@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        release {
+            keyAlias 'LeicaDistoApp'
+            keyPassword 'MMVfNKCVrWzDq5Gc'
+            storeFile file('../kStore/releaseK.jks')
+            storePassword 'MMVfNKCVrWzDq5Gc'
+        }
+    }
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "ch.leica.distosdkapp"
+        minSdkVersion 18
+        targetSdkVersion 25
+
+        def MAJOR_RELEASE = 1
+        def MINOR_RELEASE = 0
+        def PATCH_LEVEL = 0
+        def BUILD_NUMBER = 2
+        versionCode 102
+        versionName = String.valueOf(MAJOR_RELEASE) + "." + String.valueOf(MINOR_RELEASE) + "." + String.valueOf(PATCH_LEVEL) + "." + String.valueOf(BUILD_NUMBER)
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        dexOptions {
+            javaMaxHeapSize "4g"
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+    productFlavors {
+        leica {
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    // to use the aar
+        compile(name: 'sdk-release', ext: 'aar')
+
+    // to use the whole project as source code to debug
+    //compile project(':sdk')
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+}

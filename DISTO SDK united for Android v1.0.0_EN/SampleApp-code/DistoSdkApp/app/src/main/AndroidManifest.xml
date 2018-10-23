@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ch.leica.distosdkapp">
+
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <!--
+       App has four activities:
+       1. Search activity: Shows device list of all devices arround
+       2. Bluetooth connection view
+       3. Bluetooth connection view for Yeti
+       4. Wifi connection view
+    -->
+    <application
+        android:name=".DistoApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <service
+            android:name=".CleanupService"
+            android:label="CleanupService"
+            android:exported = "false"
+
+            >
+        </service>
+
+
+        <activity
+            android:name=".SearchDevicesActivity"
+            android:screenOrientation="sensorPortrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".BLEInformationActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".YetiInformationActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".WifiInformationActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".RndisInformationActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name="ch.leica.distosdkTest.TestActivity"></activity>
+    </application>
+
+</manifest>

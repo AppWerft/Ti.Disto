@@ -1,0 +1,17 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/modules.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+commands_BACKUP_8095.json
+commands_BASE_8095.json
+commands_LOCAL_8095.json
+commands_REMOTE_8095.json
+jarvis_android_beta.zip
+#aplication build
+/app/build

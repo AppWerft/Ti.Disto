@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">DistoSdkApp</string>
+
+    <string name="wifi_activation">The app will start the Wifi Service to be able to find Wifi connected Leica Devices"</string>
+    <string name="ble_activation">The app will start the Bluetooth Service to be able to find BLE connected Leica Devices"</string>
+    <string name="activate_wifi_text">To connect to devices via wifi we need to enable wifi</string>
+    <string name="activate_wifi_title">Enable wifi</string>
+    <string name="activate_bt_text">To connect to devices via bluetooth we need to enable bluetooth</string>
+    <string name="activate_bt_title">Enable bluetooth</string>
+    <string name="access_location_text">To list available devices we need to access course location</string>
+    <string name="access_location_title">Access course location</string>
+
+
+    <string name="listview_no_matches">No Matches</string>
+
+    <string name="ok">OK</string>
+    <string name="enable">Enable</string>
+    <string name="allow">Allow</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="wifi_information_title">Leica Demo Application"</string>
+    <string name="up_arrow">▲</string>
+    <string name="right_arrow">▶</string>
+    <string name="down_arrow">▼</string>
+    <string name="left_arrow">◀</string>
+    <string name="zoom1">1x</string>
+    <string name="zoom2">2x</string>
+    <string name="zoom4">4x</string>
+    <string name="zoom8">8x</string>
+
+
+    <string name="status">Status:</string>
+    <string name="camera_feed">Camera Feed:</string>
+    <string name="laser_mode">Laser Mode:</string>
+    <string name="continuous">Continuous:</string>
+    <string name="off">Off</string>
+
+    <string name="bat_s">inclinationState:</string>
+
+
+    <string-array name="Entries">
+        <item>L</item>
+        <item>N</item>
+        <item>M</item>
+        <item>H</item>
+    </string-array>
+    <string name="title_activity_wifi_information">WifiInformationActivity</string>
+    <string name="update">Update</string>
+    <string name="clear">Clear</string>
+    <string name="send_command">Send command</string>
+    <string name="dist">Distance</string>
+    <string name="start_tracking">Start tracking</string>
+    <string name="stop_tracking">Stop tracking</string>
+    <string name="software_version">SV:</string>
+    <string name="init_software_version">0x000</string>
+    <string name="serialnumber">SN:</string>
+    <string name="custom_command">Custom Command:</string>
+    <string name="start_live_image">Start Live Image</string>
+    <string name="stop_live_image">Stop Live Image</string>
+    <string name="default_value" />
+    <string name="blank_value" />
+
+    <string name="basic_measurements">BASIC:</string>
+    <string name="ptop_measurements">P2P:</string>
+    <string name="quaternion_measurements">Quaternion:</string>
+    <string name="acceleration_and_rotation_measurements">Acceleration and Rotation:</string>
+    <string name="magnetometer_measurements">Magnetometer:</string>
+
+    <string name="measurements">Measurements:</string>
+    <string name="distance">Distance:</string>
+    <string name="distunit">Distance Unit:</string>
+    <string name="v">Vertical Angle:</string>
+    <string name="vunit">Vertical Angle Unit:</string>
+    <string name="direction">Direction:</string>
+    <string name="ni_hz">H. Angle Not corrected:</string>
+    <string name="ni_v">V. Angle Not corrected:</string>
+    <string name="directionunit">Direction Unit:</string>
+    <string name="fhzangle">HZAngle:</string>
+    <string name="fveangle">VeAngle:</string>
+    <string name="ustimestampandflags">usTimeStampAndFlags:</string>
+    <string name="uinclinationstatus">InclinationStatus:</string>
+
+    <string name="fmagnetometer_x">Magnetometer_X:</string>
+    <string name="fmagnetometer_y">Magnetometer_Y:</string>
+    <string name="fmagnetometer_z">Magnetometer_Z:</string>
+
+    <string name="distocom_commands">DistoCOM Commands</string>
+
+    <string name="fquaternion_w">Quaternion_W:</string>
+    <string name="fquaternion_x">Quaternion_X:</string>
+    <string name="fquaternion_y">Quaternion_Y:</string>
+    <string name="fquaternion_z">Quaternion_Z:</string>
+    <string name="frotationsensitivity">Rotation Sensitivity:</string>
+    <string name="saccsensitivity">AccSensitivity:</string>
+
+    <string name="sacceleration_x">Acceleration_X:</string>
+    <string name="sacceleration_y">Acceleration_Y:</string>
+    <string name="sacceleration_z">Acceleration_Z:</string>
+    <string name="srotation_x">Rotation_X:</string>
+    <string name="srotation_y">Rotation_Y:</string>
+    <string name="srotation_z">Rotation_Z:</string>
+    <string name="szspprx">szSppRx:</string>
+    <string name="modelname">ModelName:</string>
+    <string name="read">read</string>
+    <string name="timestamp">TimeStamp:</string>
+    <string name="reconnecting">Reconnecting</string>
+    <string name="reconnect">reconnect</string>
+    <string name="select_device_to_connect">Select Device to Connect</string>
+    <string name="start_search">Start Search</string>
+    <string name="ip_address">IP Address:</string>
+    <string name="hz_temp">hz_temp:</string>
+    <string name="v_temp">v_temp:</string>
+    <string name="edm_temp">edm_temp:</string>
+    <string name="ble_temp">ble_temp:</string>
+    <string name="bat_v">bat_v:</string>
+    <string name="led_se">led_se:</string>
+    <string name="led_w">led_w:</string>
+    <string name="iHZ">iHZ:</string>
+    <string name="iLen">iLen:</string>
+    <string name="iCross">iCross:</string>
+    <string name="macaddress">Mac Address:</string>
+    <string name="wlanmoduleversion">WLAN Module Version:</string>
+    <string name="wlanchannel">WLAN Channel:</string>
+    <string name="wlanfreq">WLAN Frequency:</string>
+    <string name="wlanessid">WLAN SSID:</string>
+    <string name="usrvind">usr vind:</string>
+    <string name="isensitivemode">isensitive mode:</string>
+    <string name="usercamlasx">user camlasX:</string>
+    <string name="usercamlasy">user_camlasy:</string>
+    <string name="htime">Operating Hours:</string>
+    <string name="swname">Software Name:</string>
+    <string name="device">device:</string>
+    <string name="equipment">Equipment:</string>
+    <string name="face">face:</string>
+    <string name="motwhile">Mot While:</string>
+    <string name="hztemp">hz Temp:</string>
+    <string name="vtemp">V Temp:</string>
+    <string name="edmtemp">EDM Temp:</string>
+    <string name="bletemp">BLE Temp:</string>
+    <string name="batv">Battery Voltage:</string>
+    <string name="bats">Battery State:</string>
+    <string name="ledse">LED se:</string>
+    <string name="ledw">LED w:</string>
+    <string name="ip">IP:</string>
+    <string name="lostConnection">\"Lost connection to device\"</string>
+    <string name="D510">D510</string>
+    <string name="LD520">LD520</string>
+    <string name="distocom_response">DISTOCOM Response</string>
+    <string name="distocom_event">DISTOCOM Event</string>
+    <string name="inclination">Inclination:</string>
+    <string name="inclinationUnit">Inclination Unit:</string>
+    <string name="horizontalangle">Horizontal Angle:</string>
+    <string name="version">Version:</string>
+    <string name="angleunit">Angle Unit:</string>
+    <string name="finding_devices">Finding devices...</string>
+    <string name="DeviceResponse">Response: </string>
+    <string name="event">Event:</string>
+    <string name="model">Model:</string>
+    <string name="channels">channels</string>
+    <string name="deviceInfo">Device Info:</string>
+    <string name="brandDistocom">Brand:</string>
+    <string name="IDDistocom">Device ID:</string>
+    <string name="swVersionAPPDistocom">APP Version:</string>
+    <string name="swVersionEDMDistocom">EDM Version:</string>
+    <string name="swVersionFTADistocom">FTA Version:</string>
+    <string name="serialAPPDistocom">Serial APP:</string>
+    <string name="serialEDMDistocom">Serial EDM:</string>
+    <string name="serialFTADistocom">Serial FTA:</string>
+    <string name="reinstall">Reinstall</string>
+
+
+</resources>
