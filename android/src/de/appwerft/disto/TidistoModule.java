@@ -21,9 +21,9 @@ public class TidistoModule extends KrollModule
 {
 
 	// Standard Debugging variables
-	private static final String LCAT = "TidistoModule";
-	private static final boolean DBG = TiConfig.LOGD;
-
+	private static final String LCAT = "TiDisto";
+	
+	
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 
@@ -39,27 +39,6 @@ public class TidistoModule extends KrollModule
 		// put module init code that needs to run when the application is created
 	}
 
-	// Methods
-	@Kroll.method
-	public String example()
-	{
-		Log.d(LCAT, "example called");
-		return "hello world";
-	}
-
-	// Properties
-	@Kroll.getProperty
-	public String getExampleProp()
-	{
-		Log.d(LCAT, "get example property");
-		return "hello world";
-	}
-
-
-	@Kroll.setProperty
-	public void setExampleProp(String value) {
-		Log.d(LCAT, "set example property: " + value);
-	}
-
+	
 }
 

@@ -7,7 +7,9 @@ Axway Titaniums module for connecting to Disto devices via bluetooth.
 ```javascript
 const Disto = require("de.appwerft.disto");
 
-Disto.browseForDevices(onFound);
+Disto.init();
+
+Disto.findAvailableDevices(onFound);
 
 function onFound(e) {
 	const Devices = e.devices;
