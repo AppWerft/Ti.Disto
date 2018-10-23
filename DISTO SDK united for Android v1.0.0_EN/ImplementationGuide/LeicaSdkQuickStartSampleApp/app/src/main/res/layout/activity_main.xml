@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme.NoActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <!--<ProgressBar-->
+        <!--style="@android:style/Widget.ProgressBar.Small"-->
+        <!--android:id="@+id/progressbar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="5dp"/>-->
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/finding_devices"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <TextView
+        android:text="@string/logs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logsLabel"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textStyle="normal|bold"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:text="@string/logs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/logsText"
+        android:textSize="12sp"
+        android:textColor="@android:color/black"
+        android:textStyle="normal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="textStart"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.9" />
+
+
+    <Button
+        android:id="@+id/findDevices_button"
+        android:scrollbars="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/find_devices" />
+
+    <TextView
+        android:id="@+id/sdkVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/version"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+</LinearLayout>

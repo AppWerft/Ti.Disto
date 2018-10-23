@@ -1,0 +1,10 @@
+ch.leica.sdk
+ch.leica.sdk.Devices
+ch.leica.sdk.ErrorHandling
+ch.leica.sdk.Listeners
+ch.leica.sdk.Reconnection
+ch.leica.sdk.Utilities
+ch.leica.sdk.commands
+ch.leica.sdk.commands.response
+ch.leica.sdk.connection.ble
+ch.leica.sdk.update.FirmwareUpdate.DataClasses

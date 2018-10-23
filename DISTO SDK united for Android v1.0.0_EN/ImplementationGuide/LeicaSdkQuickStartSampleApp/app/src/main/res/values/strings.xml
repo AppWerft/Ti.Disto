@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Quickstartapp</string>
+    <string name="finding_devices">Finding devices ...</string>
+    <string name="logs">LOG</string>
+    <string name="version">version</string>
+    <string name="find_devices">Find Devices</string>
+    <string name="connect">connect</string>
+    <string name="disconnect">disconnect</string>
+    <string name="sendCommand">send command</string>
+    <string name="device">Device:</string>
+</resources>
