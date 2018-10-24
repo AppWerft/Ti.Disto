@@ -21,16 +21,21 @@ import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
 
+import ch.leica.sdk.Devices.BleDevice;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
+import ch.leica.sdk.ErrorHandling.ErrorObject;
+import ch.leica.sdk.Listeners.ErrorListener;
+import ch.leica.sdk.Listeners.ReceivedDataListener;
+import ch.leica.sdk.commands.ReceivedData;
 import android.app.Activity;
 
 // This proxy can be created by calling Tidisto.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = TidistoModule.class)
-public class DeviceProxy extends KrollProxy {
+public class DeviceProxy extends KrollProxy implements Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	// Standard Debugging variables
 	private static final String LCAT = "ExampleProxy";
-	private Device device;
+	private Device currentDevice;
 
 	// Constructor
 	public DeviceProxy() {
@@ -39,7 +44,13 @@ public class DeviceProxy extends KrollProxy {
 
 	public void handleCreationArgs(KrollModule createdInModule, Object[] args) {
 		if (args.length > 0 && args[0] instanceof Device)
-			this.device = (Device) args[0];
+			this.currentDevice = (Device) args[0];
+		
+		currentDevice.setConnectionListener(this);
+        currentDevice.setErrorListener(this);
+        currentDevice.setReceiveDataListener(this);
+		
+		
 		super.handleCreationArgs(createdInModule, args);
 	}
 
@@ -52,23 +63,84 @@ public class DeviceProxy extends KrollProxy {
 	@Kroll.getProperty
 	@Kroll.method
 	public String getName() {
-		return device.getDeviceName();
+		return currentDevice.getDeviceName();
 	}
 	@Kroll.getProperty
 	@Kroll.method
 	public String getId() {
-		return device.getDeviceID();
+		return currentDevice.getDeviceID();
 	}
 	@Kroll.getProperty
 	@Kroll.method
 	public KrollDict getAllCharacteristics() {
 		KrollDict res = new KrollDict();
 		try {
-			device.getAllCharacteristics();
+			currentDevice.getAllCharacteristics();
 		} catch (DeviceException e) {
 			e.printStackTrace();
 		}
 		return res;
 	}
+	
+	@Override
+    public void onConnectionStateChanged(final Device device, final Device.ConnectionState connectionState) {
+
+
+        final String METHODTAG = ".onConnectionStateChanged";
+        Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: " + connectionState);
+
+        try {
+
+
+            if (connectionState == Device.ConnectionState.disconnected) {
+                return;
+            }
+
+            if(connectionState == Device.ConnectionState.connected){
+
+//                uiHelper.setLog(InformationActivity.this, log, "connected to device.");
+                // start bt connection
+                try {
+                    if (currentDevice != null && currentDevice instanceof BleDevice ) {
+                        currentDevice.startBTConnection(new Device.BTConnectionCallback() {
+                            @Override
+                            public void onFinished() {
+                                Log.d(METHODTAG, "NOW YOU CAN SEND COMMANDS TO THE DEVICE");
+            //                    uiHelper.setLog(InformationActivity.this, log, "NOW YOU CAN SEND COMMANDS TO THE DEVICE");
+
+
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+              
+                return;
+            }
+
+
+
+        } catch (Exception e) {
+            Log.e(LCAT, METHODTAG, e);
+        }
+
+    }
+
+    @Override
+    public void onError(ErrorObject errorObject, Device device) {
+   //     uiHelper.setLog(this, log, "onError" + ": " + errorObject.getErrorMessage() + ", errorCode: " + errorObject.getErrorCode());
+    }
+
+	@Override
+	public void onAsyncDataReceived(ReceivedData arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 
 }
