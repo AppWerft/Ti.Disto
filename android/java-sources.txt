@@ -1,4 +1,3 @@
-"/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/AppLicences.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/DeviceProxy.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/TidistoModule.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/build/generated/java/de/appwerft/disto/TidistoBootstrap.java"

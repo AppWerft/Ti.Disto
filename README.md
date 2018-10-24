@@ -12,13 +12,14 @@ if (Disto.verifyPermissions()) {
 	Disto.addScanConfig(Disto.distoBle);
 	Disto.init();
 	Disto.findAvailableDevices(onAvailableDeviceFound);
+	const version = Disto.getVersion();
 }
 
 function onAvailableDeviceFound(e) {
 	Disto.stopFindingDevices();
 	const Device = e.device;
 	console.log("DeviceId: "  + Device.getDeviceId());
-	console.log("DeviceName: " + Device.getDeviceName()	);
+	console.log("DeviceName: " + Device.getDeviceName();	);
 }
 
 function onConnect(e) {
