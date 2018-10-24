@@ -9,6 +9,7 @@
 package de.appwerft.disto;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -41,6 +42,7 @@ public class TidistoModule extends KrollModule implements
 public static final String LCAT = "TiDisto";
 
 	DeviceManager deviceManager;
+	private ArrayList<String> keys = new ArrayList<>();
 
 	private KrollFunction Callback;
 	boolean findDevicesRunning = false;
@@ -76,7 +78,7 @@ public static final String LCAT = "TiDisto";
 				// boolean distoWifi, boolean distoBle, boolean yeti, boolean
 				// disto3DD
 				LeicaSdk.setScanConfig(false, true, false, false);
-				LeicaSdk.setLicenses(new AppLicenses().keys);
+				LeicaSdk.setLicenses(keys);
 
 			} catch (JSONException e) {
 				Log.d(LCAT, e.getMessage());
@@ -97,8 +99,8 @@ public static final String LCAT = "TiDisto";
 
 	}
 	@Kroll.method
-	public void setLicences(Object[] o) {
-		
+	public void addLicences(String key) {
+		keys.add(key);
 	};
 	
 	@Kroll.method
