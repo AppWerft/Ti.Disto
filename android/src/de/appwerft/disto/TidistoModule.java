@@ -33,21 +33,22 @@ import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Listeners.ErrorListener;
 
 @Kroll.module(name = "Tidisto", id = "de.appwerft.disto")
-public class TidistoModule extends KrollModule implements DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener, ErrorListener {
+public class TidistoModule extends KrollModule implements
+		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener,
+		ErrorListener {
 
 	// Standard Debugging variables
-	private static final String LCAT = "TiDisto";
+public static final String LCAT = "TiDisto";
 
 	DeviceManager deviceManager;
-	
-	private KrollFunction Callback;
-    boolean findDevicesRunning = false;
-    /**
-     * Current selected device
-     */
-    Device currentDevice;
 
-    	
+	private KrollFunction Callback;
+	boolean findDevicesRunning = false;
+	/**
+	 * Current selected device
+	 */
+	Device currentDevice;
+
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 
@@ -59,80 +60,96 @@ public class TidistoModule extends KrollModule implements DeviceManager.FoundAva
 	public String getVersion() {
 		return LeicaSdk.getVersion();
 	}
+
 	@Kroll.method
 	public void init() {
 		if (LeicaSdk.isInit == false) {
 
-            // this "commands.json" file can be named differently. it only has to exist in the assets folder
-            LeicaSdk.InitObject initObject = new LeicaSdk.InitObject("commands.json");
+			// this "commands.json" file can be named differently. it only has
+			// to exist in the assets folder
+			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
+					"commands.json");
 
-            try {
-            	
-                LeicaSdk.init(TiApplication.getInstance().getApplicationContext(), initObject);
-                //boolean distoWifi, boolean distoBle, boolean yeti, boolean disto3DD
-                LeicaSdk.setScanConfig(false, true, false, false);
-                LeicaSdk.setLicenses(new AppLicenses().keys);
+			try {
+				LeicaSdk.init(TiApplication.getInstance()
+						.getApplicationContext(), initObject);
+				// boolean distoWifi, boolean distoBle, boolean yeti, boolean
+				// disto3DD
+				LeicaSdk.setScanConfig(false, true, false, false);
+				LeicaSdk.setLicenses(new AppLicenses().keys);
 
-            } catch (JSONException e) {
-              Log.d(LCAT,e.getMessage());
+			} catch (JSONException e) {
+				Log.d(LCAT, e.getMessage());
 
-            } catch (IllegalArgumentCheckedException e) {
-            	Log.d(LCAT,e.getMessage());
+			} catch (IllegalArgumentCheckedException e) {
+				Log.d(LCAT, e.getMessage());
 
+			} catch (IOException e) {
+				Log.d(LCAT, e.getMessage());
 
-            } catch (IOException e) {
-            	Log.d(LCAT,e.getMessage());
-               
-            }
-            
+			}
+
 		}
 		Context ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-        deviceManager.setFoundAvailableDeviceListener(this);
-        deviceManager.setErrorListener(this);
+		deviceManager.setFoundAvailableDeviceListener(this);
+		deviceManager.setErrorListener(this);
 
+	}
+	@Kroll.method
+	public void setLicences(Object[] o) {
+		
+	};
+	
+	@Kroll.method
+	public void stopFindingDevices() {
+			Log.i(LCAT,
+				" Stop find Devices Task and set BroadcastReceivers to Null");
+		findDevicesRunning = false;
+		deviceManager.stopFindingDevices();
 	}
 
 	@Override
 	public void onError(ErrorObject arg0, Device arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onConnectionStateChanged(Device arg0, ConnectionState arg1) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	 @Override
-	    public void onAvailableDeviceFound(final Device device) {
-
-	        final String METHODTAG = ".onAvailableDeviceFound";
-	       // stopFindingDevices();
-
-	    //    uiHelper.setLog(this, log, "DeviceId found: " + device.getDeviceID() + ", deviceName: " + device.getDeviceName());
-	        //new Thread
-	     //   Log.i(CLASSTAG, METHODTAG + "DeviceId found: "  + device.getDeviceID() + ", deviceName: " + device.getDeviceName());
-
-	        //Call this to avoid interference in Bluetooth operations
-
-
-	        if (device == null) {
-	            Log.i(METHODTAG, "device not found");
-	            return;
-	        }
-
-	        currentDevice = device;
-	       // goToInfoScreen(device);
 
 	}
-	 
-	 private void dispatchMessage(KrollDict dict) {
-		 if (Callback != null) {
-			 Callback.call(getKrollObject(), dict);
-		 }
-		 
-	 }
+
+	@Override
+	public void onAvailableDeviceFound(final Device device) {
+
+		final String METHODTAG = ".onAvailableDeviceFound";
+		// stopFindingDevices();
+
+		// uiHelper.setLog(this, log, "DeviceId found: " + device.getDeviceID()
+		// + ", deviceName: " + device.getDeviceName());
+		// new Thread
+		// Log.i(CLASSTAG, METHODTAG + "DeviceId found: " + device.getDeviceID()
+		// + ", deviceName: " + device.getDeviceName());
+
+		// Call this to avoid interference in Bluetooth operations
+
+		if (device == null) {
+			Log.i(METHODTAG, "device not found");
+			return;
+		}
+
+		currentDevice = device;
+		// goToInfoScreen(device);
+
+	}
+
+	private void dispatchMessage(KrollDict dict) {
+		if (Callback != null) {
+			Callback.call(getKrollObject(), dict);
+		}
+
+	}
 
 }
