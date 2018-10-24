@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:module xmlns:ti="http://ti.appcelerator.org" xmlns:android="http://schemas.android.com/apk/res/android">
 	<!--
-		Similar to tiapp.xml, but contains module/platform specific
-		configuration in <iphone> and <android> sections
+	Similar to tiapp.xml, but contains module/platform specific
+	configuration in <iphone> and <android> sections
 	-->
-	<iphone>
-	</iphone>
+	<iphone></iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
+		<manifest package="${tiapp.properties['id']}" >
+			<uses-permission android:name="android.permission.BLUETOOTH" />
+			<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+		</manifest>
 	</android>
 </ti:module>
