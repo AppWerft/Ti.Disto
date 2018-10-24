@@ -71,8 +71,9 @@ public class TidistoModule extends KrollModule implements
 
 	@Kroll.method
 	public void init() {
+		Log.d(LCAT,"====== START leica ========");
 		if (LeicaSdk.isInit == false) {
-
+			Log.d(LCAT,"was not initalized.");
 			// this "commands.json" file can be named differently. it only has
 			// to exist in the assets folder
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
@@ -85,7 +86,8 @@ public class TidistoModule extends KrollModule implements
 				// disto3DD
 				LeicaSdk.setScanConfig(false, true, false, false);
 				LeicaSdk.setLicenses(keys);
-				Log.d(LCAT,"Interfacxe started");
+				Log.d(LCAT, keys.toString());
+				Log.d(LCAT,"Interface started");
 
 			} catch (JSONException e) {
 				Log.d(LCAT, e.getMessage());
@@ -98,7 +100,7 @@ public class TidistoModule extends KrollModule implements
 
 			}
 
-		}
+		} else Log.d(LCAT,"was always initalized.");
 		KrollDict res = new KrollDict();
 		res.put("version",LeicaSdk.getVersion());
 		Context ctx = TiApplication.getInstance().getApplicationContext();
@@ -163,8 +165,8 @@ public class TidistoModule extends KrollModule implements
 			Callback.call(getKrollObject(), dict);
 		}
 		KrollFunction onTest = (KrollFunction) getProperty("onTest");
-		
 		if (onTest != null) {
+			Log.d(LCAT,"property callback is called .");
 			onTest.call(getKrollObject(),
 					new Object[] { dict });
 		}
