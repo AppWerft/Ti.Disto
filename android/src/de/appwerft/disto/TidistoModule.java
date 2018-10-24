@@ -163,7 +163,7 @@ public class TidistoModule extends KrollModule implements
 		
 		if (onTest != null) {
 			onTest.call(getKrollObject(),
-					new Object[] { event });
+					new Object[] { dict });
 		}
 
 	}
