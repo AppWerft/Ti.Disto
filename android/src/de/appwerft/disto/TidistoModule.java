@@ -189,6 +189,7 @@ public class TidistoModule extends KrollModule implements
 	}
 
 	private boolean[] verifyPermissions() {
+		Log.d(LCAT,"Starting verifyPermissions()");
 		ArrayList<String> manifestPermission = new ArrayList<>();
 		boolean[] permissions = { false, false };
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -212,7 +213,7 @@ public class TidistoModule extends KrollModule implements
 			}
 			if (!network_enabled) {
 			} else {
-				LeicaSdk.scanConfig.setWifiAdapterOn(true);
+				//LeicaSdk.scanConfig.setWifiAdapterOn(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(ctx.getPackageManager()
 						.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE));
 			}
