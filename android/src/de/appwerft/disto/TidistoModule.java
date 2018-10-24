@@ -20,6 +20,8 @@ import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
 import org.json.JSONException;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -200,25 +202,36 @@ public class TidistoModule extends KrollModule implements
 		currentDevice = device;
 
 	}
-
+	private boolean hasPermission(String permission) {
+		if (Build.VERSION.SDK_INT >= 23) {
+			Activity currentActivity = TiApplication.getInstance()
+					.getCurrentActivity();
+			if (currentActivity.checkSelfPermission( permission) != PackageManager.PERMISSION_GRANTED) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	private boolean[] verifyPermissions() {
 		Log.d(LCAT,"Starting verifyPermissions()");
 		ArrayList<String> manifestPermission = new ArrayList<>();
 		boolean[] permissions = { false, false };
+		
+		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			String[] manifestPermissionStrArray = new String[manifestPermission
 					.size()];
 			int i = 0;
 			for (String permission : manifestPermission) {
+				Log.d(LCAT,permission);
 				manifestPermissionStrArray[i] = permission;
 			}
-			Context ctx = TiApplication.getAppCurrentActivity()
-					.getApplicationContext();
-			LocationManager lm = (LocationManager) ctx
+			LocationManager locationManager = (LocationManager) ctx
 					.getSystemService(Context.LOCATION_SERVICE);
 			boolean network_enabled = false;
 			try {
-				network_enabled = lm
+				network_enabled = locationManager
 						.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			} catch (Exception e) {
 				Log.e(LCAT + "NETWORK PROVIDER, network not enabled",
@@ -240,17 +253,16 @@ public class TidistoModule extends KrollModule implements
 
 	private void dispatchMessage(KrollDict dict) {
 		Log.i(LCAT, dict.toString());
-		Log.i(LCAT, getProperties().toString());
 		if (Callback != null) {
 			Callback.call(getKrollObject(), dict);
 		}
 		KrollFunction onTest = (KrollFunction) getProperty("onTest");
 		if (onTest != null) {
-			Log.d(LCAT, "property callback is called .");
 			onTest.call(getKrollObject(), new Object[] { dict });
 		} else
 			Log.w(LCAT, "onTest is null");
-
+		if (hasListeners("availableDeviceFound"))
+			fireEvent("availableDeviceFound",dict);
 	}
 
 }
