@@ -85,6 +85,7 @@ public class TidistoModule extends KrollModule implements
 				// disto3DD
 				LeicaSdk.setScanConfig(false, true, false, false);
 				LeicaSdk.setLicenses(keys);
+				Log.d(LCAT,"Interfacxe started");
 
 			} catch (JSONException e) {
 				Log.d(LCAT, e.getMessage());
@@ -98,11 +99,13 @@ public class TidistoModule extends KrollModule implements
 			}
 
 		}
+		KrollDict res = new KrollDict();
+		res.put("version",LeicaSdk.getVersion());
 		Context ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
-		dispatchMessage(new KrollDict());
+		dispatchMessage(res);
 
 	}
 
@@ -146,7 +149,7 @@ public class TidistoModule extends KrollModule implements
 		// Call this to avoid interference in Bluetooth operations
 
 		KrollDict res = new KrollDict();
-		res.put("device",new DeviceProxy(device));
+		res.put("device", new DeviceProxy(device));
 
 		currentDevice = device;
 		
