@@ -46,7 +46,6 @@ public class TidistoModule extends KrollModule implements
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
 
-
 	private ArrayList<String> keys = new ArrayList<>();
 
 	private KrollFunction Callback;
@@ -81,16 +80,16 @@ public class TidistoModule extends KrollModule implements
 	public boolean isBluetoothAvailable() {
 		return deviceManager.checkBluetoothAvailibilty();
 	}
-	
-	@Kroll.method 
-	public void enableBLE (){
-		 deviceManager.enableBLE();
+
+	@Kroll.method
+	public void enableBLE() {
+		deviceManager.enableBLE();
 	}
-	
+
 	@Kroll.method
 	public void init() {
 		Log.i(LCAT, "====== START leica ========");
-		
+
 		if (LeicaSdk.isInit == false) {
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands.json");
@@ -121,7 +120,6 @@ public class TidistoModule extends KrollModule implements
 		} else
 			Log.d(LCAT, "was always initalized.");
 
-		
 		Log.i(LCAT, "deviceManager created");
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
@@ -135,7 +133,8 @@ public class TidistoModule extends KrollModule implements
 
 	}
 
-	private void findAvailableDevices() {
+	@Kroll.method
+	public void findAvailableDevices() {
 
 		findDevicesRunning = true;
 
@@ -202,26 +201,32 @@ public class TidistoModule extends KrollModule implements
 		currentDevice = device;
 
 	}
+
 	private boolean hasPermission(String permission) {
 		if (Build.VERSION.SDK_INT >= 23) {
 			Activity currentActivity = TiApplication.getInstance()
 					.getCurrentActivity();
-			if (currentActivity.checkSelfPermission( permission) != PackageManager.PERMISSION_GRANTED) {
+			if (currentActivity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	private boolean[] verifyPermissions() {
-		Log.d(LCAT,"Starting verifyPermissions()");
-		boolean[] permissions = { false, false };
-		
-		
+
+	public boolean verifyPermissions() {
+		Log.d(LCAT, "Starting verifyPermissions()");
+		boolean granted = false;
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			Log.i(LCAT,"ACCESS_FINE_LOCATION="+hasPermission("android.permission.ACCESS_FINE_LOCATION"));
-			Log.i(LCAT,"ACCESS_COARSE_LOCATION="+hasPermission("android.permission.ACCESS_COARSE_LOCATION"));
-			
+			if (!hasPermission("android.permission.ACCESS_FINE_LOCATION")
+					&& !hasPermission("android.permission.ACCESS_COARSE_LOCATION"))
+				granted = false;
+			Log.i(LCAT, "ACCESS_FINE_LOCATION="
+					+ hasPermission("android.permission.ACCESS_FINE_LOCATION"));
+			Log.i(LCAT,
+					"ACCESS_COARSE_LOCATION="
+							+ hasPermission("android.permission.ACCESS_COARSE_LOCATION"));
+
 			LocationManager locationManager = (LocationManager) ctx
 					.getSystemService(Context.LOCATION_SERVICE);
 			boolean network_enabled = false;
@@ -229,11 +234,12 @@ public class TidistoModule extends KrollModule implements
 				network_enabled = locationManager
 						.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			} catch (Exception e) {
+				granted=false;
 				Log.e(LCAT + "NETWORK PROVIDER, network not enabled",
 						e.getMessage());
 			}
 			if (network_enabled) {
-				//LeicaSdk.scanConfig.setWifiAdapterOn(true);
+				// LeicaSdk.scanConfig.setWifiAdapterOn(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(ctx.getPackageManager()
 						.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE));
 			}
@@ -241,8 +247,9 @@ public class TidistoModule extends KrollModule implements
 					"Permissions: WIFI: "
 							+ LeicaSdk.scanConfig.isWifiAdapterOn() + ", BLE: "
 							+ LeicaSdk.scanConfig.isBleAdapterOn());
+			if (!hasPermission("android.permission.ACCESS_FINE_LOCATION")) granted=false;
 		}
-		return permissions;
+		return granted;
 	}
 
 	private void dispatchMessage(KrollDict dict) {
@@ -253,9 +260,9 @@ public class TidistoModule extends KrollModule implements
 		KrollFunction onTest = (KrollFunction) getProperty("onTest");
 		if (onTest != null) {
 			onTest.call(getKrollObject(), new Object[] { dict });
-		} 
+		}
 		if (hasListeners("availableDeviceFound"))
-			fireEvent("availableDeviceFound",dict);
+			fireEvent("availableDeviceFound", dict);
 	}
 
 }
