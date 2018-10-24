@@ -11,22 +11,24 @@ if (Disto.verifyPermissions()) {
 	Disto.addLicence("1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+");
 	Disto.addScanConfig(Disto.distoBle);
 	Disto.init();
-	Disto.findAvailableDevices(onAvailableDeviceFound);
+	Disto.findAvailableDevices({},onAvailableDeviceFound);
 	const version = Disto.getVersion();
+	Disto.onTest = function(e) {
+		console.log(e);
+	}
 }
 
 function onAvailableDeviceFound(e) {
 	Disto.stopFindingDevices();
 	const Device = e.device;
 	console.log("DeviceId: "  + Device.getDeviceId());
-	console.log("DeviceName: " + Device.getDeviceName();	);
+	console.log("DeviceName: " + Device.getDeviceName();
+	Device.registerListeners({
+		onAsyncDataReceived : onAsyncDataReceived,
+		onError : onError,
+		onConnectionStateChanged : onConnectionStateChanged
+	});
 }
 
-function onConnect(e) {
-	
-}
-
-function onReady(e) {
-}
 
 ```

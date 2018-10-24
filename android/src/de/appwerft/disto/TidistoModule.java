@@ -39,7 +39,7 @@ public class TidistoModule extends KrollModule implements
 		ErrorListener {
 
 	// Standard Debugging variables
-public static final String LCAT = "TiDisto";
+	public static final String LCAT = "TiDisto";
 
 	DeviceManager deviceManager;
 	private ArrayList<String> keys = new ArrayList<>();
@@ -51,8 +51,14 @@ public static final String LCAT = "TiDisto";
 	 */
 	Device currentDevice;
 
-	// You can define constants with @Kroll.constant, for example:
-	// @Kroll.constant public static final String EXTERNAL_NAME = value;
+	@Kroll.constant
+	public static final int distoWifi = 1;
+	@Kroll.constant
+	public static final int distoBle = 2;
+	@Kroll.constant
+	public static final int yeti = 4;
+	@Kroll.constant
+	public static final int disto3DD = 8;
 
 	public TidistoModule() {
 		super();
@@ -96,16 +102,18 @@ public static final String LCAT = "TiDisto";
 		deviceManager = DeviceManager.getInstance(ctx);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
+		dispatchMessage(new KrollDict());
 
 	}
+
 	@Kroll.method
 	public void addLicences(String key) {
 		keys.add(key);
 	};
-	
+
 	@Kroll.method
 	public void stopFindingDevices() {
-			Log.i(LCAT,
+		Log.i(LCAT,
 				" Stop find Devices Task and set BroadcastReceivers to Null");
 		findDevicesRunning = false;
 		deviceManager.stopFindingDevices();
@@ -137,19 +145,25 @@ public static final String LCAT = "TiDisto";
 
 		// Call this to avoid interference in Bluetooth operations
 
-		if (device == null) {
-			Log.i(METHODTAG, "device not found");
-			return;
-		}
+		KrollDict res = new KrollDict();
+		res.put("device",new DeviceProxy(device));
 
 		currentDevice = device;
-		// goToInfoScreen(device);
-
+		
+		
 	}
-
+    
+	
+	
 	private void dispatchMessage(KrollDict dict) {
 		if (Callback != null) {
 			Callback.call(getKrollObject(), dict);
+		}
+		KrollFunction onTest = (KrollFunction) getProperty("onTest");
+		
+		if (onTest != null) {
+			onTest.call(getKrollObject(),
+					new Object[] { event });
 		}
 
 	}
