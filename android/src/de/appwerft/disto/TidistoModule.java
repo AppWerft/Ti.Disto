@@ -162,7 +162,8 @@ public class TidistoModule extends KrollModule implements
 	}
 
 	private void dispatchMessage(KrollDict dict) {
-		Log.i(LCAT,dict.toString());
+		Log.i(LCAT, dict.toString());
+		Log.i(LCAT, getProperties().toString());
 		if (Callback != null) {
 			Callback.call(getKrollObject(), dict);
 		}
@@ -170,7 +171,8 @@ public class TidistoModule extends KrollModule implements
 		if (onTest != null) {
 			Log.d(LCAT, "property callback is called .");
 			onTest.call(getKrollObject(), new Object[] { dict });
-		} else Log.w(LCAT,"onTest is null");
+		} else
+			Log.w(LCAT, "onTest is null");
 
 	}
 
