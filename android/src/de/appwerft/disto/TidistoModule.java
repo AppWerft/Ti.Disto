@@ -44,7 +44,7 @@ public class TidistoModule extends KrollModule implements
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
 
-	DeviceManager deviceManager;
+
 	private ArrayList<String> keys = new ArrayList<>();
 
 	private KrollFunction Callback;
@@ -53,7 +53,8 @@ public class TidistoModule extends KrollModule implements
 	 * Current selected device
 	 */
 	Device currentDevice;
-
+	Context ctx;
+	DeviceManager deviceManager;
 	@Kroll.constant
 	public static final int distoWifi = 1;
 	@Kroll.constant
@@ -65,6 +66,8 @@ public class TidistoModule extends KrollModule implements
 
 	public TidistoModule() {
 		super();
+		ctx = TiApplication.getInstance().getApplicationContext();
+		deviceManager = DeviceManager.getInstance(ctx);
 	}
 
 	@Kroll.method
@@ -73,9 +76,19 @@ public class TidistoModule extends KrollModule implements
 	}
 
 	@Kroll.method
+	public boolean isBluetoothAvailable() {
+		return deviceManager.checkBluetoothAvailibilty();
+	}
+	
+	@Kroll.method 
+	public void enableBLE (){
+		 deviceManager.enableBLE();
+	}
+	
+	@Kroll.method
 	public void init() {
 		Log.i(LCAT, "====== START leica ========");
-		Context ctx = TiApplication.getInstance().getApplicationContext();
+		
 		if (LeicaSdk.isInit == false) {
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands.json");
@@ -106,7 +119,7 @@ public class TidistoModule extends KrollModule implements
 		} else
 			Log.d(LCAT, "was always initalized.");
 
-		deviceManager = DeviceManager.getInstance(ctx);
+		
 		Log.i(LCAT, "deviceManager created");
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
