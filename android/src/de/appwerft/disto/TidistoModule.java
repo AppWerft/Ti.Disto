@@ -71,17 +71,17 @@ public class TidistoModule extends KrollModule implements
 
 	@Kroll.method
 	public void init() {
-		Log.d(LCAT,"====== START leica ========");
+		Log.i(LCAT,"====== START leica ========");
+		Context ctx = TiApplication.getInstance()
+				.getApplicationContext();
 		if (LeicaSdk.isInit == false) {
-			Log.d(LCAT,"was not initalized.");
+			Log.i(LCAT,"was not initalized.");
 			// this "commands.json" file can be named differently. it only has
 			// to exist in the assets folder
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands.json");
-
 			try {
-				LeicaSdk.init(TiApplication.getInstance()
-						.getApplicationContext(), initObject);
+				LeicaSdk.init(ctx, initObject);
 				// boolean distoWifi, boolean distoBle, boolean yeti, boolean
 				// disto3DD
 				LeicaSdk.setScanConfig(false, true, false, false);
@@ -103,10 +103,14 @@ public class TidistoModule extends KrollModule implements
 		} else Log.d(LCAT,"was always initalized.");
 		KrollDict res = new KrollDict();
 		res.put("version",LeicaSdk.getVersion());
-		Context ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
+		Log.i(LCAT, "deviceManager created");
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
+		Log.i(LCAT, "listeners added");
+		Log.i(LCAT, "BluetoothAvailibilty="+deviceManager.checkBluetoothAvailibilty());
+		res.put("BluetoothAvailibilty",deviceManager.checkBluetoothAvailibilty());
+		res.put("WiFiAvailibilty",deviceManager.checkWifiAvailibilty());
 		dispatchMessage(res);
 
 	}
