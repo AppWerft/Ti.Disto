@@ -215,18 +215,13 @@ public class TidistoModule extends KrollModule implements
 	
 	private boolean[] verifyPermissions() {
 		Log.d(LCAT,"Starting verifyPermissions()");
-		ArrayList<String> manifestPermission = new ArrayList<>();
 		boolean[] permissions = { false, false };
 		
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			String[] manifestPermissionStrArray = new String[manifestPermission
-					.size()];
-			int i = 0;
-			for (String permission : manifestPermission) {
-				Log.d(LCAT,permission);
-				manifestPermissionStrArray[i] = permission;
-			}
+			Log.i(LCAT,"ACCESS_FINE_LOCATION="+hasPermission("android.permission.ACCESS_FINE_LOCATION"));
+			Log.i(LCAT,"ACCESS_COARSE_LOCATION="+hasPermission("android.permission.ACCESS_COARSE_LOCATION"));
+			
 			LocationManager locationManager = (LocationManager) ctx
 					.getSystemService(Context.LOCATION_SERVICE);
 			boolean network_enabled = false;
@@ -237,8 +232,7 @@ public class TidistoModule extends KrollModule implements
 				Log.e(LCAT + "NETWORK PROVIDER, network not enabled",
 						e.getMessage());
 			}
-			if (!network_enabled) {
-			} else {
+			if (network_enabled) {
 				//LeicaSdk.scanConfig.setWifiAdapterOn(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(ctx.getPackageManager()
 						.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE));
@@ -259,8 +253,7 @@ public class TidistoModule extends KrollModule implements
 		KrollFunction onTest = (KrollFunction) getProperty("onTest");
 		if (onTest != null) {
 			onTest.call(getKrollObject(), new Object[] { dict });
-		} else
-			Log.w(LCAT, "onTest is null");
+		} 
 		if (hasListeners("availableDeviceFound"))
 			fireEvent("availableDeviceFound",dict);
 	}
