@@ -21,6 +21,9 @@ import org.appcelerator.kroll.common.TiConfig;
 import org.json.JSONException;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.Device.ConnectionState;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
@@ -74,24 +77,25 @@ public class TidistoModule extends KrollModule implements
 		Log.i(LCAT, "====== START leica ========");
 		Context ctx = TiApplication.getInstance().getApplicationContext();
 		if (LeicaSdk.isInit == false) {
-			Log.i(LCAT, "was not initalized.");
-			// this "commands.json" file can be named differently. it only has
-			// to exist in the assets folder
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands.json");
 			try {
 				LeicaSdk.init(ctx, initObject);
-				// boolean distoWifi, boolean distoBle, boolean yeti, boolean
-				// disto3DD
+				LeicaSdk.setMethodCalledLog(false);
+
 				LeicaSdk.setScanConfig(false, true, false, false);
 				LeicaSdk.setLicenses(keys);
 				Log.d(LCAT, keys.toString());
-				Log.d(LCAT, "Interface started");
+				Log.d(LCAT, "Interface started >>>>>>>>>>>");
 
 			} catch (JSONException e) {
+				Log.e(LCAT,
+						"Error in the structure of the JSON File, closing the application");
 				Log.d(LCAT, e.getMessage());
 
 			} catch (IllegalArgumentCheckedException e) {
+				Log.e(LCAT,
+						"Error in the data of the JSON File, closing the application");
 				Log.d(LCAT, e.getMessage());
 
 			} catch (IOException e) {
@@ -101,17 +105,40 @@ public class TidistoModule extends KrollModule implements
 
 		} else
 			Log.d(LCAT, "was always initalized.");
-		KrollDict res = new KrollDict();
-		res.put("version", LeicaSdk.getVersion());
+
 		deviceManager = DeviceManager.getInstance(ctx);
 		Log.i(LCAT, "deviceManager created");
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
+		KrollDict res = new KrollDict();
 		Log.i(LCAT, "listeners added");
 		res.put("BluetoothAvailibilty",
 				deviceManager.checkBluetoothAvailibilty());
 		res.put("WiFiAvailibilty", deviceManager.checkWifiAvailibilty());
 		dispatchMessage(res);
+		findAvailableDevices();
+
+	}
+
+	private void findAvailableDevices() {
+
+		findDevicesRunning = true;
+
+		// Verify and enable Wifi and Bluetooth, according to what the user
+		// allowed
+		verifyPermissions();
+
+		deviceManager.setErrorListener(this);
+		deviceManager.setFoundAvailableDeviceListener(this);
+
+		try {
+			deviceManager.findAvailableDevices(TiApplication
+					.getAppCurrentActivity().getApplicationContext());
+		} catch (PermissionException e) {
+			if (LeicaSdk.ERROR) {
+				Log.e(LCAT, "Wissing permission: " + e.getMessage());
+			}
+		}
 
 	}
 
@@ -159,6 +186,42 @@ public class TidistoModule extends KrollModule implements
 
 		currentDevice = device;
 
+	}
+
+	private boolean[] verifyPermissions() {
+		ArrayList<String> manifestPermission = new ArrayList<>();
+		boolean[] permissions = { false, false };
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			String[] manifestPermissionStrArray = new String[manifestPermission
+					.size()];
+			int i = 0;
+			for (String permission : manifestPermission) {
+				manifestPermissionStrArray[i] = permission;
+			}
+			Context ctx = TiApplication.getAppCurrentActivity()
+					.getApplicationContext();
+			LocationManager lm = (LocationManager) ctx
+					.getSystemService(Context.LOCATION_SERVICE);
+			boolean network_enabled = false;
+			try {
+				network_enabled = lm
+						.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			} catch (Exception e) {
+				Log.e(LCAT + "NETWORK PROVIDER, network not enabled",
+						e.getMessage());
+			}
+			if (!network_enabled) {
+			} else {
+				LeicaSdk.scanConfig.setWifiAdapterOn(true);
+				LeicaSdk.scanConfig.setBleAdapterOn(ctx.getPackageManager()
+						.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE));
+			}
+			Log.i(LCAT,
+					"Permissions: WIFI: "
+							+ LeicaSdk.scanConfig.isWifiAdapterOn() + ", BLE: "
+							+ LeicaSdk.scanConfig.isBleAdapterOn());
+		}
+		return permissions;
 	}
 
 	private void dispatchMessage(KrollDict dict) {
