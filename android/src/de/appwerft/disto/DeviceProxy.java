@@ -38,22 +38,15 @@ public class DeviceProxy extends KrollProxy implements Device.ConnectionListener
 	private Device currentDevice;
 
 	// Constructor
-	public DeviceProxy() {
+	public DeviceProxy(Device device) {
 		super();
-	}
-
-	public void handleCreationArgs(KrollModule createdInModule, Object[] args) {
-		if (args.length > 0 && args[0] instanceof Device)
-			this.currentDevice = (Device) args[0];
-		
+		currentDevice = device;
 		currentDevice.setConnectionListener(this);
         currentDevice.setErrorListener(this);
         currentDevice.setReceiveDataListener(this);
-		
-		
-		super.handleCreationArgs(createdInModule, args);
 	}
 
+	
 	// Methods
 	@Kroll.method
 	public void printMessage(String message) {
@@ -84,8 +77,6 @@ public class DeviceProxy extends KrollProxy implements Device.ConnectionListener
 	
 	@Override
     public void onConnectionStateChanged(final Device device, final Device.ConnectionState connectionState) {
-
-
         final String METHODTAG = ".onConnectionStateChanged";
         Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: " + connectionState);
 
