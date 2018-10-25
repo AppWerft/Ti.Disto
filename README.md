@@ -38,12 +38,16 @@ function onAvailableDeviceFound(e) {
 ## Methods of module
 ### isBluetoothAvailable(): boolean
 ### enableBLE()
+Works only if BLUETOOTH_ADMIN permission is granted.
 ### getVersion(): String
 ### init();
+Reads the `command.json` in modules assets folder.
 ### addLicence(String)
 ### verifyPermissions(): boolean
 ### findAvailableDevices(Callback)
+Starts the scan. In every callback you will receive a device.
 ### getConnectedDevices(): Device[]
+Return a list of device. For every device you can the methods below:	
 
 ## Methods of device
 

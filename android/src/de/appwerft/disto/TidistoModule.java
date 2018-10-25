@@ -10,6 +10,7 @@ package de.appwerft.disto;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -76,6 +77,16 @@ public class TidistoModule extends KrollModule implements
 		return LeicaSdk.getVersion();
 	}
 
+	@Kroll.method
+	public Object getConnectedDevices() {
+		List<DeviceProxy> deviceArray = new ArrayList<DeviceProxy>();
+		List<Device> devices = deviceManager.getConnectedDevices();
+		for (Device device : devices) {
+			deviceArray.add(new DeviceProxy(device));
+		}
+		return deviceArray;
+	}
+	
 	@Kroll.method
 	public boolean isBluetoothAvailable() {
 		return deviceManager.checkBluetoothAvailibilty();
