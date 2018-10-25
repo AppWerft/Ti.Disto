@@ -43,7 +43,7 @@ function onAvailableDeviceFound(e) {
 ### addLicence(String)
 ### verifyPermissions(): boolean
 ### findAvailableDevices(Callback)
-### getConnectedDevices(): Device
+### getConnectedDevices(): Device[]
 
 ## Methods of device
 
