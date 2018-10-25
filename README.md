@@ -7,7 +7,7 @@ Axway Titaniums module for connecting to Disto devices via bluetooth.
 ```javascript
 const Disto = require("de.appwerft.disto");
 
-!Dist.enableBLE() && Dist.enableBLE();
+!Dist.isBluetoothAvailable() && Dist.enableBLE();
 
 if (Disto.verifyPermissions() == true) {
 	Disto.addLicence("1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+");
@@ -36,20 +36,20 @@ function onAvailableDeviceFound(e) {
 ```
 
 ## Methods of module
-
-### Dist.enableBLE()
+### isBluetoothAvailable(): boolean
 ### enableBLE()
-### getVersion()
+### getVersion(): String
 ### init();
-### addLicence()
-### isBluetoothAvailable()
-### verifyPermissions()
+### addLicence(String)
+### verifyPermissions(): boolean
+### findAvailableDevices(Callback)
+### getConnectedDevices(): Device
 
 ## Methods of device
 
-### getDeviceID()
-### getDeviceName()
-### getModel()
+### getDeviceID(): String
+### getDeviceName(): String
+### getModel(): String
 ### connect()
 ### disconnect()
 ### unpairDevice();
