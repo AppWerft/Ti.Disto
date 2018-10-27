@@ -11,11 +11,10 @@ const Disto = require("de.appwerft.disto");
 
 if (Disto.verifyPermissions() == true) {
 	Disto.addLicence("1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+")
-		.addScanConfig(Disto.distoBle)
-		.enableBLE()
-		.setDebugging(Disto.VERBOSEs)
-		.findAvailableDevices()
-	Disto.stopFindingDevices();
+		.addScanConfig(Disto.distoBle) //optional
+		.enableBLE()  //optional
+		.setDebugging(Disto.VERBOSE) //optional
+		.findAvailableDevices() 
 }
 const DialogSelectDevice = require('dialog')();
 DialogSelectDevice.shwo();
