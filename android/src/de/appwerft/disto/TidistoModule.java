@@ -44,40 +44,45 @@ import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Types;
 import ch.leica.sdk.Listeners.ErrorListener;
 
-@Kroll.module(name = "Tidisto", id = "de.appwerft.disto",propertyAccessors = { "onScanResult" })
+@Kroll.module(name = "Tidisto", id = "de.appwerft.disto", propertyAccessors = { "onScanResult" })
 public class TidistoModule extends KrollModule implements
-		DeviceManager.FoundAvailableDeviceListener, 
-		Device.ConnectionListener,
+		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener,
 		ErrorListener {
-	
+
 	@Kroll.constant
 	public static final int DEVICE_TYPE_BLE = Types.DeviceType.Ble.ordinal();
 	@Kroll.constant
-	public static final int DEVICE_TYPE_DISTO = Types.DeviceType.Disto.ordinal();
+	public static final int DEVICE_TYPE_DISTO = Types.DeviceType.Disto
+			.ordinal();
 	@Kroll.constant
 	public static final int DEVICE_TYPE_YETI = Types.DeviceType.Yeti.ordinal();
-	
+
 	@Kroll.constant
-	public static final int DEVICE_CONNECTION_STATE_CONNECTED = Device.ConnectionState.connected.ordinal();
+	public static final int DEVICE_CONNECTION_STATE_CONNECTED = Device.ConnectionState.connected
+			.ordinal();
 	@Kroll.constant
-	public static final int DEVICE_CONNECTION_STATE_DISCONNECTED = Device.ConnectionState.disconnected.ordinal();
+	public static final int DEVICE_CONNECTION_STATE_DISCONNECTED = Device.ConnectionState.disconnected
+			.ordinal();
 	@Kroll.constant
-	public static final int DEVICE_STATE_NORMAL = Device.DeviceState.normal.ordinal();
+	public static final int DEVICE_STATE_NORMAL = Device.DeviceState.normal
+			.ordinal();
 	@Kroll.constant
-	public static final int DEVICE_STATE_UPDATE = Device.DeviceState.update.ordinal();
+	public static final int DEVICE_STATE_UPDATE = Device.DeviceState.update
+			.ordinal();
 	@Kroll.constant
-	public static final int CONNECTION_TYPE_WIFI_AP = Types.ConnectionType.wifiAP.ordinal();
+	public static final int CONNECTION_TYPE_WIFI_AP = Types.ConnectionType.wifiAP
+			.ordinal();
 	@Kroll.constant
-	public static final int CONNECTION_TYPE_WIFI_HOTSPOT = Types.ConnectionType.wifiHotspot.ordinal();
-	
-	
+	public static final int CONNECTION_TYPE_WIFI_HOTSPOT = Types.ConnectionType.wifiHotspot
+			.ordinal();
+
 	@Kroll.constant
 	public static final int WIFI = 1;
 	@Kroll.constant
 	public static final int BLE = 2;
 	@Kroll.constant
 	public static final int BLUETOOTH = 2;
-	List<Device> availableDevices = new ArrayList<>();	
+	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
 
@@ -92,10 +97,10 @@ public class TidistoModule extends KrollModule implements
 	Context ctx;
 	DeviceManager deviceManager;
 	// needed for connection timeout
-		Timer connectionTimeoutTimer;
+	Timer connectionTimeoutTimer;
 	TimerTask connectionTimeoutTask;
 	// to do infinite rounds of finding devices
-	Timer findDevicesTimer;	
+	Timer findDevicesTimer;
 	boolean activityStopped = true;
 	// to handle user cancel connection attempt
 	Map<Device, Boolean> connectionAttempts = new HashMap<>();
@@ -113,13 +118,15 @@ public class TidistoModule extends KrollModule implements
 	}
 
 	@Kroll.method
-	public Object getConnectedDevices() {
+	public KrollDict getConnectedDevices() {
+		KrollDict res = new KrollDict();
 		List<DeviceProxy> deviceArray = new ArrayList<DeviceProxy>();
 		List<Device> devices = deviceManager.getConnectedDevices();
 		for (Device device : devices) {
 			deviceArray.add(new DeviceProxy(device));
 		}
-		return deviceArray;
+		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
+		return res;
 	}
 
 	@Kroll.method
@@ -133,7 +140,15 @@ public class TidistoModule extends KrollModule implements
 	}
 
 	@Kroll.method
-	public void init(int modus) {
+	public TidistoModule enableConditionalBLE() {
+		if (isBluetoothAvailable() == false)
+			deviceManager.enableBLE();
+		return this;
+
+	}
+
+	@Kroll.method
+	public TidistoModule init(int modus) {
 		boolean[] modi = { false, false, false, false };
 		if (modus == WIFI)
 			modi[0] = true;
@@ -181,7 +196,7 @@ public class TidistoModule extends KrollModule implements
 		res.put("WiFiAvailibilty", deviceManager.checkWifiAvailibilty());
 		dispatchMessage(res);
 		findAvailableDevices();
-
+		return this;
 	}
 
 	@Kroll.method
@@ -195,7 +210,7 @@ public class TidistoModule extends KrollModule implements
 
 		deviceManager.setErrorListener(this);
 		deviceManager.setFoundAvailableDeviceListener(this);
-        
+
 		try {
 			deviceManager.findAvailableDevices(TiApplication
 					.getAppCurrentActivity().getApplicationContext());
@@ -208,8 +223,9 @@ public class TidistoModule extends KrollModule implements
 	}
 
 	@Kroll.method
-	public void addLicences(String key) {
+	public TidistoModule addLicence(String key) {
 		keys.add(key);
+		return this;
 	};
 
 	@Kroll.method
@@ -232,11 +248,11 @@ public class TidistoModule extends KrollModule implements
 
 	}
 
-	
 	/**
 	 * called when a valid Leica device is found
 	 *
-	 * @param device the device
+	 * @param device
+	 *            the device
 	 */
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
@@ -244,9 +260,11 @@ public class TidistoModule extends KrollModule implements
 		final String METHODTAG = ".onAvailableDeviceFound";
 		synchronized (availableDevices) {
 
-			// in rare cases it can happen, that a device is found twice. so here is a double check.
+			// in rare cases it can happen, that a device is found twice. so
+			// here is a double check.
 			for (Device availableDevice : availableDevices) {
-				if (availableDevice.getDeviceID().equalsIgnoreCase(device.getDeviceID())) {
+				if (availableDevice.getDeviceID().equalsIgnoreCase(
+						device.getDeviceID())) {
 					return;
 				}
 			}
@@ -259,7 +277,7 @@ public class TidistoModule extends KrollModule implements
 			availableDevices.add(device);
 		}
 
-//updateList();
+		// updateList();
 
 		// uiHelper.setLog(this, log, "DeviceId found: " + device.getDeviceID()
 		// + ", deviceName: " + device.getDeviceName());
@@ -269,7 +287,6 @@ public class TidistoModule extends KrollModule implements
 
 		// Call this to avoid interference in Bluetooth operations
 
-		
 		currentDevice = device;
 
 	}
