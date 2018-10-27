@@ -105,6 +105,7 @@ public class TidistoModule extends KrollModule implements
 	// to handle user cancel connection attempt
 	Map<Device, Boolean> connectionAttempts = new HashMap<>();
 	Device currentConnectionAttemptToDevice = null;
+	public static boolean DEBUG = false;
 
 	public TidistoModule() {
 		super();
@@ -134,31 +135,28 @@ public class TidistoModule extends KrollModule implements
 		return deviceManager.checkBluetoothAvailibilty();
 	}
 
-	
-
 	@Kroll.method
 	public TidistoModule enableBLE() {
 		if (isBluetoothAvailable() == false)
 			deviceManager.enableBLE();
 		return this;
 	}
-	
+
 	@Kroll.method
 	public TidistoModule setTimeout(int timeout) {
 		return this;
 	}
 
 	@Kroll.method
-	public TidistoModule setDebugging() {
-
+	public TidistoModule enableDebugging() {
+		DEBUG = true;
 		return this;
 
 	}
 
-	
 	private TidistoModule init() {
 		boolean[] modi = { false, false, false, false };
-			Log.i(LCAT, "====== START leica ========");
+		if (DEBUG) Log.i(LCAT, "====== START leica ========");
 
 		if (LeicaSdk.isInit == false) {
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
@@ -168,13 +166,14 @@ public class TidistoModule extends KrollModule implements
 				LeicaSdk.setMethodCalledLog(false);
 				LeicaSdk.setScanConfig(modi[0], modi[1], modi[2], modi[3]);
 				LeicaSdk.setLicenses(keys);
-				Log.d(LCAT, keys.toString());
-				Log.d(LCAT, "Interface started >>>>>>>>>>>");
+				if (DEBUG)  Log.d(LCAT, keys.toString());
+				
 
 			} catch (JSONException e) {
 				Log.e(LCAT,
 						"Error in the structure of the JSON File, closing the application");
 				Log.d(LCAT, e.getMessage());
+				
 
 			} catch (IllegalArgumentCheckedException e) {
 				Log.e(LCAT,
@@ -187,13 +186,13 @@ public class TidistoModule extends KrollModule implements
 			}
 
 		} else
-			Log.d(LCAT, "was always initalized.");
+			if (DEBUG)  Log.d(LCAT, "was always initalized.");
 
-		Log.i(LCAT, "deviceManager created");
+		if (DEBUG) Log.i(LCAT, "deviceManager created");
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		KrollDict res = new KrollDict();
-		Log.i(LCAT, "listeners added");
+		if (DEBUG) Log.i(LCAT, "listeners added");
 		res.put("BluetoothAvailibilty",
 				deviceManager.checkBluetoothAvailibilty());
 		res.put("WiFiAvailibilty", deviceManager.checkWifiAvailibilty());
