@@ -14,6 +14,7 @@ if (Disto.verifyPermissions() == true) {
 		.addScanConfig(Disto.distoBle) //optional
 		.enableBLE()  //optional
 		.setDebugging(Disto.VERBOSE) //optional
+		.setTimeout(2000) //optional
 		.findAvailableDevices() 
 }
 const DialogSelectDevice = require('dialog')();

@@ -134,28 +134,31 @@ public class TidistoModule extends KrollModule implements
 		return deviceManager.checkBluetoothAvailibilty();
 	}
 
+	
+
 	@Kroll.method
-	public void enableBLE() {
-		deviceManager.enableBLE();
+	public TidistoModule enableBLE() {
+		if (isBluetoothAvailable() == false)
+			deviceManager.enableBLE();
+		return this;
+	}
+	
+	@Kroll.method
+	public TidistoModule setTimeout(int timeout) {
+		return this;
 	}
 
 	@Kroll.method
-	public TidistoModule enableConditionalBLE() {
-		if (isBluetoothAvailable() == false)
-			deviceManager.enableBLE();
+	public TidistoModule setDebugging() {
+
 		return this;
 
 	}
 
-	@Kroll.method
-	public TidistoModule init(int modus) {
+	
+	private TidistoModule init() {
 		boolean[] modi = { false, false, false, false };
-		if (modus == WIFI)
-			modi[0] = true;
-		if (modus == BLE)
-			modi[1] = true;
-
-		Log.i(LCAT, "====== START leica ========");
+			Log.i(LCAT, "====== START leica ========");
 
 		if (LeicaSdk.isInit == false) {
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
@@ -201,7 +204,7 @@ public class TidistoModule extends KrollModule implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
-
+		init();
 		findDevicesRunning = true;
 
 		// Verify and enable Wifi and Bluetooth, according to what the user
