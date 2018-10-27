@@ -13,6 +13,7 @@ if (Disto.verifyPermissions() == true) {
 	Disto.addLicence("1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+")
 		.addScanConfig(Disto.distoBle)
 		.enableConditionedBLE()
+		.setDebugging(Disto.VERBOSE)
 		.init(),
 		.findAvailableDevices()
 	Disto.stopFindingDevices();
