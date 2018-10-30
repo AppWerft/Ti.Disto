@@ -104,8 +104,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public void findAvailableDevices() {
 		Log.i(LCAT, "findAvailableDevices() called");
-		ctx = TiApplication.getInstance().getApplicationContext();
+		
+		ctx = TiApplication.getInstance().getBaseContext();
 		deviceManager = DeviceManager.getInstance(ctx);
+		
 		if (deviceManager == null) {
 			Log.e(LCAT, "deviceManager is null");
 			return;
