@@ -107,16 +107,17 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void findAvailableDevices() {
 		Log.i(LCAT, "findAvailableDevices() called");
 		
-		ctx = TiApplication.getInstance().getBaseContext();
-		deviceManager = DeviceManager.getInstance(ctx);
+		deviceManager = DeviceManager.getInstance(TiApplication.getInstance().getApplicationContext());
 		
 		if (deviceManager == null) {
 			Log.e(LCAT, "deviceManager is null");
 			return;
 		}
 		Log.i(LCAT, "deviceManager created: " + deviceManager.toString());
+	
 		deviceManager.setErrorListener(this);
 		deviceManager.setFoundAvailableDeviceListener(this);
+		
 		Log.i(LCAT, "listener set deviceManager.checkBluetoothAvailibilty "
 				+ deviceManager.checkBluetoothAvailibilty());
 		try {
@@ -137,6 +138,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
 	}
+	
+	
+	
 	
 	@Override
 	public void onStart(Activity activity) {
