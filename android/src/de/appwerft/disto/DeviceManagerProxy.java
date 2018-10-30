@@ -47,11 +47,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public static final String LCAT = TidistoModule.LCAT;
 
 	/**
-     * Defines the default behavior when an error is notified.
-     * Presents alert to user showsing a error message
-     *
-     * @param errorObject error object comes from different sources SDK or APP.
-     */
+	 * Defines the default behavior when an error is notified. Presents alert to
+	 * user showsing a error message
+	 *
+	 * @param errorObject
+	 *            error object comes from different sources SDK or APP.
+	 */
 	@Override
 	public void onError(ErrorObject err, Device device) {
 		Log.e(LCAT, err.getErrorMessage());
@@ -59,11 +60,13 @@ public class DeviceManagerProxy extends KrollProxy implements
 	}
 
 	/**
-     * Called when the connection state of a device changed
-     *
-     * @param device currently connected device
-     * @param state  current device connection state
-     */
+	 * Called when the connection state of a device changed
+	 *
+	 * @param device
+	 *            currently connected device
+	 * @param state
+	 *            current device connection state
+	 */
 	@Override
 	public void onConnectionStateChanged(final Device device,
 			ConnectionState state) {
@@ -72,10 +75,11 @@ public class DeviceManagerProxy extends KrollProxy implements
 	}
 
 	/**
-     * called when a valid Leica device is found
-     *
-     * @param device the device
-     */
+	 * called when a valid Leica device is found
+	 *
+	 * @param device
+	 *            the device
+	 */
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "Hurra! |||||||||||||||||||||||||||||||");
@@ -103,15 +107,21 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
-		ctx = TiApplication.getInstance().getApplicationContext();
-		deviceManager = DeviceManager.getInstance(ctx);
-		deviceManager.registerReceivers(ctx);
+
 	}
 
 	@Override
 	public void handleCreationDict(
 			@Kroll.argument(optional = true) KrollDict opts) {
 		Log.i(LCAT, "handleCreationDict() called");
+		Activity activity = TiApplication.getAppCurrentActivity();
+		if (activity == null) {
+			Log.e(LCAT, "Current activity is null");
+			return;
+		}
+		ctx = TiApplication.getInstance().getApplicationContext();
+		deviceManager = DeviceManager.getInstance(activity);
+		deviceManager.registerReceivers(ctx);
 
 	}
 
@@ -125,8 +135,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
-		Log.i(LCAT, "findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		
+		Log.i(LCAT,
+				"findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
@@ -146,24 +157,22 @@ public class DeviceManagerProxy extends KrollProxy implements
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
 	}
-	
-	
-	
-	
+
 	@Override
 	public void onStart(Activity activity) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onStart");
 		super.onStart(activity);
 	}
+
 	@Override
 	public void onResume(Activity activity) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onResume");
 		super.onResume(activity);
 	}
-	
+
 	@Override
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
 		super.onCreate(activity, savedInstanceState);
-    }
+	}
 }
