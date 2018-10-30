@@ -48,7 +48,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	/**
      * Defines the default behavior when an error is notified.
-     * Presents alert to user showing a error message
+     * Presents alert to user showsing a error message
      *
      * @param errorObject error object comes from different sources SDK or APP.
      */
@@ -103,6 +103,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
+		ctx = TiApplication.getInstance().getApplicationContext();
+		deviceManager = DeviceManager.getInstance(ctx);
 	}
 
 	@Override
@@ -123,8 +125,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public void findAvailableDevices() {
 		Log.i(LCAT, "findAvailableDevices() called ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		ctx = TiApplication.getInstance().getApplicationContext();
-		deviceManager = DeviceManager.getInstance(ctx);
+		
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
