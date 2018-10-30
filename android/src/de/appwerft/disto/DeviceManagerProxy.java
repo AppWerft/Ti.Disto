@@ -109,7 +109,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
-		testContext = new TestContext(TiApplication.getInstance().getBaseContext());
+		
 	}
 	
 	
@@ -125,6 +125,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		}
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
+		testContext = new TestContext(ctx);
 		deviceManager.registerReceivers(ctx);
 	}
 
