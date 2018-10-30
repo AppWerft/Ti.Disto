@@ -120,8 +120,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.e(LCAT, "Current activity is null");
 			return;
 		}
-		ctx = TiApplication.getInstance().getRootOrCurrentActivity().getApplicationContext();
-		deviceManager = DeviceManager.getInstance(activity);
+		ctx = TiApplication.getInstance().getApplicationContext();
+		deviceManager = DeviceManager.getInstance(ctx);
 		//deviceManager.registerReceivers(ctx);
 	}
 
