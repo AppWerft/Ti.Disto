@@ -43,7 +43,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	private Device currentConnectionAttemptToDevice = null;
 	public static boolean DEBUG = false;
 	private List<Device> availableDevices = new ArrayList<>();
-
+	private Activity activity;
 	public static final String LCAT = TidistoModule.LCAT;
 
 	/**
@@ -113,16 +113,16 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void handleCreationDict(
 			@Kroll.argument(optional = true) KrollDict opts) {
+		super.handleCreationDict(opts);
 		Log.i(LCAT, "handleCreationDict() called");
-		Activity activity = TiApplication.getAppCurrentActivity();
+		activity = TiApplication.getAppCurrentActivity();
 		if (activity == null) {
 			Log.e(LCAT, "Current activity is null");
 			return;
 		}
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(activity);
-		deviceManager.registerReceivers(ctx);
-
+		//deviceManager.registerReceivers(ctx);
 	}
 
 	@Kroll.method
@@ -141,7 +141,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
-			deviceManager.findAvailableDevices(ctx);
+			deviceManager.findAvailableDevices(activity);
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
