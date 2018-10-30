@@ -176,6 +176,13 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super.onCreate(activity, savedInstanceState);
 	}
 
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void onApDeviceFound(String arg0, String arg1) {
 		// TODO Auto-generated method stub
@@ -206,5 +213,5 @@ public class DeviceManagerProxy extends KrollProxy implements
 		// TODO Auto-generated method stub
 		
 	}
-	
+		
 }
