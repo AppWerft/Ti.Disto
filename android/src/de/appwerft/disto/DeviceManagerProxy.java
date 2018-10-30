@@ -46,12 +46,24 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public static final String LCAT = TidistoModule.LCAT;
 
+	/**
+     * Defines the default behavior when an error is notified.
+     * Presents alert to user showing a error message
+     *
+     * @param errorObject error object comes from different sources SDK or APP.
+     */
 	@Override
 	public void onError(ErrorObject err, Device device) {
 		Log.e(LCAT, err.getErrorMessage());
 
 	}
 
+	/**
+     * Called when the connection state of a device changed
+     *
+     * @param device currently connected device
+     * @param state  current device connection state
+     */
 	@Override
 	public void onConnectionStateChanged(final Device device,
 			ConnectionState state) {
@@ -59,6 +71,11 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	}
 
+	/**
+     * called when a valid Leica device is found
+     *
+     * @param device the device
+     */
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "Hurra! |||||||||||||||||||||||||||||||");
@@ -106,7 +123,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public void findAvailableDevices() {
 		Log.i(LCAT, "findAvailableDevices() called ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
 		deviceManager.setFoundAvailableDeviceListener(this);
