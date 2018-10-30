@@ -142,7 +142,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 				"findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 		deviceManager.setFoundAvailableDeviceListener(testContext);
-		deviceManager.setErrorListener(this);
+		deviceManager.setErrorListener(testContext);
 		
 		try {
 			deviceManager.findAvailableDevices(testContext);
