@@ -1,6 +1,9 @@
 package de.appwerft.disto;
 
 import java.util.ArrayList;
+
+import ch.leica.sdk.connection.BaseConnectionManager;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,13 +22,12 @@ import ch.leica.sdk.Devices.Device.ConnectionState;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 
-@Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = {
-		"onFound"})
-
+@Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
 public class DeviceManagerProxy extends KrollProxy implements
-		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener,
+		DeviceManager.FoundAvailableDeviceListener,BaseConnectionManager.ScanDevicesListener, Device.ConnectionListener,
 		ErrorListener {
 	Device currentDevice;
 	Context ctx;
@@ -43,8 +45,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public static boolean DEBUG = false;
 	List<Device> availableDevices = new ArrayList<>();
 
-	
-	
 	public static final String LCAT = TidistoModule.LCAT;
 
 	@Override
@@ -62,7 +62,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
-		Log.i(LCAT,"Hurra! |||||||||||||||||||||||||||||||");
+		Log.i(LCAT, "Hurra! |||||||||||||||||||||||||||||||");
 		Log.i(LCAT, device.getDeviceName());
 		Log.i(LCAT, device.getModel());
 		synchronized (availableDevices) {
@@ -82,9 +82,13 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
+	}
+
+	@Override
+	public void handleCreationDict(
+			@Kroll.argument(optional = true) KrollDict opts) {
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-	
 	}
 
 	@Kroll.method
@@ -116,6 +120,36 @@ public class DeviceManagerProxy extends KrollProxy implements
 				" Stop find Devices Task and set BroadcastReceivers to Null");
 		findDevicesRunning = false;
 		deviceManager.stopFindingDevices();
+	}
+
+	@Override
+	public void onApDeviceFound(String arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBluetoothDeviceACLDisconnected(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBluetoothDeviceFound(String arg0, BluetoothDevice device,
+			boolean arg2, boolean arg3) {
+		Log.i(LCAT,"$$$$$$$$$$" + device.getName());
+	}
+
+	@Override
+	public void onHotspotDeviceFound(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRndisDeviceFound(String arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

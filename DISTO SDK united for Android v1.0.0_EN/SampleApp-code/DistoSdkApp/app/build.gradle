@@ -39,9 +39,22 @@ android {
         }
 
     }
+    flavorDimensions "version"
+
     productFlavors {
-        leica {
+        demo {
+            // Assigns this product flavor to the "version" flavor dimension.
+            // This property is optional if you are using only one dimension.
+            dimension "version"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "-demo"
         }
+        full {
+            dimension "version"
+            applicationIdSuffix ".full"
+            versionNameSuffix "-full"
+        }
+
     }
 }
 
