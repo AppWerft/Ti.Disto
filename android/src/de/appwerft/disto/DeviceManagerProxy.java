@@ -126,12 +126,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void stopFindingDevices() {
-		
+
 		Log.i(LCAT,
 				" Stop find Devices Task and set BroadcastReceivers to Null");
 		findDevicesRunning = false;
-		if (deviceManager!=null)
-		deviceManager.stopFindingDevices();
+		if (deviceManager != null)
+			deviceManager.stopFindingDevices();
 	}
 
 }
