@@ -83,8 +83,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void handleCreationDict(
 			@Kroll.argument(optional = true) KrollDict opts) {
+		Log.i(LCAT,"handleCreationDict() called");
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
+		Log.i(LCAT,"deviceManager created: " + deviceManager.toString());
 	}
 
 	@Kroll.method
@@ -97,6 +99,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
+		Log.i(LCAT,"findAvailableDevices() called");
 		deviceManager.setErrorListener(this);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		Log.i(LCAT, "listener set deviceManager.checkBluetoothAvailibilty "
