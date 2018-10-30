@@ -120,7 +120,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.e(LCAT, "Current activity is null");
 			return;
 		}
-		ctx = TiApplication.getInstance().getApplicationContext();
+		ctx = TiApplication.getInstance().getRootOrCurrentActivity().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(activity);
 		//deviceManager.registerReceivers(ctx);
 	}
@@ -141,7 +141,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		deviceManager.setFoundAvailableDeviceListener(DeviceManagerProxy.this);
 		deviceManager.setErrorListener(DeviceManagerProxy.this);
 		try {
-			deviceManager.findAvailableDevices(activity);
+			deviceManager.findAvailableDevices(ctx);
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
