@@ -141,7 +141,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		Log.i(LCAT,
 				"findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-		deviceManager.setFoundAvailableDeviceListener(this);
+		deviceManager.setFoundAvailableDeviceListener(testContext);
 		deviceManager.setErrorListener(this);
 		
 		try {
