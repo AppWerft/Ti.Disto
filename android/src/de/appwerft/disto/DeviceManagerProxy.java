@@ -60,8 +60,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "Hurra! |||||||||||||||||||||||||||||||");
-		Log.i(LCAT, device.getDeviceName());
-		Log.i(LCAT, device.getModel());
+		Log.i(LCAT,
+				"Model: " + device.getModel() + " Name: "
+						+ device.getDeviceName());
 		synchronized (availableDevices) {
 			for (Device availableDevice : availableDevices) {
 				if (availableDevice.getDeviceID().equalsIgnoreCase(
@@ -74,7 +75,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			if (device != null)
 				availableDevices.add(device);
 			if (hasProperty("onFound")) {
-				KrollFunction onFound = (KrollFunction)getProperty("onFound");
+				KrollFunction onFound = (KrollFunction) getProperty("onFound");
 				onFound.call(getKrollObject(), res);
 			}
 		}
@@ -88,8 +89,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void handleCreationDict(
 			@Kroll.argument(optional = true) KrollDict opts) {
-		Log.i(LCAT,"handleCreationDict() called");
-		
+		Log.i(LCAT, "handleCreationDict() called");
+
 	}
 
 	@Kroll.method
@@ -102,14 +103,14 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
-		Log.i(LCAT,"findAvailableDevices() called");
+		Log.i(LCAT, "findAvailableDevices() called");
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-		if (deviceManager ==null) {
+		if (deviceManager == null) {
 			Log.e(LCAT, "deviceManager is null");
 			return;
 		}
-		Log.i(LCAT,"deviceManager created: " + deviceManager.toString());
+		Log.i(LCAT, "deviceManager created: " + deviceManager.toString());
 		deviceManager.setErrorListener(this);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		Log.i(LCAT, "listener set deviceManager.checkBluetoothAvailibilty "
@@ -125,12 +126,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void stopFindingDevices() {
+		
 		Log.i(LCAT,
 				" Stop find Devices Task and set BroadcastReceivers to Null");
 		findDevicesRunning = false;
+		if (deviceManager!=null)
 		deviceManager.stopFindingDevices();
 	}
-
-	
 
 }
