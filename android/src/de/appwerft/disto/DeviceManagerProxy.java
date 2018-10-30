@@ -14,6 +14,7 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 
+import android.app.Activity;
 import android.content.Context;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.Device.ConnectionState;
@@ -134,6 +135,15 @@ public class DeviceManagerProxy extends KrollProxy implements
 		findDevicesRunning = false;
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
+	}
+	
+	@Override
+	public void onStart(Activity activity) {
+		Log.i(LCAT, ">>>>>>>>>  onStart");
+	}
+	@Override
+	public void onResume(Activity activity) {
+		Log.i(LCAT, ">>>>>>>>>  onResume");
 	}
 
 }
