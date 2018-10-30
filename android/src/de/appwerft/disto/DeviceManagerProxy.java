@@ -27,7 +27,7 @@ import android.content.Context;
 
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
 public class DeviceManagerProxy extends KrollProxy implements
-		DeviceManager.FoundAvailableDeviceListener,BaseConnectionManager.ScanDevicesListener, Device.ConnectionListener,
+		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener,
 		ErrorListener {
 	Device currentDevice;
 	Context ctx;
