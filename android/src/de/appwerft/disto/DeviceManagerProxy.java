@@ -139,12 +139,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void findAvailableDevices() {
 		Log.i(LCAT,
 				"findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		TestContext con = new TestContext();
-		deviceManager.setFoundAvailableDeviceListener(this);
-		deviceManager.setErrorListener(this);
+
+		deviceManager.setFoundAvailableDeviceListener(DeviceManagerProxy.this);
+		deviceManager.setErrorListener(DeviceManagerProxy.this);
 		
 		try {
-			deviceManager.findAvailableDevices((Context)con);
+			deviceManager.findAvailableDevices(TiApplication.getAppRootOrCurrentActivity());
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
