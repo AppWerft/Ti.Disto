@@ -25,21 +25,21 @@ import ch.leica.sdk.Listeners.ErrorListener;
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener,
 		ErrorListener {
-	Device currentDevice;
-	Context ctx;
-	DeviceManager deviceManager;
+	private Device currentDevice;
+	private Context ctx;
+	private DeviceManager deviceManager;
 	// needed for connection timeout
-	Timer connectionTimeoutTimer;
-	TimerTask connectionTimeoutTask;
+	private Timer connectionTimeoutTimer;
+	private TimerTask connectionTimeoutTask;
 	// to do infinite rounds of finding devices
-	Timer findDevicesTimer;
+	private Timer findDevicesTimer;
 	boolean findDevicesRunning = false;
 	boolean activityStopped = true;
 	// to handle user cancel connection attempt
-	Map<Device, Boolean> connectionAttempts = new HashMap<>();
-	Device currentConnectionAttemptToDevice = null;
+	private Map<Device, Boolean> connectionAttempts = new HashMap<>();
+	private Device currentConnectionAttemptToDevice = null;
 	public static boolean DEBUG = false;
-	List<Device> availableDevices = new ArrayList<>();
+	private List<Device> availableDevices = new ArrayList<>();
 
 	public static final String LCAT = TidistoModule.LCAT;
 
@@ -84,9 +84,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void handleCreationDict(
 			@Kroll.argument(optional = true) KrollDict opts) {
 		Log.i(LCAT,"handleCreationDict() called");
-		ctx = TiApplication.getInstance().getApplicationContext();
-		deviceManager = DeviceManager.getInstance(ctx);
-		Log.i(LCAT,"deviceManager created: " + deviceManager.toString());
+		
 	}
 
 	@Kroll.method
@@ -100,6 +98,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public void findAvailableDevices() {
 		Log.i(LCAT,"findAvailableDevices() called");
+		ctx = TiApplication.getInstance().getApplicationContext();
+		deviceManager = DeviceManager.getInstance(ctx);
+		Log.i(LCAT,"deviceManager created: " + deviceManager.toString());
 		deviceManager.setErrorListener(this);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		Log.i(LCAT, "listener set deviceManager.checkBluetoothAvailibilty "
