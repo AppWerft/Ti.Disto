@@ -122,7 +122,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		}
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-		//deviceManager.registerReceivers(ctx);
+		deviceManager.registerReceivers(ctx);
 	}
 
 	@Kroll.method
@@ -150,9 +150,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void stopFindingDevices() {
-
-		Log.i(LCAT,
-				" Stop find Devices Task and set BroadcastReceivers to Null");
 		findDevicesRunning = false;
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
