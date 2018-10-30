@@ -122,34 +122,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 		deviceManager.stopFindingDevices();
 	}
 
-	@Override
-	public void onApDeviceFound(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onBluetoothDeviceACLDisconnected(String arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onBluetoothDeviceFound(String arg0, BluetoothDevice device,
-			boolean arg2, boolean arg3) {
-		Log.i(LCAT,"$$$$$$$$$$" + device.getName());
-	}
-
-	@Override
-	public void onHotspotDeviceFound(String arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onRndisDeviceFound(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }
