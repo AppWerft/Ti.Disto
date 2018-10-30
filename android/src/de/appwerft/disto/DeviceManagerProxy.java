@@ -144,7 +144,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		deviceManager.setErrorListener(this);
 		
 		try {
-			deviceManager.findAvailableDevices(con);
+			deviceManager.findAvailableDevices((Context)con);
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
