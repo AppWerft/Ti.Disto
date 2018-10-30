@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Bundle;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.Device.ConnectionState;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
@@ -270,5 +271,22 @@ public class TidistoModule extends KrollModule  {
 		if (hasListeners("availableDeviceFound"))
 			fireEvent("availableDeviceFound", dict);
 	}
+	
+	@Override
+	public void onStart(Activity activity) {
+		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onStart");
+		super.onStart(activity);
+	}
+	@Override
+	public void onResume(Activity activity) {
+		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onResume");
+		super.onResume(activity);
+	}
+	
+	@Override
+	public void onCreate(Activity activity, Bundle savedInstanceState) {
+		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
+		super.onCreate(activity, savedInstanceState);
+    }
 
 }
