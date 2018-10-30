@@ -45,10 +45,11 @@ import ch.leica.sdk.Types;
 import ch.leica.sdk.Listeners.ErrorListener;
 
 @Kroll.module(name = "Tidisto", id = "de.appwerft.disto", propertyAccessors = { "onScanResult" })
-public class TidistoModule extends KrollModule implements
-		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener,
-		ErrorListener {
+public class TidistoModule extends KrollModule  {
+	
+	
 
+	/* Constants */
 	@Kroll.constant
 	public static final int DEVICE_TYPE_BLE = Types.DeviceType.Ble.ordinal();
 	@Kroll.constant
@@ -89,7 +90,7 @@ public class TidistoModule extends KrollModule implements
 	private ArrayList<String> keys = new ArrayList<>();
 
 	private KrollFunction Callback;
-	boolean findDevicesRunning = false;
+	
 	/**
 	 * Current selected device
 	 */
@@ -130,17 +131,8 @@ public class TidistoModule extends KrollModule implements
 		return res;
 	}
 
-	@Kroll.method
-	public boolean isBluetoothAvailable() {
-		return deviceManager.checkBluetoothAvailibilty();
-	}
-
-	@Kroll.method
-	public TidistoModule enableBLE() {
-		if (isBluetoothAvailable() == false)
-			deviceManager.enableBLE();
-		return this;
-	}
+	
+	
 
 	@Kroll.method
 	public TidistoModule setTimeout(int timeout) {
@@ -154,10 +146,13 @@ public class TidistoModule extends KrollModule implements
 
 	}
 
-	private TidistoModule init() {
-		boolean[] modi = { false, false, false, false };
-		if (DEBUG) Log.i(LCAT, "====== START leica ========");
-
+	
+	@Kroll.method
+	public void init() {
+		boolean[] modi = { false, true, false, false };
+		if (DEBUG)
+			Log.i(LCAT, "====== START leica ========");
+		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands.json");
@@ -166,14 +161,13 @@ public class TidistoModule extends KrollModule implements
 				LeicaSdk.setMethodCalledLog(false);
 				LeicaSdk.setScanConfig(modi[0], modi[1], modi[2], modi[3]);
 				LeicaSdk.setLicenses(keys);
-				if (DEBUG)  Log.d(LCAT, keys.toString());
-				
+				if (DEBUG)
+					Log.d(LCAT, keys.toString());
 
 			} catch (JSONException e) {
 				Log.e(LCAT,
 						"Error in the structure of the JSON File, closing the application");
 				Log.d(LCAT, e.getMessage());
-				
 
 			} catch (IllegalArgumentCheckedException e) {
 				Log.e(LCAT,
@@ -185,113 +179,33 @@ public class TidistoModule extends KrollModule implements
 
 			}
 
-		} else
-			if (DEBUG)  Log.d(LCAT, "was always initalized.");
+		} else if (DEBUG)
+			Log.d(LCAT, "was always initalized.");
 
-		if (DEBUG) Log.i(LCAT, "deviceManager created");
-		deviceManager.setFoundAvailableDeviceListener(this);
-		deviceManager.setErrorListener(this);
+		if (DEBUG)
+			Log.i(LCAT, "deviceManager created");
+
 		KrollDict res = new KrollDict();
-		if (DEBUG) Log.i(LCAT, "listeners added");
+		if (DEBUG)
+			Log.i(LCAT, "listeners added");
 		res.put("BluetoothAvailibilty",
 				deviceManager.checkBluetoothAvailibilty());
 		res.put("WiFiAvailibilty", deviceManager.checkWifiAvailibilty());
 		dispatchMessage(res);
-		findAvailableDevices();
-		return this;
-	}
 
-	@Kroll.method
-	public void findAvailableDevices() {
-		init();
-		findDevicesRunning = true;
-
-		// Verify and enable Wifi and Bluetooth, according to what the user
-		// allowed
-		verifyPermissions();
-
-		deviceManager.setErrorListener(this);
-		deviceManager.setFoundAvailableDeviceListener(this);
-
-		try {
-			deviceManager.findAvailableDevices(TiApplication
-					.getAppCurrentActivity().getApplicationContext());
-		} catch (PermissionException e) {
-			if (LeicaSdk.ERROR) {
-				Log.e(LCAT, "Wissing permission: " + e.getMessage());
-			}
-		}
+		Log.i(LCAT, "init succeeded");
 
 	}
+
+	
+
+	
 
 	@Kroll.method
 	public TidistoModule addLicence(String key) {
 		keys.add(key);
 		return this;
 	};
-
-	@Kroll.method
-	public void stopFindingDevices() {
-		Log.i(LCAT,
-				" Stop find Devices Task and set BroadcastReceivers to Null");
-		findDevicesRunning = false;
-		deviceManager.stopFindingDevices();
-	}
-
-	@Override
-	public void onError(ErrorObject arg0, Device arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onConnectionStateChanged(Device arg0, ConnectionState arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * called when a valid Leica device is found
-	 *
-	 * @param device
-	 *            the device
-	 */
-	@Override
-	public void onAvailableDeviceFound(final Device device) {
-
-		final String METHODTAG = ".onAvailableDeviceFound";
-		synchronized (availableDevices) {
-
-			// in rare cases it can happen, that a device is found twice. so
-			// here is a double check.
-			for (Device availableDevice : availableDevices) {
-				if (availableDevice.getDeviceID().equalsIgnoreCase(
-						device.getDeviceID())) {
-					return;
-				}
-			}
-			KrollDict res = new KrollDict();
-			res.put("device", new DeviceProxy(device));
-			if (device == null) {
-				Log.i(METHODTAG, "device not found");
-				return;
-			}
-			availableDevices.add(device);
-		}
-
-		// updateList();
-
-		// uiHelper.setLog(this, log, "DeviceId found: " + device.getDeviceID()
-		// + ", deviceName: " + device.getDeviceName());
-		// new Thread
-		// Log.i(CLASSTAG, METHODTAG + "DeviceId found: " + device.getDeviceID()
-		// + ", deviceName: " + device.getDeviceName());
-
-		// Call this to avoid interference in Bluetooth operations
-
-		currentDevice = device;
-
-	}
 
 	private boolean hasPermission(String permission) {
 		if (Build.VERSION.SDK_INT >= 23) {
@@ -333,6 +247,7 @@ public class TidistoModule extends KrollModule implements
 				// LeicaSdk.scanConfig.setWifiAdapterOn(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(ctx.getPackageManager()
 						.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE));
+				Log.d(LCAT, "setBleAdapterOn");
 			}
 			Log.i(LCAT,
 					"Permissions: WIFI: "
@@ -345,13 +260,12 @@ public class TidistoModule extends KrollModule implements
 	}
 
 	private void dispatchMessage(KrollDict dict) {
-		Log.i(LCAT, dict.toString());
 		if (Callback != null) {
 			Callback.call(getKrollObject(), dict);
 		}
-		KrollFunction onTest = (KrollFunction) getProperty("onTest");
-		if (onTest != null) {
-			onTest.call(getKrollObject(), new Object[] { dict });
+		KrollFunction onScanResult = (KrollFunction) getProperty("onScanResult");
+		if (onScanResult != null) {
+			onScanResult.call(getKrollObject(), new Object[] { dict });
 		}
 		if (hasListeners("availableDeviceFound"))
 			fireEvent("availableDeviceFound", dict);

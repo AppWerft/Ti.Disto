@@ -15,8 +15,14 @@ if (Disto.verifyPermissions() == true) {
 		.enableBLE()  //optional
 		.enableDebugging() //optional
 		.setTimeout(2000) //optional
-		.findAvailableDevices() 
+		.init() 
 }
+const Dm = Disto.createDeviceManager();
+
+Dm.findAvailableDevices();
+Dm.onFound= function() {
+}
+
 const DialogSelectDevice = require('dialog')();
 DialogSelectDevice.shwo();
 DialogSelectDevice.onSelect() {
