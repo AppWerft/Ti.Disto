@@ -1,5 +1,6 @@
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/DeviceManagerProxy.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/DeviceProxy.java"
+"/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/TestContext.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/TidistoModule.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/build/generated/java/de/appwerft/disto/TidistoBootstrap.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/build/generated/r/android/support/compat/R.java"

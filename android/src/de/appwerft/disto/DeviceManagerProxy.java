@@ -15,6 +15,7 @@ import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.os.Bundle;
 import ch.leica.sdk.Devices.Device;
@@ -23,10 +24,10 @@ import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
-
+import ch.leica.sdk.connection.BaseConnectionManager;
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
 public class DeviceManagerProxy extends KrollProxy implements
-		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener,
+		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener, BaseConnectionManager.ScanDevicesListener,
 		ErrorListener {
 	private Device currentDevice;
 	private Context ctx;
@@ -109,7 +110,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super();
 
 	}
-
+	
+	
 	@Override
 	public void handleCreationDict(
 			@Kroll.argument(optional = true) KrollDict opts) {
@@ -140,8 +142,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 		deviceManager.setFoundAvailableDeviceListener(DeviceManagerProxy.this);
 		deviceManager.setErrorListener(DeviceManagerProxy.this);
+		
 		try {
-			deviceManager.findAvailableDevices(ctx);
+			deviceManager.findAvailableDevices(TiApplication.getAppRootOrCurrentActivity());
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
@@ -171,5 +174,36 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
 		super.onCreate(activity, savedInstanceState);
+	}
+
+	@Override
+	public void onApDeviceFound(String arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBluetoothDeviceACLDisconnected(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBluetoothDeviceFound(String arg0, BluetoothDevice device,
+			boolean arg2, boolean arg3) {
+		Log.i(LCAT,device.toString() );
+		
+	}
+
+	@Override
+	public void onHotspotDeviceFound(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRndisDeviceFound(String arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }
