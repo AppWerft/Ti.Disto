@@ -16,6 +16,7 @@ import org.appcelerator.titanium.TiApplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.Device.ConnectionState;
 import ch.leica.sdk.Devices.DeviceManager;
@@ -147,5 +148,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onResume");
 		super.onResume(activity);
 	}
-
+	
+	@Override
+	public void onCreate(Activity activity, Bundle savedInstanceState) {
+		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
+		super.onCreate(activity, savedInstanceState);
+    }
 }
