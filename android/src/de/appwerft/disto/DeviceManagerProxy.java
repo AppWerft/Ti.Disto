@@ -139,12 +139,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 	
 	@Override
 	public void onStart(Activity activity) {
-		Log.i(LCAT, ">>>>>>>>>  onStart");
+		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onStart");
 		super.onStart(activity);
 	}
 	@Override
 	public void onResume(Activity activity) {
-		Log.i(LCAT, ">>>>>>>>>  onResume");
+		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onResume");
 		super.onResume(activity);
 	}
 
