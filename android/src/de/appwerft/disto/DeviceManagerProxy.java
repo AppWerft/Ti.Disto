@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
@@ -72,6 +73,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 			res.put("device", new DeviceProxy(device));
 			if (device != null)
 				availableDevices.add(device);
+			if (hasProperty("onFound")) {
+				KrollFunction onFound = (KrollFunction)getProperty("onFound");
+				onFound.call(getKrollObject(), res);
+			}
 		}
 		currentDevice = device;
 	}
@@ -100,6 +105,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 		Log.i(LCAT,"findAvailableDevices() called");
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
+		if (deviceManager ==null) {
+			Log.e(LCAT, "deviceManager is null");
+			return;
+		}
 		Log.i(LCAT,"deviceManager created: " + deviceManager.toString());
 		deviceManager.setErrorListener(this);
 		deviceManager.setFoundAvailableDeviceListener(this);
