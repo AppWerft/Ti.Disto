@@ -105,7 +105,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
-		Log.i(LCAT, "findAvailableDevices() called");
+		Log.i(LCAT, "findAvailableDevices() called ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
@@ -113,7 +113,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 		deviceManager.setErrorListener(this);
 		try {
 			deviceManager.findAvailableDevices(ctx);
-			Log.i(LCAT, "search for leica devices started!");
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
