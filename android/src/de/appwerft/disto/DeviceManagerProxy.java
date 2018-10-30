@@ -109,21 +109,11 @@ public class DeviceManagerProxy extends KrollProxy implements
 		
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-		
-		if (deviceManager == null) {
-			Log.e(LCAT, "deviceManager is null");
-			return;
-		}
-		Log.i(LCAT, "deviceManager created: " + deviceManager.toString());
-	
-		deviceManager.setErrorListener(this);
 		deviceManager.setFoundAvailableDeviceListener(this);
-		
-		Log.i(LCAT, "listener set deviceManager.checkBluetoothAvailibilty "
-				+ deviceManager.checkBluetoothAvailibilty());
+		deviceManager.setErrorListener(this);
 		try {
 			deviceManager.findAvailableDevices(ctx);
-			Log.i(LCAT, "search started!");
+			Log.i(LCAT, "search for leica devices started!");
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
