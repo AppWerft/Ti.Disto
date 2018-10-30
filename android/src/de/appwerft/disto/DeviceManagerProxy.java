@@ -105,6 +105,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super();
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
+		deviceManager.registerReceivers(ctx);
 	}
 
 	@Override
@@ -125,7 +126,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public void findAvailableDevices() {
 		Log.i(LCAT, "findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		deviceManager.registerReceivers(ctx);
+		
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
