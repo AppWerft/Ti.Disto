@@ -149,7 +149,7 @@ public class TidistoModule extends KrollModule  {
 	
 	@Kroll.method
 	public void init() {
-		boolean[] modi = { false, true, false, false };
+		boolean[] modi = { true, true, true, true };
 		if (DEBUG)
 			Log.i(LCAT, "====== START leica ========");
 		verifyPermissions();

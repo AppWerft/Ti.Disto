@@ -1,9 +1,6 @@
 package de.appwerft.disto;
 
 import java.util.ArrayList;
-
-import ch.leica.sdk.connection.BaseConnectionManager;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +13,13 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 
+import android.content.Context;
 import ch.leica.sdk.Devices.Device;
-import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.Devices.Device.ConnectionState;
+import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
-import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
 public class DeviceManagerProxy extends KrollProxy implements
