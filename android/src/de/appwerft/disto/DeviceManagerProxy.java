@@ -31,6 +31,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		ErrorListener,BaseConnectionManager.ScanDevicesListener {
 	private Device currentDevice;
 	private Context ctx;
+    static TestContext testContext;
 	private DeviceManager deviceManager;
 	// needed for connection timeout
 	private Timer connectionTimeoutTimer;
@@ -108,7 +109,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
-
+		testContext = new TestContext(TiApplication.getInstance().getBaseContext());
 	}
 	
 	
@@ -140,11 +141,11 @@ public class DeviceManagerProxy extends KrollProxy implements
 		Log.i(LCAT,
 				"findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-		deviceManager.setFoundAvailableDeviceListener(DeviceManagerProxy.this);
-		deviceManager.setErrorListener(DeviceManagerProxy.this);
+		deviceManager.setFoundAvailableDeviceListener(this);
+		deviceManager.setErrorListener(this);
 		
 		try {
-			deviceManager.findAvailableDevices(TiApplication.getAppRootOrCurrentActivity());
+			deviceManager.findAvailableDevices(testContext);
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
