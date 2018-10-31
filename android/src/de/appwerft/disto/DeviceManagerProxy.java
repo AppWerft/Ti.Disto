@@ -103,7 +103,15 @@ public class DeviceManagerProxy extends KrollProxy implements
 			deviceManager.enableBLE();
 		return this;
 	}
-
+  
+	
+	
+	
+	
+	
+	
+	
+	
 	@Kroll.method
 	public void findAvailableDevices() {
 		// https://github.com/AppWerft/Ti.Disto/blob/master/DISTO%20SDK%20united%20for%20Android%20v1.0.0_EN/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L374
