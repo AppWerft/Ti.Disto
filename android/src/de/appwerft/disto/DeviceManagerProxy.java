@@ -27,16 +27,13 @@ import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Listeners.ErrorListener;
 
-
-
 // https://github.com/AppWerft/Ti.Disto/blob/master/DISTO%20SDK%20united%20for%20Android%20v1.0.0_EN/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L39
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
 public class DeviceManagerProxy extends KrollProxy implements
-		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener, 
-		ErrorListener {
+		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
 	private Device currentDevice;
 	private Context ctx;
- 	private DeviceManager deviceManager;
+	private DeviceManager deviceManager;
 	private Timer connectionTimeoutTimer;
 	private TimerTask connectionTimeoutTask;
 	private Timer findDevicesTimer;
@@ -52,12 +49,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void onError(ErrorObject err, Device device) {
 		Log.e(LCAT, err.getErrorMessage());
-	}
-
-	@Override
-	public void onConnectionStateChanged(final Device device,
-			ConnectionState state) {
-		Log.i(LCAT, device.getModel() + "  " + state);
 	}
 
 	@Override
@@ -87,12 +78,13 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public DeviceManagerProxy() {
 		super();
 	}
-	
+
 	@Override
 	public void handleCreationDict(
 			@Kroll.argument(optional = true) KrollDict opts) {
 		super.handleCreationDict(opts);
-		ctx = TiApplication.getInstance().getApplicationContext();
+		TiApplication app = TiApplication.getInstance();
+		ctx = app.getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
 	}
 
@@ -103,15 +95,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			deviceManager.enableBLE();
 		return this;
 	}
-  
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@Kroll.method
 	public void findAvailableDevices() {
 		// https://github.com/AppWerft/Ti.Disto/blob/master/DISTO%20SDK%20united%20for%20Android%20v1.0.0_EN/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L374
@@ -151,5 +135,4 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super.onCreate(activity, savedInstanceState);
 	}
 
-	
 }
