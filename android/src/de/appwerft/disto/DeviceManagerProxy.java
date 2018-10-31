@@ -87,7 +87,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		if (app != null) {
 			ctx = app.getApplicationContext();
 			deviceManager = DeviceManager.getInstance(ctx);
-		}
+		} else Log.e(LCAT, "app == null");
 	}
 
 	@Kroll.method
