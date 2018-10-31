@@ -28,10 +28,10 @@ import ch.leica.sdk.connection.BaseConnectionManager;
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, Device.ConnectionListener, 
-		ErrorListener,BaseConnectionManager.ScanDevicesListener {
+		ErrorListener {
 	private Device currentDevice;
 	private Context ctx;
-    static TestContext testContext;
+ //   static TestContext testContext;
 	private DeviceManager deviceManager;
 	// needed for connection timeout
 	private Timer connectionTimeoutTimer;
@@ -73,7 +73,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void onConnectionStateChanged(final Device device,
 			ConnectionState state) {
 		Log.i(LCAT, device.getModel() + "  " + state);
-
 	}
 
 	/**
@@ -125,7 +124,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		}
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-		testContext = new TestContext(ctx);
+	//	testContext = new TestContext(ctx);
 		deviceManager.registerReceivers(ctx);
 	}
 
@@ -139,14 +138,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
-		Log.i(LCAT,
-				"findAvailableDevices() called \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-		deviceManager.setFoundAvailableDeviceListener(testContext);
-		deviceManager.setErrorListener(testContext);
-		
+		deviceManager.setFoundAvailableDeviceListener(this);
+		deviceManager.setErrorListener(this);
 		try {
-			deviceManager.findAvailableDevices(testContext);
+			deviceManager.findAvailableDevices(TiApplication.getInstance());
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
@@ -177,43 +172,4 @@ public class DeviceManagerProxy extends KrollProxy implements
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
 		super.onCreate(activity, savedInstanceState);
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	@Override
-	public void onApDeviceFound(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onBluetoothDeviceACLDisconnected(String arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onBluetoothDeviceFound(String arg0, BluetoothDevice device,
-			boolean arg2, boolean arg3) {
-		Log.i(LCAT,device.toString() );
-		
-	}
-
-	@Override
-	public void onHotspotDeviceFound(String arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onRndisDeviceFound(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-		
 }
