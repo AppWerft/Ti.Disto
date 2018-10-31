@@ -22,9 +22,11 @@ import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.Device.ConnectionState;
 import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
+import ch.leica.sdk.ErrorHandling.IllegalArgumentCheckedException;
 import ch.leica.sdk.ErrorHandling.PermissionException;
+import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Listeners.ErrorListener;
-import ch.leica.sdk.connection.BaseConnectionManager;
+
 
 
 // https://github.com/AppWerft/Ti.Disto/blob/master/DISTO%20SDK%20united%20for%20Android%20v1.0.0_EN/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L39
@@ -148,4 +150,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
 		super.onCreate(activity, savedInstanceState);
 	}
+
+	
 }
