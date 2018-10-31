@@ -84,8 +84,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 			@Kroll.argument(optional = true) KrollDict opts) {
 		super.handleCreationDict(opts);
 		TiApplication app = TiApplication.getInstance();
-		ctx = app.getApplicationContext();
-		deviceManager = DeviceManager.getInstance(ctx);
+		if (app != null) {
+			ctx = app.getApplicationContext();
+			deviceManager = DeviceManager.getInstance(ctx);
+		}
 	}
 
 	@Kroll.method
