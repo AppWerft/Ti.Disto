@@ -39,7 +39,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	private Device currentConnectionAttemptToDevice = null;
 	public static boolean DEBUG = false;
 	private List<Device> availableDevices = new ArrayList<>();
-	public static final String ONFOUND = TidistoModule.ONFOUND;
+	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
 	public static final String LCAT = TidistoModule.LCAT;
 
 	@Override
@@ -63,8 +63,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 			res.put("device", new DeviceProxy(device));
 			if (device != null)
 				availableDevices.add(device);
-			if (hasProperty(ONFOUND) && getProperty(ONFOUND) instanceof KrollFunction) {
-				KrollFunction onFound = (KrollFunction) getProperty(ONFOUND);
+			if (hasProperty(PROPERTY_ONFOUND) && getProperty(PROPERTY_ONFOUND) instanceof KrollFunction) {
+				KrollFunction onFound = (KrollFunction) getProperty(PROPERTY_ONFOUND);
 				onFound.call(getKrollObject(), res);
 			}
 		}

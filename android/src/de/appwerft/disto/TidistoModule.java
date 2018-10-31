@@ -87,7 +87,7 @@ public class TidistoModule extends KrollModule  {
 	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
-	public static final String ONFOUND = "onFound";
+	public static final String PROPERTY_ONFOUND = "onFound";
 
 	private ArrayList<String> keys = new ArrayList<>();
 
