@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import de.appwerft.disto.TidistoModule;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -24,7 +25,7 @@ import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
 
 // https://github.com/AppWerft/Ti.Disto/blob/master/DISTO%20SDK%20united%20for%20Android%20v1.0.0_EN/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L39
-@Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { TidistoModule.ONFOUND })
+@Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { TidistoModule.PROPERTY_ONFOUND })
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
 	private Device currentDevice;
@@ -63,7 +64,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 			res.put("device", new DeviceProxy(device));
 			if (device != null)
 				availableDevices.add(device);
-			if (hasProperty(PROPERTY_ONFOUND) && getProperty(PROPERTY_ONFOUND) instanceof KrollFunction) {
+			if (hasProperty(PROPERTY_ONFOUND)
+					&& getProperty(PROPERTY_ONFOUND) instanceof KrollFunction) {
 				KrollFunction onFound = (KrollFunction) getProperty(PROPERTY_ONFOUND);
 				onFound.call(getKrollObject(), res);
 			}
@@ -134,4 +136,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super.onCreate(activity, savedInstanceState);
 	}
 
+	@Override
+	public String getApiName() {
+		return "Ti.Disto";
+	}
 }
