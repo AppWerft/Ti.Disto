@@ -117,8 +117,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		deviceManager.setErrorListener(this);
 		try {
 			// https://github.com/AppWerft/Ti.Disto/blob/master/DISTO%20SDK%20united%20for%20Android%20v1.0.0_EN/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L378
-
-			deviceManager.findAvailableDevices(TiApplication.getInstance());
+			deviceManager.findAvailableDevices(ctx);
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
