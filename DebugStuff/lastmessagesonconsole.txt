@@ -1,0 +1,8 @@
+last words:
+
+[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO 82651594, deviceAdress: C4:53:91:AF:C9:C2, bondState: 10
+[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO 82651594
+[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
+[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO 82651594, hasDistoService: true
+[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
+[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - Device Skipped: DISTO 82651594

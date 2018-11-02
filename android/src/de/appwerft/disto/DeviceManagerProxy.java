@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import de.appwerft.disto.TidistoModule;
 
 import org.appcelerator.kroll.KrollDict;
@@ -18,6 +19,7 @@ import org.appcelerator.titanium.TiApplication;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
@@ -100,6 +102,14 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public void findAvailableDevices() {
 		// https://github.com/AppWerft/Ti.Disto/blob/master/LeicaSDK/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L374
+		
+		LeicaSdk.scanConfig.setBle(true);
+		LeicaSdk.scanConfig.setBleAdapterOn(true);
+		
+		
+		Log.d(LCAT, "isBleAdapterOn=" + LeicaSdk.scanConfig.isBleAdapterOn());
+		Log.d(LCAT, "isDistoBle=" + LeicaSdk.scanConfig.isDistoBle());
+		
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
