@@ -47,8 +47,6 @@ import ch.leica.sdk.Listeners.ErrorListener;
 
 @Kroll.module(name = "Tidisto", id = "de.appwerft.disto", propertyAccessors = { "onScanResult" })
 public class TidistoModule extends KrollModule  {
-	
-	
 
 	/* Constants */
 	@Kroll.constant
@@ -84,6 +82,7 @@ public class TidistoModule extends KrollModule  {
 	public static final int BLE = 2;
 	@Kroll.constant
 	public static final int BLUETOOTH = 2;
+	
 	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
@@ -114,6 +113,7 @@ public class TidistoModule extends KrollModule  {
 		super();
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
+		keys.add(TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", ""));
 	}
 
 	@Kroll.method
@@ -151,7 +151,6 @@ public class TidistoModule extends KrollModule  {
 	
 	@Kroll.method
 	public void init() {
-		boolean[] modi = { true, true, true, true };
 		if (DEBUG)
 			Log.i(LCAT, "====== START leica ========");
 		verifyPermissions();
@@ -161,7 +160,7 @@ public class TidistoModule extends KrollModule  {
 			try {
 				LeicaSdk.init(ctx, initObject);
 				LeicaSdk.setMethodCalledLog(false);
-				LeicaSdk.setScanConfig(modi[0], modi[1], modi[2], modi[3]);
+				LeicaSdk.setScanConfig(true, true, true, true);
 				LeicaSdk.setLicenses(keys);
 				if (DEBUG)
 					Log.d(LCAT, keys.toString());

@@ -85,7 +85,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super.handleCreationDict(opts);
 		TiApplication app = TiApplication.getInstance();
 		if (app != null) {
-			ctx = app.getApplicationContext();
+			ctx = app.getCurrentActivity();
 			deviceManager = DeviceManager.getInstance(ctx);
 		} else
 			Log.e(LCAT, "app == null");
@@ -103,17 +103,15 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void findAvailableDevices() {
 		// https://github.com/AppWerft/Ti.Disto/blob/master/LeicaSDK/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L374
 		
-		LeicaSdk.scanConfig.setBle(true);
-		LeicaSdk.scanConfig.setBleAdapterOn(true);
 		
-		
-		Log.d(LCAT, "isBleAdapterOn=" + LeicaSdk.scanConfig.isBleAdapterOn());
+		LeicaSdk.setScanConfig(false, true, false, false);
 		Log.d(LCAT, "isDistoBle=" + LeicaSdk.scanConfig.isDistoBle());
+		Log.d(LCAT, "toString=" + LeicaSdk.scanConfig.toString());
+		
 		
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
-			// https://github.com/AppWerft/Ti.Disto/blob/master/LeicaSDK/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L378
 			deviceManager.findAvailableDevices(ctx);
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
