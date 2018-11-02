@@ -6,3 +6,33 @@ last words:
 [DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO 82651594, hasDistoService: true
 [DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
 [DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - Device Skipped: DISTO 82651594
+
+
+
+with comments:
+
+[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO 82651594, hasDistoService: true
+line 83 (only one match in this class)
+
+[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
+line 100  (only this one match) ==>  L115 
+This method uses regex to decide which device.
+if isYetiName
+else is DistoGenericName (guess this is our match)
+else "deviceName does not fit the naming filter"
+
+else if (LeicaSdk.isDistoGenericName(paramString2))
+        {
+          if (LeicaSdk.scanConfig.isDistoBle())
+          {
+            i2 = 1;
+            localObject1 = new BleDevice(f, paramString2, paramBluetoothDevice, paramBoolean);
+          }
+          else
+          {
+            Logs.log(Logs.LogTypes.verbose, "Device Skipped: " + paramString2); <======!! our hit
+          }
+        }
+        
+        
+I have logged   LeicaSdk.scanConfig.isDistoBle(). It is false although I have set in module,       
