@@ -1,19 +1,3 @@
-
-Skip to content
-
-    All gists
-    GitHub
-
-    New gist
-    @AppWerft
-
-    0
-
-@AppWerft AppWerft/gist:440b2101a247008e347a21f69fef74c9
-Created 18 hours ago
-Code
-Revisions 1
-gistfile1.txt
 package ch.leica.sdk.Devices;
 
 import android.bluetooth.BluetoothAdapter;
@@ -703,25 +687,3 @@ public class DeviceManager
     }
   }
 }
-@AppWerft
-
-Attach files by dragging & dropping,
-
-, or pasting from the clipboard.
-Styling with Markdown is supported
-
-    © 2018 GitHub, Inc.
-    Terms
-    Privacy
-    Security
-    Status
-    Help
-
-    Contact GitHub
-    Pricing
-    API
-    Training
-    Blog
-    About
-
-Press h to open a hovercard with more details.
