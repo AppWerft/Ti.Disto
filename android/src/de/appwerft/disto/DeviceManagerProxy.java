@@ -104,10 +104,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 		// https://github.com/AppWerft/Ti.Disto/blob/master/LeicaSDK/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L374
 		
 		
-		LeicaSdk.setScanConfig(false, true, false, false);
+		LeicaSdk.setScanConfig(true, true, true, true);
 		Log.d(LCAT, "isDistoBle=" + LeicaSdk.scanConfig.isDistoBle());
-		Log.d(LCAT, "toString=" + LeicaSdk.scanConfig.toString());
-		
+		Log.d(LCAT, "isYeti=" + LeicaSdk.scanConfig.isYeti());
 		
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
