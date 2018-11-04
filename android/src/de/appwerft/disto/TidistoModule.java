@@ -149,8 +149,6 @@ public class TidistoModule extends KrollModule  {
 			try {
 				LeicaSdk.init(ctx, initObject);
 				LeicaSdk.setMethodCalledLog(false);
-				 //boolean distoWifi, boolean distoBle, boolean yeti, boolean disto3DD
-				// X3 is yeta (following regex pattern in LeicaSDK.java)
 				LeicaSdk.setScanConfig(true, true, true, true);
 				addLicenceKey();
 
@@ -166,25 +164,10 @@ public class TidistoModule extends KrollModule  {
 
 			} catch (IOException e) {
 				Log.d(LCAT, e.getMessage());
-
 			}
 
 		} else if (DEBUG)
 			Log.d(LCAT, "was always initalized.");
-
-		if (DEBUG)
-			Log.i(LCAT, "deviceManager created");
-
-		KrollDict res = new KrollDict();
-		if (DEBUG)
-			Log.i(LCAT, "listeners added");
-		res.put("BluetoothAvailibilty",
-				deviceManager.checkBluetoothAvailibilty());
-		res.put("WiFiAvailibilty", deviceManager.checkWifiAvailibilty());
-		dispatchMessage(res);
-
-		Log.i(LCAT, "init succeeded");
-
 	}
 
 	private boolean hasPermission(String permission) {

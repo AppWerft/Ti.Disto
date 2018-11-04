@@ -330,127 +330,134 @@ public class DeviceManager implements ErrorListener,
 	}
 
 	public void findAvailableDevices(Context paramContext)
-    throws PermissionException
-  {
-    if (LeicaSdk.scanConfig != null)
-    {
-      int i5;
-      try
-      {
-        PackageInfo localPackageInfo = paramContext.getPackageManager().getPackageInfo(paramContext.getPackageName(), 4096);
-        if ((localPackageInfo != null) && (requestedPermissions != null))
-        {
-          int i1 = 0;
-          int i2 = 0;
-          int i3 = 0;
-          int i4 = 0;
-          i5 = 0;
-          int i6 = 0;
-          for (String str : requestedPermissions)
-          {
-            if ("android.permission.ACCESS_COARSE_LOCATION".equalsIgnoreCase(str)) {
-              i1 = 1;
-            }
-            if ("android.permission.ACCESS_WIFI_STATE".equalsIgnoreCase(str)) {
-              i2 = 1;
-            }
-            if ("android.permission.CHANGE_WIFI_STATE".equalsIgnoreCase(str)) {
-              i3 = 1;
-            }
-            if ("android.permission.INTERNET".equalsIgnoreCase(str)) {
-              i4 = 1;
-            }
-            if ("android.permission.BLUETOOTH".equalsIgnoreCase(str)) {
-              i5 = 1;
-            }
-            if ("android.permission.BLUETOOTH_ADMIN".equalsIgnoreCase(str)) {
-              i6 = 1;
-            }
-          }
-          if (i1 == 0) {
-            throw new PermissionException("Permission denied: ACCESS_COARSE_LOCATION");
-          }
-          if (i2 == 0) {
-            throw new PermissionException("Permission denied: ACCESS_WIFI_STATE");
-          }
-          if (i3 == 0) {
-            throw new PermissionException("Permission denied: CHANGE_WIFI_STATE");
-          }
-          if (i4 == 0) {
-            throw new PermissionException("Permission denied: INTERNET");
-          }
-          if (i5 == 0) {
-            throw new PermissionException("Permission denied: BLUETOOTH");
-          }
-          if (i6 == 0) {
-            throw new PermissionException("Permission denied: BLUETOOTH_ADMIN");
-          }
-        }
-        else
-        {
-          throw new PermissionException("no permission found");
-        }
-      }
-      catch (PackageManager.NameNotFoundException localNameNotFoundException)
-      {
-        Logs.log(Logs.LogTypes.exception, "Error Caused by: ", localNameNotFoundException);
-      }
-      stopFindingDevices();
-      h.clear();
-      ArrayList localArrayList = new ArrayList();
-      Iterator localIterator1 = i.entrySet().iterator();
-      Object localObject2;
-      while (localIterator1.hasNext())
-      {
-        localObject1 = (Map.Entry)localIterator1.next();
-        localObject2 = (String)((Map.Entry)localObject1).getKey();
-        BleDevice localBleDevice = (BleDevice)((Map.Entry)localObject1).getValue();
-        i5 = 0;
-        Iterator localIterator2 = g.iterator();
-        
-        if (i5 == 0) {
-          localArrayList.add(localBleDevice);
-        }
-      }
-      Object localObject1 = localArrayList.iterator();
-      while (((Iterator)localObject1).hasNext())
-      {
-        localObject2 = (Device)((Iterator)localObject1).next();
-        c((Device)localObject2);
-      }
-      try
-      {
-        if ((LeicaSdk.scanConfig.isWifiAdapterOn()) && (c.checkConnectionMethodsAvailable()))
-        {
-          Logs.log(Logs.LogTypes.debug, "Hotspot findAvailableDevices");
-          n.post(o);
-        }
-        if ((LeicaSdk.scanConfig.isWifiAdapterOn()) && (a.checkConnectionMethodsAvailable()))
-        {
-          Logs.log(Logs.LogTypes.debug, "AP findAvailableDevices");
-          l.post(m);
-        }
-        if ((LeicaSdk.scanConfig.isBleAdapterOn()) && (b.checkConnectionMethodsAvailable()))
-        {
-          Logs.log(Logs.LogTypes.debug, "BLE findAvailableDevices");
-          p.post(q);
-        }
-        if (d.checkConnectionMethodsAvailable())
-        {
-          Logs.log(Logs.LogTypes.debug, "Rndis findAvailableDevices");
-          r.post(s);
-        }
-      }
-      catch (Exception localException)
-      {
-        Logs.log(Logs.LogTypes.exception, "Error caused by: ", localException);
-      }
-    }
-    else
-    {
-      throw new PermissionException("Parameter array Permissions is null ");
-    }
-  }
+			throws PermissionException {
+		if (LeicaSdk.scanConfig != null) {
+			int i5;
+			try {
+				PackageInfo localPackageInfo = paramContext.getPackageManager()
+						.getPackageInfo(paramContext.getPackageName(), 4096);
+				if ((localPackageInfo != null)
+						&& (requestedPermissions != null)) {
+					int i1 = 0;
+					int i2 = 0;
+					int i3 = 0;
+					int i4 = 0;
+					i5 = 0;
+					int i6 = 0;
+					for (String str : requestedPermissions) {
+						if ("android.permission.ACCESS_COARSE_LOCATION"
+								.equalsIgnoreCase(str)) {
+							i1 = 1;
+						}
+						if ("android.permission.ACCESS_WIFI_STATE"
+								.equalsIgnoreCase(str)) {
+							i2 = 1;
+						}
+						if ("android.permission.CHANGE_WIFI_STATE"
+								.equalsIgnoreCase(str)) {
+							i3 = 1;
+						}
+						if ("android.permission.INTERNET".equalsIgnoreCase(str)) {
+							i4 = 1;
+						}
+						if ("android.permission.BLUETOOTH"
+								.equalsIgnoreCase(str)) {
+							i5 = 1;
+						}
+						if ("android.permission.BLUETOOTH_ADMIN"
+								.equalsIgnoreCase(str)) {
+							i6 = 1;
+						}
+					}
+					if (i1 == 0) {
+						throw new PermissionException(
+								"Permission denied: ACCESS_COARSE_LOCATION");
+					}
+					if (i2 == 0) {
+						throw new PermissionException(
+								"Permission denied: ACCESS_WIFI_STATE");
+					}
+					if (i3 == 0) {
+						throw new PermissionException(
+								"Permission denied: CHANGE_WIFI_STATE");
+					}
+					if (i4 == 0) {
+						throw new PermissionException(
+								"Permission denied: INTERNET");
+					}
+					if (i5 == 0) {
+						throw new PermissionException(
+								"Permission denied: BLUETOOTH");
+					}
+					if (i6 == 0) {
+						throw new PermissionException(
+								"Permission denied: BLUETOOTH_ADMIN");
+					}
+				} else {
+					throw new PermissionException("no permission found");
+				}
+			} catch (PackageManager.NameNotFoundException localNameNotFoundException) {
+				Logs.log(Logs.LogTypes.exception, "Error Caused by: ",
+						localNameNotFoundException);
+			}
+			stopFindingDevices();
+			h.clear();
+			ArrayList localArrayList = new ArrayList();
+			Iterator localIterator1 = i.entrySet().iterator();
+			Object localObject2;
+			while (localIterator1.hasNext()) {
+				localObject1 = (Map.Entry) localIterator1.next();
+				localObject2 = (String) ((Map.Entry) localObject1).getKey();
+				BleDevice localBleDevice = (BleDevice) ((Map.Entry) localObject1)
+						.getValue();
+				i5 = 0;
+				Iterator localIterator2 = g.iterator();
+				while (localIterator2.hasNext()) {
+		          ??? = (Device)localIterator2.next();
+		          if (((Device)???).getDeviceID().contains((CharSequence)localObject2)) {
+		            i5 = 1;
+		            break;
+		          }
+		        }
+				if (i5 == 0) {
+					localArrayList.add(localBleDevice);
+				}
+			}
+			Object localObject1 = localArrayList.iterator();
+			while (((Iterator) localObject1).hasNext()) {
+				localObject2 = (Device) ((Iterator) localObject1).next();
+				c((Device) localObject2);
+			}
+			try {
+				if ((LeicaSdk.scanConfig.isWifiAdapterOn())
+						&& (c.checkConnectionMethodsAvailable())) {
+					Logs.log(Logs.LogTypes.debug,
+							"Hotspot findAvailableDevices");
+					n.post(o);
+				}
+				if ((LeicaSdk.scanConfig.isWifiAdapterOn())
+						&& (a.checkConnectionMethodsAvailable())) {
+					Logs.log(Logs.LogTypes.debug, "AP findAvailableDevices");
+					l.post(m);
+				}
+				if ((LeicaSdk.scanConfig.isBleAdapterOn())
+						&& (b.checkConnectionMethodsAvailable())) {
+					Logs.log(Logs.LogTypes.debug, "BLE findAvailableDevices");
+					p.post(q);
+				}
+				if (d.checkConnectionMethodsAvailable()) {
+					Logs.log(Logs.LogTypes.debug, "Rndis findAvailableDevices");
+					r.post(s);
+				}
+			} catch (Exception localException) {
+				Logs.log(Logs.LogTypes.exception, "Error caused by: ",
+						localException);
+			}
+		} else {
+			throw new PermissionException(
+					"Parameter array Permissions is null ");
+		}
+	}
 
 	public List<Device> getConnectedDevices() {
 		ArrayList localArrayList = new ArrayList();

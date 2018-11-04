@@ -99,6 +99,18 @@ public class DeviceManagerProxy extends KrollProxy implements
 		return this;
 	}
 
+	
+	@Kroll.method
+	public KrollDict getConnectedDevices() {
+		KrollDict res = new KrollDict();
+		List<DeviceProxy> deviceArray = new ArrayList<DeviceProxy>();
+		List<Device> devices = deviceManager.getConnectedDevices();
+		for (Device device : devices) {
+			deviceArray.add(new DeviceProxy(device));
+		}
+		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
+		return res;
+	}
 	@Kroll.method
 	public void findAvailableDevices() {
 		// https://github.com/AppWerft/Ti.Disto/blob/master/LeicaSDK/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L374
