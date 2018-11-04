@@ -123,20 +123,6 @@ public class TidistoModule extends KrollModule  {
 		return LeicaSdk.getVersion();
 	}
 
-	@Kroll.method
-	public KrollDict getConnectedDevices() {
-		KrollDict res = new KrollDict();
-		List<DeviceProxy> deviceArray = new ArrayList<DeviceProxy>();
-		List<Device> devices = deviceManager.getConnectedDevices();
-		for (Device device : devices) {
-			deviceArray.add(new DeviceProxy(device));
-		}
-		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
-		return res;
-	}
-
-	
-	
 
 	@Kroll.method
 	public TidistoModule setTimeout(int timeout) {
@@ -147,7 +133,6 @@ public class TidistoModule extends KrollModule  {
 	public TidistoModule enableDebugging() {
 		DEBUG = true;
 		return this;
-
 	}
 
 	
@@ -165,9 +150,8 @@ public class TidistoModule extends KrollModule  {
 				 //boolean distoWifi, boolean distoBle, boolean yeti, boolean disto3DD
 				// X3 is yeta (following regex pattern in LeicaSDK.java)
 				LeicaSdk.setScanConfig(true, true, true, true);
-				LeicaSdk.setLicenses(keys);
-				if (DEBUG)
-					Log.d(LCAT, keys.toString());
+				LeicaSdk.setLicenses(keys);	
+				Log.d(LCAT, keys.toString());
 
 			} catch (JSONException e) {
 				Log.e(LCAT,
