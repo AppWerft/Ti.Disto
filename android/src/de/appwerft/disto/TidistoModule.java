@@ -87,9 +87,6 @@ public class TidistoModule extends KrollModule  {
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
 	public static final String PROPERTY_ONFOUND = "onFound";
-
-	private ArrayList<String> keys = new ArrayList<>();
-
 	private KrollFunction Callback;
 	
 	/**
@@ -113,11 +110,16 @@ public class TidistoModule extends KrollModule  {
 		super();
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-		String key = TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", "");
-		keys.add(key);
-		Log.d(LCAT,"key="+ key.toString());
+		
+		
 	}
 
+	private void addLicenceKey() {
+		ArrayList<String> keys = new ArrayList<>();
+		String key = TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", "");
+		keys.add(key);
+	}
+	
 	@Kroll.method
 	public String getVersion() {
 		return LeicaSdk.getVersion();
@@ -150,8 +152,7 @@ public class TidistoModule extends KrollModule  {
 				 //boolean distoWifi, boolean distoBle, boolean yeti, boolean disto3DD
 				// X3 is yeta (following regex pattern in LeicaSDK.java)
 				LeicaSdk.setScanConfig(true, true, true, true);
-				LeicaSdk.setLicenses(keys);	
-				Log.d(LCAT, keys.toString());
+				addLicenceKey();
 
 			} catch (JSONException e) {
 				Log.e(LCAT,
