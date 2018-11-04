@@ -148,7 +148,7 @@ public class TidistoModule extends KrollModule  {
 					"commands.json");
 			try {
 				LeicaSdk.init(ctx, initObject);
-				LeicaSdk.setMethodCalledLog(false);
+				LeicaSdk.setMethodCalledLog(true);
 				LeicaSdk.setScanConfig(true, true, true, true);
 				addLicenceKey();
 
