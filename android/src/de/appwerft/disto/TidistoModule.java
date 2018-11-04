@@ -148,10 +148,9 @@ public class TidistoModule extends KrollModule  {
 					"commands.json");
 			try {
 				LeicaSdk.init(ctx, initObject);
-				LeicaSdk.setMethodCalledLog(true);
+				LeicaSdk.setMethodCalledLog(false);
 				LeicaSdk.setScanConfig(true, true, true, true);
 				addLicenceKey();
-
 			} catch (JSONException e) {
 				Log.e(LCAT,
 						"Error in the structure of the JSON File, closing the application");
