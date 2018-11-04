@@ -85,7 +85,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super.handleCreationDict(opts);
 		TiApplication app = TiApplication.getInstance();
 		if (app != null) {
-			ctx = app.getCurrentActivity();
+			ctx = app.getApplicationContext();
 			deviceManager = DeviceManager.getInstance(ctx);
 		} else
 			Log.e(LCAT, "app == null");

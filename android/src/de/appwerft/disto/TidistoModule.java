@@ -113,7 +113,9 @@ public class TidistoModule extends KrollModule  {
 		super();
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-		keys.add(TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", ""));
+		String key = TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", "");
+		keys.add(key);
+		Log.d(LCAT,"key="+ key.toString());
 	}
 
 	@Kroll.method
@@ -160,6 +162,8 @@ public class TidistoModule extends KrollModule  {
 			try {
 				LeicaSdk.init(ctx, initObject);
 				LeicaSdk.setMethodCalledLog(false);
+				 //boolean distoWifi, boolean distoBle, boolean yeti, boolean disto3DD
+				// X3 is yeta (following regex pattern in LeicaSDK.java)
 				LeicaSdk.setScanConfig(true, true, true, true);
 				LeicaSdk.setLicenses(keys);
 				if (DEBUG)

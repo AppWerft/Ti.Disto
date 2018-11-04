@@ -1,38 +1,24 @@
 last words:
 
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO 82651594, deviceAdress: C4:53:91:AF:C9:C2, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO 82651594
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO 82651594, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - Device Skipped: DISTO 82651594
-
-
+ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
+ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
+ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
+ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
+ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
+ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
+ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
 
 with comments:
 
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO 82651594, hasDistoService: true
-line 83 (only one match in this class)
+ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
+ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
+ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
+ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
 
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-line 100  (only this one match) ==>  L115 
-This method uses regex to decide which device.
-if isYetiName
-else is DistoGenericName (guess this is our match)
-else "deviceName does not fit the naming filter"
+ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
+ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
+This will logid in line 97 (inside public synchronized void onBluetoothDeviceFound())
+and call `private ConcurrentHashMap<String, Device> a()` in L110
+no skipping etc no retunr, only adds the foud device to a  ConcurrentHashMap 
 
-else if (LeicaSdk.isDistoGenericName(paramString2))
-        {
-          if (LeicaSdk.scanConfig.isDistoBle())
-          {
-            i2 = 1;
-            localObject1 = new BleDevice(f, paramString2, paramBluetoothDevice, paramBoolean);
-          }
-          else
-          {
-            Logs.log(Logs.LogTypes.verbose, "Device Skipped: " + paramString2); <======!! our hit
-          }
-        }
-        
-        
-I have logged   LeicaSdk.scanConfig.isDistoBle(). It is false although I have set in module,       
+ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
