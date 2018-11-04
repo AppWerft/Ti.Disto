@@ -187,16 +187,6 @@ public class TidistoModule extends KrollModule  {
 
 	}
 
-	
-
-	
-
-	@Kroll.method
-	public TidistoModule addLicence(String key) {
-		keys.add(key);
-		return this;
-	};
-
 	private boolean hasPermission(String permission) {
 		if (Build.VERSION.SDK_INT >= 23) {
 			Activity currentActivity = TiApplication.getInstance()
