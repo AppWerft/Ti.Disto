@@ -77,11 +77,16 @@ public class TidistoModule extends KrollModule  {
 			.ordinal();
 
 	@Kroll.constant
-	public static final int WIFI = 1;
+	public static final int VERBOSE = 2;
 	@Kroll.constant
-	public static final int BLE = 2;
+	public static final int DEBUG = 3;
 	@Kroll.constant
-	public static final int BLUETOOTH = 2;
+	public static final int INFO = 4;
+	@Kroll.constant
+	public static final int WARN = 5;
+	@Kroll.constant
+	public static final int ERROR = 6;
+	
 	
 	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
@@ -104,7 +109,7 @@ public class TidistoModule extends KrollModule  {
 	// to handle user cancel connection attempt
 	Map<Device, Boolean> connectionAttempts = new HashMap<>();
 	Device currentConnectionAttemptToDevice = null;
-	public static boolean DEBUG = false;
+	
 
 	public TidistoModule() {
 		super();
@@ -132,15 +137,15 @@ public class TidistoModule extends KrollModule  {
 	}
 
 	@Kroll.method
-	public TidistoModule enableDebugging() {
-		DEBUG = true;
+	public TidistoModule setLogLeve(int level) {
+		LeicaSdk.setLogLevel(level);
 		return this;
 	}
 
 	
 	@Kroll.method
 	public void init() {
-		if (DEBUG)
+		
 			Log.i(LCAT, "====== START leica ========");
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
@@ -165,7 +170,7 @@ public class TidistoModule extends KrollModule  {
 				Log.d(LCAT, e.getMessage());
 			}
 
-		} else if (DEBUG)
+		} 
 			Log.d(LCAT, "was always initalized.");
 	}
 
@@ -221,18 +226,6 @@ public class TidistoModule extends KrollModule  {
 		return granted;
 	}
 
-	private void dispatchMessage(KrollDict dict) {
-		if (Callback != null) {
-			Callback.call(getKrollObject(), dict);
-		}
-		KrollFunction onScanResult = (KrollFunction) getProperty("onScanResult");
-		if (onScanResult != null) {
-			onScanResult.call(getKrollObject(), new Object[] { dict });
-		}
-		if (hasListeners("availableDeviceFound"))
-			fireEvent("availableDeviceFound", dict);
-	}
-	
 	@Override
 	public void onStart(Activity activity) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onStart");
