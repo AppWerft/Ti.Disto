@@ -142,16 +142,7 @@ public class TidistoModule extends KrollModule {
 			try {
 				LeicaSdk.init(ctx, initObject);
 				LeicaSdk.setMethodCalledLog(false);
-				LeicaSdk.setScanConfig(true, true, true, true);
-				ArrayList<String> keys = new ArrayList<>();
-				// adding key from properties:
-				String key = TiApplication.getInstance().getAppProperties()
-						.getString("DISTO_KEY", "");
-				keys.add(key);
-				Log.d(LCAT,
-						"================================================\n"
-								+ keys.toString());
-				LeicaSdk.setLicenses(keys);
+			
 			} catch (JSONException e) {
 				Log.e(LCAT,
 						"Error in the structure of the JSON File, closing the application");
@@ -164,9 +155,17 @@ public class TidistoModule extends KrollModule {
 				Log.d(LCAT, e.getMessage());
 			}
 		} else
-			Log.d(LCAT, "was always initalized.");
-		Log.i(LCAT, "====== END init ========");
-		
+			Log.w(LCAT, "was always initalized.");
+		LeicaSdk.setScanConfig(true, true, true, true);
+		ArrayList<String> keys = new ArrayList<>();
+		// adding key from properties:
+		String key = TiApplication.getInstance().getAppProperties()
+				.getString("DISTO_KEY", "");
+		keys.add(key);
+		Log.d(LCAT, "=====================\n" + keys.toString());
+		LeicaSdk.setLicenses(keys);
+		Log.i(LCAT, "====== END init ==========");
+
 	}
 
 	private boolean hasPermission(String permission) {
