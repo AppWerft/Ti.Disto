@@ -115,8 +115,6 @@ public class TidistoModule extends KrollModule  {
 		super();
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
-		
-		
 	}
 
 	private void addLicenceKey() {
@@ -137,7 +135,7 @@ public class TidistoModule extends KrollModule  {
 	}
 
 	@Kroll.method
-	public TidistoModule setLogLeve(int level) {
+	public TidistoModule setLogLevel(int level) {
 		LeicaSdk.setLogLevel(level);
 		return this;
 	}
