@@ -118,13 +118,7 @@ public class TidistoModule extends KrollModule  {
 	}
 
 	private void addLicenceKey() {
-		ArrayList<String> keys = new ArrayList<>();
-		// adding key from properties:
-		String key = TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", "");
-		keys.add(key);
-		Log.d(LCAT,"================================================\n"+keys.toString());
-		// copy to LeicaSdk, this wrapper does: a.a(paramArrayList);
-		LeicaSdk.setLicenses(keys);
+		
 	}
 	
 	@Kroll.method
@@ -156,7 +150,13 @@ public class TidistoModule extends KrollModule  {
 				LeicaSdk.init(ctx, initObject);
 				LeicaSdk.setMethodCalledLog(false);
 				LeicaSdk.setScanConfig(true, true, true, true);
-				addLicenceKey();
+				ArrayList<String> keys = new ArrayList<>();
+				// adding key from properties:
+				String key = TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", "");
+				keys.add(key);
+				Log.d(LCAT,"================================================\n"+keys.toString());
+				// copy to LeicaSdk, this wrapper does: a.a(paramArrayList);
+				LeicaSdk.setLicenses(keys);
 			} catch (JSONException e) {
 				Log.e(LCAT,
 						"Error in the structure of the JSON File, closing the application");
