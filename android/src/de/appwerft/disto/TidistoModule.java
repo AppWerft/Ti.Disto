@@ -143,8 +143,7 @@ public class TidistoModule extends KrollModule  {
 	
 	@Kroll.method
 	public void init() {
-		
-			Log.i(LCAT, "====== START leica ========");
+			Log.i(LCAT, "====== START leica DISTO ========");
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
