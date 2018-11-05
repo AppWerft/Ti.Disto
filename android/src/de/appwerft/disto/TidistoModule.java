@@ -46,7 +46,7 @@ import ch.leica.sdk.Types;
 import ch.leica.sdk.Listeners.ErrorListener;
 
 @Kroll.module(name = "Tidisto", id = "de.appwerft.disto", propertyAccessors = { "onScanResult" })
-public class TidistoModule extends KrollModule  {
+public class TidistoModule extends KrollModule {
 
 	/* Constants */
 	@Kroll.constant
@@ -86,14 +86,13 @@ public class TidistoModule extends KrollModule  {
 	public static final int WARN = 5;
 	@Kroll.constant
 	public static final int ERROR = 6;
-	
-	
+
 	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
 	public static final String PROPERTY_ONFOUND = "onFound";
 	private KrollFunction Callback;
-	
+
 	/**
 	 * Current selected device
 	 */
@@ -109,19 +108,17 @@ public class TidistoModule extends KrollModule  {
 	// to handle user cancel connection attempt
 	Map<Device, Boolean> connectionAttempts = new HashMap<>();
 	Device currentConnectionAttemptToDevice = null;
-	
 
 	public TidistoModule() {
 		super();
 		ctx = TiApplication.getInstance().getApplicationContext();
 		deviceManager = DeviceManager.getInstance(ctx);
 	}
-	
+
 	@Kroll.method
 	public String getVersion() {
 		return LeicaSdk.getVersion();
 	}
-
 
 	@Kroll.method
 	public TidistoModule setTimeout(int timeout) {
@@ -134,10 +131,9 @@ public class TidistoModule extends KrollModule  {
 		return this;
 	}
 
-	
 	@Kroll.method
 	public void init() {
-			Log.i(LCAT, "====== START leica DISTO ========");
+		Log.i(LCAT, "====== START leica DISTO ========");
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
@@ -149,9 +145,12 @@ public class TidistoModule extends KrollModule  {
 				LeicaSdk.setScanConfig(true, true, true, true);
 				ArrayList<String> keys = new ArrayList<>();
 				// adding key from properties:
-				String key = TiApplication.getInstance().getAppProperties().getString("DISTO_KEY", "");
+				String key = TiApplication.getInstance().getAppProperties()
+						.getString("DISTO_KEY", "");
 				keys.add(key);
-				Log.d(LCAT,"================================================\n"+keys.toString());
+				Log.d(LCAT,
+						"================================================\n"
+								+ keys.toString());
 				LeicaSdk.setLicenses(keys);
 			} catch (JSONException e) {
 				Log.e(LCAT,
@@ -164,8 +163,10 @@ public class TidistoModule extends KrollModule  {
 			} catch (IOException e) {
 				Log.d(LCAT, e.getMessage());
 			}
-		} 
+		} else
 			Log.d(LCAT, "was always initalized.");
+		Log.i(LCAT, "====== END init ========");
+		
 	}
 
 	private boolean hasPermission(String permission) {
@@ -225,16 +226,17 @@ public class TidistoModule extends KrollModule  {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onStart");
 		super.onStart(activity);
 	}
+
 	@Override
 	public void onResume(Activity activity) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onResume");
 		super.onResume(activity);
 	}
-	
+
 	@Override
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
 		super.onCreate(activity, savedInstanceState);
-    }
+	}
 
 }
