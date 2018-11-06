@@ -113,16 +113,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 	}
 	@Kroll.method
 	public void findAvailableDevices() {
-		// https://github.com/AppWerft/Ti.Disto/blob/master/LeicaSDK/ImplementationGuide/LeicaSdkQuickStartSampleApp/app/src/main/java/leica/ch/quickstartapp/MainActivity.java#L374
-		
-		
+		// opened for all device types
 		LeicaSdk.setScanConfig(true, true, true, true);
-		Log.d(LCAT, "isDistoBle=" + LeicaSdk.scanConfig.isDistoBle());
-		Log.d(LCAT, "isYeti=" + LeicaSdk.scanConfig.isYeti());
-		
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
+			// method below crashes the app (lost reference?) 
 			deviceManager.findAvailableDevices(ctx);
 		} catch (PermissionException e) {
 			Log.e(LCAT, "Missing permission: " + e.getMessage());

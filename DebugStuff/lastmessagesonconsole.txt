@@ -1,135 +1,62 @@
-[INFO] :   TiDisto: (main) [68,68] ====== START leica ========
-[DEBUG] :  TiDisto: (main) [0,68] Starting verifyPermissions()
-[INFO] :   TiDisto: (main) [0,68] ACCESS_FINE_LOCATION=true
-[INFO] :   TiDisto: (main) [0,68] ACCESS_COARSE_LOCATION=true
-[DEBUG] :  TiDisto: (main) [1,69] setBleAdapterOn
-[INFO] :   TiDisto: (main) [0,69] Permissions: WIFI: false, BLE: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.LeicaSdk.init - Leica Sdk Version: 1.0.0.2
-[DEBUG] :  TiDisto: (main) [0,69] commands.json
-[INFO] :   TiDisto: (main) [1,70] deviceManager created
-[INFO] :   TiDisto: (main) [0,70] listeners added
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.setState - connection state: disconnected
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.setState - listener is null
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.HSConnectionManager.checkConnectionMethodsAvailable - Connection State changed: disconnected
-[INFO] :   TiDisto: (main) [1,71] init succeeded
-[DEBUG] :  TiDisto: (main) [2,73] isDistoBle=true
-[DEBUG] :  TiDisto: (main) [0,73] isYeti=true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.setState - listener is null
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleConnectionManager.checkConnectionMethodsAvailable - Connection State changed: disconnected
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.findAvailableDevices - BLE findAvailableDevices
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.findAvailableDevices - Rndis findAvailableDevices
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleConnectionManager.scanLeDevice - Bluetooth, Scanning Started
-[DEBUG] :  BluetoothAdapter: isLeEnabled(): ON
-[DEBUG] :  BluetoothLeScanner: onScannerRegistered() - status=0 scannerId=6 mScannerId=0
-[INFO] :   Adreno: QUALCOMM build                   : 4a65519, I8a9bdcf8d3
-[INFO] :   Adreno: Build Date                       : 01/22/18
-[INFO] :   Adreno: OpenGL ES Shader Compiler Version: EV031.22.00.01
-[INFO] :   Adreno: Local Branch                     :
-[INFO] :   Adreno: Remote Branch                    : refs/tags/AU_LINUX_ANDROID_LA.UM.6.4.R1.08.01.00.309.057
-[INFO] :   Adreno: Remote Branch                    : NONE
-[INFO] :   Adreno: Reconstruct Branch               : NOTHING
 
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.Device.<init> - Created DEVICE with deviceID: null
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.BleDevice.<init> - hasDistoServiceBeforeConnection: true deviceID: DISTO X3 1110824+++F1:5D:8E:45:90:7D
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.YetiDevice.<init> - YetiDevice Created
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - check: DISTO X3 1110824+++F1:5D:8E:45:90:7D
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - filtertype: leica
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - result: false
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.c - available device found, but its not allowed. deviceId: DISTO X3 1110824+++F1:5D:8E:45:90:7D
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - does not contain key DISTO X3 1110824+++F1:5D:8E:45:90:7DNew BLE Device Found - creating device: DISTO X3 1110824
+11-05 13:42:11.807 27260 27260 I TiDisto : (main) [57,57] ====== START leica DISTO ========
+11-05 13:42:11.807 27260 27260 D TiDisto : (main) [0,57] Starting verifyPermissions()
+11-05 13:42:11.807 27260 27260 I TiDisto : (main) [0,57] ACCESS_FINE_LOCATION=true
+11-05 13:42:11.807 27260 27260 I TiDisto : (main) [0,57] ACCESS_COARSE_LOCATION=true
+11-05 13:42:11.808 27260 27260 D TiDisto : (main) [1,58] setBleAdapterOn
+11-05 13:42:11.808 27260 27260 I TiDisto : (main) [0,58] Permissions: WIFI: false, BLE: true
+11-05 13:42:11.808 27260 27260 I TiDisto : (main) [0,58] ====== START init ========
+11-05 13:42:11.808 27260 27260 D SDK - Debug : : ch.leica.sdk.LeicaSdk.init - Leica Sdk Version: 1.0.0.2
+11-05 13:42:11.808 27260 27260 D TiDisto : (main) [0,58] commands.json
+11-05 13:42:11.808 27260 27260 D TiDisto : (main) [0,58] =====================
+11-05 13:42:11.808 27260 27260 D TiDisto : [1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+]
+11-05 13:42:11.809 27260 27260 D SDK - Debug : : ch.leica.a.a.a.b - keyValid: true
+11-05 13:42:11.809 27260 27260 I TiDisto : (main) [1,59] ====== END init ==========
+11-05 13:42:11.810 27260 27260 D TiDisto : (main) [1,60] isDistoBle=true
+11-05 13:42:11.810 27260 27260 D TiDisto : (main) [0,60] isYeti=true
 
+11-05 13:42:11.813 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.findAvailableDevices - BLE findAvailableDevices
+11-05 13:42:11.813 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.findAvailableDevices - Rndis findAvailableDevices
+11-05 13:42:11.816 27260 27311 D SDK - Debug : : ch.leica.sdk.connection.ble.BleConnectionManager.scanLeDevice - Bluetooth, Scanning Started
+11-05 13:42:11.886 27260 27260 D SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
+11-05 13:42:11.886 27260 27260 D SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
+11-05 13:42:11.886 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
 
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.RndisConnectionManager.findAvailableDevices - shouldScan is false, return
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 00001812-0000-1000-8000-00805f9b34fb
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: C8:69:CD:22:09:4B, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 00001812-0000-1000-8000-00805f9b34fb
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 00001812-0000-1000-8000-00805f9b34fb
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 00001812-0000-1000-8000-00805f9b34fb
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: C8:69:CD:22:09:4B, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 00001812-0000-1000-8000-00805f9b34fb
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 00001812-0000-1000-8000-00805f9b34fb
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - service uuid: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - disto service found: 3ab10100-f831-4395-b29d-570977d5bf94
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: DISTO X3 1110824, deviceAdress: F1:5D:8E:45:90:7D, bondState: 10
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - called with DISTO X3 1110824, hasDistoService: true
-[DEBUG] :  D/SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.Devices.DeviceManager.a - set hasDistoServiceBeforeConnection: true
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 66:6E:80:EF:B2:53, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 24:4B:03:2A:5D:56, bondState: 10
-[DEBUG] :  D/SDK - Verbose : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult - deviceName: null, deviceAdress: 10:46:60:C6:05:FB, bondState: 10
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.Device.<init> - Created DEVICE with deviceID: null
+
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.BleDevice.<init> - hasDistoServiceBeforeConnection: true deviceID: DISTO X3 1110824+++F1:5D:8E:45:90:7D
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.YetiDevice.<init> - YetiDevice Created
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - check: DISTO X3 1110824+++F1:5D:8E:45:90:7D
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - filtertype: leica
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - result: true
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.c -	
+
+11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.Device.getModel - Model: 
+
+11-05 13:42:11.888  1380  1551 I ActivityManager: Displayed de.appwerft.firebaseauth/org.appcelerator.titanium.TiActivity: +128ms (total +2m36s840ms)
+11-05 13:42:11.923   778  2825 I vendor.qti.bluetooth@1.0-ibs_handler: ProcessIbsCmd: Received IBS_SLEEP_IND: 0xFE
+
+11-05 13:42:12.388 27260 27260 D AndroidRuntime: Shutting down VM
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: FATAL EXCEPTION: main
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: Process: de.appwerft.firebaseauth, PID: 27260
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method 'boolean ch.leica.sdk.connection.BaseConnectionManager.readModelCharacteristic()' on a null object reference
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.BleDevice.getModelValue(Unknown Source:2)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.Device.getModel(Unknown Source:41)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at de.appwerft.disto.DeviceManagerProxy.onAvailableDeviceFound(DeviceManagerProxy.java:56)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.c(Unknown Source:60)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.a(Unknown Source:84)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound(Unknown Source:129)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice(Unknown Source:13)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.connection.ble.BleConnectionManager.onBluetoothDeviceFound(Unknown Source:0)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.connection.ble.BleScanCallback.onScanResult(Unknown Source:332)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.bluetooth.le.BluetoothLeScanner$BleScanCallbackWrapper$1.run(BluetoothLeScanner.java:490)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:790)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:164)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:6501)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:438)
+11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:807)
+11-05 13:42:12.389  1380  9531 W ActivityManager:   Force finishing activity de.appwerft.firebaseauth/org.appcelerator.titanium.TiActivity
+11-05 13:42:12.390  1380  9531 D ActivityTrigger: ActivityTrigger activityPauseTrigger 
+
