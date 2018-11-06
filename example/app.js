@@ -3,37 +3,45 @@
 // to test out the module and to provide instructions
 // to users on how to use it by example.
 
-
 // open a single window
 var win = Ti.UI.createWindow({
-	backgroundColor:'white'
+	backgroundColor : 'white'
 });
-var label = Ti.UI.createLabel();
-win.add(label);
+
+win.addEventListener('open', function() {
+	const PERMISSIONS = ['android.permission.ACCESS_FINE_LOCATION', 'android.permission.ACCESS_COARSE_LOCATION'];
+	if (Ti.Android.hasPermission(PERMISSIONS[0]) && Ti.Android.hasPermission(PERMISSIONS[1]))
+		handleDisto();
+	else
+		(Ti.Android.requestPermissions(PERMISSIONS, function(e) {
+				if (e.success)
+					handleDisto();
+			}));
+
+	function handleDisto() {
+		const DISTO = require('de.appwerft.disto');
+		
+		// import commands.json, importing key from tiapp.xml
+		DISTO.setLogLevel(DISTO.DEBUG).init();
+
+		
+		const DeviceManager = DISTO.createDeviceManager({
+			lifecycleContainer : win
+		});
+		DeviceManager.onFound = function(e) {
+			console.log(e);
+		};
+		DeviceManager.findAvailableDevices();
+		
+		$.addEventListener('click', function() {
+			DeviceManager.stopFindingDevices();
+			DeviceManager.findAvailableDevices();
+		});
+	}
+
+	function onAvailableDeviceFound(e) {
+	}
+
+});
+
 win.open();
-
-// TODO: write your module tests here
-var tidisto = require('de.appwerft.disto');
-Ti.API.info("module is => " + tidisto);
-
-label.text = tidisto.example();
-
-Ti.API.info("module exampleProp is => " + tidisto.exampleProp);
-tidisto.exampleProp = "This is a test value";
-
-if (Ti.Platform.name == "android") {
-	var proxy = tidisto.createExample({
-		message: "Creating an example Proxy",
-		backgroundColor: "red",
-		width: 100,
-		height: 100,
-		top: 100,
-		left: 150
-	});
-
-	proxy.printMessage("Hello world!");
-	proxy.message = "Hi world!.  It's me again.";
-	proxy.printMessage("Hello world!");
-	win.add(proxy);
-}
-
