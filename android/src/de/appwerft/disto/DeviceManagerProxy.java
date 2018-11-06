@@ -30,16 +30,11 @@ import ch.leica.sdk.Listeners.ErrorListener;
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { TidistoModule.PROPERTY_ONFOUND })
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
-	private Device currentDevice;
 	private Context ctx;
 	private DeviceManager deviceManager;
-	private Timer connectionTimeoutTimer;
-	private TimerTask connectionTimeoutTask;
-	private Timer findDevicesTimer;
+	private Device currentDevice;
 	boolean findDevicesRunning = false;
 	boolean activityStopped = true;
-	private Map<Device, Boolean> connectionAttempts = new HashMap<>();
-	private Device currentConnectionAttemptToDevice = null;
 	public static boolean DEBUG = false;
 	private List<Device> availableDevices = new ArrayList<>();
 	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
@@ -49,6 +44,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void findAvailableDevices() {
 		// opened for all device types
 		LeicaSdk.setScanConfig(true, true, true, true);
+		
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
@@ -73,10 +69,11 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
+		currentDevice = device;
 		Log.i(LCAT,
 				"Model: " + device.getModel() + " Name: "
 						+ device.getDeviceName());
-		synchronized (availableDevices) {
+		/*synchronized (availableDevices) {
 			for (Device availableDevice : availableDevices) {
 				if (availableDevice.getDeviceID().equalsIgnoreCase(
 						device.getDeviceID())) {
@@ -92,8 +89,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 				KrollFunction onFound = (KrollFunction) getProperty(PROPERTY_ONFOUND);
 				onFound.call(getKrollObject(), res);
 			}
-		}
-		currentDevice = device;
+		}*/
+		
 	}
 
 	public DeviceManagerProxy() {
@@ -103,7 +100,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			ctx = app.getApplicationContext();
 			deviceManager = DeviceManager.getInstance(ctx);
 		} else
-			Log.e(LCAT, "app == null");
+			Log.e(LCAT, "app == null");	
 	}
 
 	@Override

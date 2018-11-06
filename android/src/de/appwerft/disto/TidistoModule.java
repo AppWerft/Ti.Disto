@@ -16,34 +16,24 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.kroll.common.Log;
-import org.appcelerator.kroll.common.TiConfig;
+import org.appcelerator.titanium.TiApplication;
 import org.json.JSONException;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import ch.leica.sdk.Devices.Device;
-import ch.leica.sdk.Devices.Device.ConnectionState;
-import ch.leica.sdk.ErrorHandling.ErrorObject;
-import ch.leica.sdk.Listeners.ErrorListener;
-import ch.leica.sdk.Devices.Device;
-import ch.leica.sdk.Devices.DeviceManager;
-import ch.leica.sdk.ErrorHandling.ErrorObject;
-import ch.leica.sdk.ErrorHandling.IllegalArgumentCheckedException;
-import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Types;
-import ch.leica.sdk.Listeners.ErrorListener;
+import ch.leica.sdk.Devices.Device;
+import ch.leica.sdk.Devices.DeviceManager;
+import ch.leica.sdk.ErrorHandling.IllegalArgumentCheckedException;
 
 @Kroll.module(name = "Tidisto", id = "de.appwerft.disto", propertyAccessors = { "onScanResult" })
 public class TidistoModule extends KrollModule {
