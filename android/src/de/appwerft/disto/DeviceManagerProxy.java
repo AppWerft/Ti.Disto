@@ -47,6 +47,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
+		TiApplication app = TiApplication.getInstance();
+		if (app != null) {
+			ctx = app.getApplicationContext();
+			deviceManager = DeviceManager.getInstance(ctx);
+		} else
+			Log.e(LCAT, "app == null");
 		// opened for all device types
 		LeicaSdk.setScanConfig(true, true, true, true);
 		deviceManager.setFoundAvailableDeviceListener(this);
@@ -98,12 +104,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
-		TiApplication app = TiApplication.getInstance();
-		if (app != null) {
-			ctx = app.getApplicationContext();
-			deviceManager = DeviceManager.getInstance(ctx);
-		} else
-			Log.e(LCAT, "app == null");
+		
 	}
 
 	@Override
