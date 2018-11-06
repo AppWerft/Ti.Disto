@@ -27,6 +27,7 @@ import ch.leica.sdk.logging.Logs.LogTypes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -415,8 +416,8 @@ public class DeviceManager implements ErrorListener,
 				i5 = 0;
 				Iterator localIterator2 = g.iterator();
 				while (localIterator2.hasNext()) {
-		          ??? = (Device)localIterator2.next();
-		          if (((Device)???).getDeviceID().contains((CharSequence)localObject2)) {
+		          Device device = (Device)localIterator2.next();
+		          if (((Device)device).getDeviceID().contains((CharSequence)localObject2)) {
 		            i5 = 1;
 		            break;
 		          }
@@ -664,9 +665,5 @@ public class DeviceManager implements ErrorListener,
 		public abstract void onAvailableDeviceFound(Device paramDevice);
 	}
 
-	@Override
-	public void onError(ErrorObject arg0, Device arg1) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
