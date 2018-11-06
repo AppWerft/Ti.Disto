@@ -1,13 +1,6 @@
-// This is a test harness for your module
-// You should do something interesting in this harness
-// to test out the module and to provide instructions
-// to users on how to use it by example.
+const DISTO = require('de.appwerft.disto');
 
-// open a single window
-var win = Ti.UI.createWindow({
-	backgroundColor : 'white'
-});
-
+var win = Ti.UI.createWindow();
 win.addEventListener('open', function() {
 	const PERMISSIONS = ['android.permission.ACCESS_FINE_LOCATION', 'android.permission.ACCESS_COARSE_LOCATION'];
 	if (Ti.Android.hasPermission(PERMISSIONS[0]) && Ti.Android.hasPermission(PERMISSIONS[1]))
@@ -18,21 +11,22 @@ win.addEventListener('open', function() {
 					handleDisto();
 			}));
 
+	// starting DISTO after successful permission stuff:
 	function handleDisto() {
-		const DISTO = require('de.appwerft.disto');
-		
+
 		// import commands.json, importing key from tiapp.xml
 		DISTO.setLogLevel(DISTO.DEBUG).init();
-
-		
+		// creating DeviceManager
 		const DeviceManager = DISTO.createDeviceManager({
 			lifecycleContainer : win
 		});
+		// registering callback
 		DeviceManager.onFound = function(e) {
 			console.log(e);
 		};
+		// start:
 		DeviceManager.findAvailableDevices();
-		
+		// restart by click
 		$.addEventListener('click', function() {
 			DeviceManager.stopFindingDevices();
 			DeviceManager.findAvailableDevices();
