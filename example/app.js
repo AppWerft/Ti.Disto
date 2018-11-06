@@ -6,10 +6,10 @@ win.addEventListener('open', function() {
 	if (Ti.Android.hasPermission(PERMISSIONS[0]) && Ti.Android.hasPermission(PERMISSIONS[1]))
 		handleDisto();
 	else
-		(Ti.Android.requestPermissions(PERMISSIONS, function(e) {
-				if (e.success)
-					handleDisto();
-			}));
+		Ti.Android.requestPermissions(PERMISSIONS, function(e) {
+			if (e.success)
+				handleDisto();
+		});
 
 });
 
