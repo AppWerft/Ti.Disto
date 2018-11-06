@@ -13,7 +13,6 @@ win.addEventListener('open', function() {
 
 	// starting DISTO after successful permission stuff:
 	function handleDisto() {
-
 		// import commands.json, importing key from tiapp.xml
 		DISTO.setLogLevel(DISTO.DEBUG).init();
 		// creating DeviceManager
@@ -32,10 +31,6 @@ win.addEventListener('open', function() {
 			DeviceManager.findAvailableDevices();
 		});
 	}
-
-	function onAvailableDeviceFound(e) {
-	}
-
 });
 
 win.open();
