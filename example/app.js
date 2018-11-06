@@ -11,26 +11,27 @@ win.addEventListener('open', function() {
 					handleDisto();
 			}));
 
-	// starting DISTO after successful permission stuff:
-	function handleDisto() {
-		// import commands.json, importing key from tiapp.xml
-		DISTO.setLogLevel(DISTO.DEBUG).init();
-		// creating DeviceManager
-		const DeviceManager = DISTO.createDeviceManager({
-			lifecycleContainer : win
-		});
-		// registering callback
-		DeviceManager.onFound = function(e) {
-			console.log(e);
-		};
-		// start:
-		DeviceManager.findAvailableDevices();
-		// restart by click
-		$.addEventListener('click', function() {
-			DeviceManager.stopFindingDevices();
-			DeviceManager.findAvailableDevices();
-		});
-	}
 });
 
 win.open();
+
+// starting DISTO after successful permission stuff:
+function handleDisto() {
+	// import commands.json, importing key from tiapp.xml
+	DISTO.setLogLevel(DISTO.DEBUG).init();
+	// creating DeviceManager
+	const DeviceManager = DISTO.createDeviceManager({
+		lifecycleContainer : win
+	});
+	// registering callback
+	DeviceManager.onFound = function(e) {
+		console.log(e);
+	};
+	// start:
+	DeviceManager.findAvailableDevices();
+	// restart by click
+	$.addEventListener('click', function() {
+		DeviceManager.stopFindingDevices();
+		DeviceManager.findAvailableDevices();
+	});
+}
