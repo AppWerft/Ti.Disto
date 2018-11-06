@@ -1,62 +1,23 @@
+This happens if I start the X3:
 
-11-05 13:42:11.807 27260 27260 I TiDisto : (main) [57,57] ====== START leica DISTO ========
-11-05 13:42:11.807 27260 27260 D TiDisto : (main) [0,57] Starting verifyPermissions()
-11-05 13:42:11.807 27260 27260 I TiDisto : (main) [0,57] ACCESS_FINE_LOCATION=true
-11-05 13:42:11.807 27260 27260 I TiDisto : (main) [0,57] ACCESS_COARSE_LOCATION=true
-11-05 13:42:11.808 27260 27260 D TiDisto : (main) [1,58] setBleAdapterOn
-11-05 13:42:11.808 27260 27260 I TiDisto : (main) [0,58] Permissions: WIFI: false, BLE: true
-11-05 13:42:11.808 27260 27260 I TiDisto : (main) [0,58] ====== START init ========
-11-05 13:42:11.808 27260 27260 D SDK - Debug : : ch.leica.sdk.LeicaSdk.init - Leica Sdk Version: 1.0.0.2
-11-05 13:42:11.808 27260 27260 D TiDisto : (main) [0,58] commands.json
-11-05 13:42:11.808 27260 27260 D TiDisto : (main) [0,58] =====================
-11-05 13:42:11.808 27260 27260 D TiDisto : [1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+]
-11-05 13:42:11.809 27260 27260 D SDK - Debug : : ch.leica.a.a.a.b - keyValid: true
-11-05 13:42:11.809 27260 27260 I TiDisto : (main) [1,59] ====== END init ==========
-11-05 13:42:11.810 27260 27260 D TiDisto : (main) [1,60] isDistoBle=true
-11-05 13:42:11.810 27260 27260 D TiDisto : (main) [0,60] isYeti=true
+11-06 11:11:14.569  7651  7651 D SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
+11-06 11:11:14.570  7651  7651 D SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
+11-06 11:11:14.572  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
+11-06 11:11:14.575  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.Device.<init> - Created DEVICE with deviceID: null
+11-06 11:11:14.575  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.BleDevice.<init> - hasDistoServiceBeforeConnection: true deviceID: DISTO X3 1110824+++F1:5D:8E:45:90:7D
+11-06 11:11:14.575  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.YetiDevice.<init> - YetiDevice Created
+11-06 11:11:14.576  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - check: DISTO X3 1110824+++F1:5D:8E:45:90:7D
+11-06 11:11:14.576  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - filtertype: leica
+11-06 11:11:14.576  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - result: true
+11-06 11:11:14.576  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.c - available device found, tell listener now
+11-06 11:11:14.577  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.Device.getModel - Model: 
 
-11-05 13:42:11.813 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.findAvailableDevices - BLE findAvailableDevices
-11-05 13:42:11.813 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.findAvailableDevices - Rndis findAvailableDevices
-11-05 13:42:11.816 27260 27311 D SDK - Debug : : ch.leica.sdk.connection.ble.BleConnectionManager.scanLeDevice - Bluetooth, Scanning Started
-11-05 13:42:11.886 27260 27260 D SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
-11-05 13:42:11.886 27260 27260 D SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
-11-05 13:42:11.886 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
-
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.Device.<init> - Created DEVICE with deviceID: null
-
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.BleDevice.<init> - hasDistoServiceBeforeConnection: true deviceID: DISTO X3 1110824+++F1:5D:8E:45:90:7D
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.YetiDevice.<init> - YetiDevice Created
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - check: DISTO X3 1110824+++F1:5D:8E:45:90:7D
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - filtertype: leica
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.AvailableDeviceFilter.isDeviceAllowed - result: true
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.c -	
-
-11-05 13:42:11.887 27260 27260 D SDK - Debug : : ch.leica.sdk.Devices.Device.getModel - Model: 
-
-11-05 13:42:11.888  1380  1551 I ActivityManager: Displayed de.appwerft.firebaseauth/org.appcelerator.titanium.TiActivity: +128ms (total +2m36s840ms)
-11-05 13:42:11.923   778  2825 I vendor.qti.bluetooth@1.0-ibs_handler: ProcessIbsCmd: Received IBS_SLEEP_IND: 0xFE
-
-11-05 13:42:12.388 27260 27260 D AndroidRuntime: Shutting down VM
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: FATAL EXCEPTION: main
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: Process: de.appwerft.firebaseauth, PID: 27260
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method 'boolean ch.leica.sdk.connection.BaseConnectionManager.readModelCharacteristic()' on a null object reference
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.BleDevice.getModelValue(Unknown Source:2)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.Device.getModel(Unknown Source:41)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at de.appwerft.disto.DeviceManagerProxy.onAvailableDeviceFound(DeviceManagerProxy.java:56)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.c(Unknown Source:60)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.a(Unknown Source:84)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound(Unknown Source:129)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice(Unknown Source:13)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.connection.ble.BleConnectionManager.onBluetoothDeviceFound(Unknown Source:0)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at ch.leica.sdk.connection.ble.BleScanCallback.onScanResult(Unknown Source:332)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.bluetooth.le.BluetoothLeScanner$BleScanCallbackWrapper$1.run(BluetoothLeScanner.java:490)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:790)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:99)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:164)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:6501)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:438)
-11-05 13:42:12.388 27260 27260 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:807)
-11-05 13:42:12.389  1380  9531 W ActivityManager:   Force finishing activity de.appwerft.firebaseauth/org.appcelerator.titanium.TiActivity
-11-05 13:42:12.390  1380  9531 D ActivityTrigger: ActivityTrigger activityPauseTrigger 
-
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method 'boolean ch.leica.sdk.connection.BaseConnectionManager.readModelCharacteristic()' on a null object reference
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.Devices.BleDevice.getModelValue(Unknown Source:2)
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.Devices.Device.getModel(Unknown Source:41)
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.c(Unknown Source:60)
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.a(Unknown Source:84)
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound(Unknown Source:129)
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice(Unknown Source:13)
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.connection.ble.BleConnectionManager.onBluetoothDeviceFound(Unknown Source:0)
+11-06 11:11:15.078  7651  7651 E AndroidRuntime: 	at ch.leica.sdk.connection.ble.BleScanCallback.onScanResult(Unknown Source:332)
