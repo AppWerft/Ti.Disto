@@ -420,8 +420,7 @@ public abstract class BaseConnectionManager {
 		context = paramContext;
 	}
 
-	public synchronized void setState(ConnectionState paramConnectionState, boolean paramBoolean)
-  {
+	public synchronized void setState(ConnectionState paramConnectionState, boolean paramBoolean) {
     Logs.log(Logs.LogTypes.debug, "connection state: " + paramConnectionState);
     c = paramConnectionState;
     if (!paramBoolean) {
