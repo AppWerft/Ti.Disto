@@ -45,6 +45,27 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
 	public static final String LCAT = TidistoModule.LCAT;
 
+	@Kroll.method
+	public void findAvailableDevices() {
+		// opened for all device types
+		LeicaSdk.setScanConfig(true, true, true, true);
+		deviceManager.setFoundAvailableDeviceListener(this);
+		deviceManager.setErrorListener(this);
+		try {
+			// method below crashes the app (lost reference?)
+			deviceManager.findAvailableDevices(ctx);
+		} catch (PermissionException e) {
+			Log.e(LCAT, "Missing permission: " + e.getMessage());
+		}
+		findDevicesRunning = true;
+	}
+
+	@Kroll.method
+	public void stopFindingDevices() {
+		findDevicesRunning = false;
+		if (deviceManager != null)
+			deviceManager.stopFindingDevices();
+	}
 	@Override
 	public void onError(ErrorObject err, Device device) {
 		Log.e(LCAT, err.getErrorMessage());
@@ -99,7 +120,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 		return this;
 	}
 
-	
 	@Kroll.method
 	public KrollDict getConnectedDevices() {
 		KrollDict res = new KrollDict();
@@ -111,27 +131,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
 		return res;
 	}
-	@Kroll.method
-	public void findAvailableDevices() {
-		// opened for all device types
-		LeicaSdk.setScanConfig(true, true, true, true);
-		deviceManager.setFoundAvailableDeviceListener(this);
-		deviceManager.setErrorListener(this);
-		try {
-			// method below crashes the app (lost reference?) 
-			deviceManager.findAvailableDevices(ctx);
-		} catch (PermissionException e) {
-			Log.e(LCAT, "Missing permission: " + e.getMessage());
-		}
-		findDevicesRunning = true;
-	}
 
-	@Kroll.method
-	public void stopFindingDevices() {
-		findDevicesRunning = false;
-		if (deviceManager != null)
-			deviceManager.stopFindingDevices();
-	}
+	
 
 	@Override
 	public void onStart(Activity activity) {
