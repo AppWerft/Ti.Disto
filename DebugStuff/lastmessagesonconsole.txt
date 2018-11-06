@@ -1,7 +1,18 @@
 This happens if I start the X3:
 
+In our class we set:
+
+deviceManager.setFoundAvailableDeviceListener(this);
+
+This method sets an private var to this;
+
+and this class has an override method `onAvailableDeviceFound`
+
+
 11-06 11:11:14.569  7651  7651 D SDK - Debug : : ch.leica.sdk.connection.ble.BleScanCallback.onScanResult -  matches if inside called for: DISTO X3 1110824
 11-06 11:11:14.570  7651  7651 D SDK - Debug : : ch.leica.sdk.connection.BaseConnectionManager.foundAvailableBluetoothDevice - available BLE device found, tell listener now
+After this line the private var (set to this) will call onAvailableDeviceFound(device);
+
 11-06 11:11:14.572  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.DeviceManager.onBluetoothDeviceFound - checkNewAvailableDeviceForBle: by APP
 11-06 11:11:14.575  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.Device.<init> - Created DEVICE with deviceID: null
 11-06 11:11:14.575  7651  7651 D SDK - Debug : : ch.leica.sdk.Devices.BleDevice.<init> - hasDistoServiceBeforeConnection: true deviceID: DISTO X3 1110824+++F1:5D:8E:45:90:7D
