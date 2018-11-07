@@ -43,6 +43,21 @@ public class DeviceManagerProxy extends KrollProxy implements
 					MSG_START));
 	}
 
+	@Kroll.method
+	public void stopFindingDevices() {
+		if (TiApplication.isUIThread())
+			handleStopFindingDevices();
+		else
+			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
+					MSG_STOP));
+	}
+	
+	private void handleStopFindingDevices() {
+		findDevicesRunning = false;
+		if (deviceManager != null)
+			deviceManager.stopFindingDevices();
+	}
+	
 	@Override
 	public boolean handleMessage(Message msg) {
 		AsyncResult result = null;
@@ -53,7 +68,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 			result.setResult(null);
 			return true;
 		}
-
+		case MSG_STOP: {
+			result = (AsyncResult) msg.obj;
+			handleStopFindingDevices();
+			result.setResult(null);
+			return true;
+		}
 		default: {
 			return super.handleMessage(msg);
 		}
@@ -71,13 +91,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
 		findDevicesRunning = true;
-	}
-
-	@Kroll.method
-	public void stopFindingDevices() {
-		findDevicesRunning = false;
-		if (deviceManager != null)
-			deviceManager.stopFindingDevices();
 	}
 
 	@Override
