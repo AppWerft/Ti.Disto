@@ -25,6 +25,7 @@ import ch.leica.sdk.Listeners.ErrorListener;
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { TidistoModule.PROPERTY_ONFOUND })
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
+	
 	private Context ctx;
 	private DeviceManager deviceManager;
 	boolean findDevicesRunning = false;
