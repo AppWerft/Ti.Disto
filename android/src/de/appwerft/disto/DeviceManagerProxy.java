@@ -6,12 +6,15 @@ import java.util.List;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.kroll.common.AsyncResult;
 import org.appcelerator.kroll.common.Log;
+import org.appcelerator.kroll.common.TiMessenger;
 import org.appcelerator.titanium.TiApplication;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
@@ -28,10 +31,36 @@ public class DeviceManagerProxy extends KrollProxy implements
 	boolean activityStopped = true;
 	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
 	public static final String LCAT = TidistoModule.LCAT;
+	private static final int MSG_START = 500;
+	private static final int MSG_STOP = 501;
 
 	@Kroll.method
 	public void findAvailableDevices() {
-		// opened for all device types
+		if (TiApplication.isUIThread())
+			handleFindAvailableDevices();
+		else
+			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
+					MSG_START));
+	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		AsyncResult result = null;
+		switch (msg.what) {
+		case MSG_START: {
+			result = (AsyncResult) msg.obj;
+			handleFindAvailableDevices();
+			result.setResult(null);
+			return true;
+		}
+
+		default: {
+			return super.handleMessage(msg);
+		}
+		}
+	}
+
+	private void handleFindAvailableDevices() {
 		LeicaSdk.setScanConfig(true, true, true, true);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
@@ -50,6 +79,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
 	}
+
 	@Override
 	public void onError(ErrorObject err, Device device) {
 		Log.e(LCAT, err.getErrorMessage());
@@ -69,7 +99,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 			ctx = app.getApplicationContext();
 			deviceManager = DeviceManager.getInstance(ctx);
 		} else
-			Log.e(LCAT, "app == null");	
+			Log.e(LCAT, "app == null");
+		// opened for all device types
+		
 	}
 
 	@Kroll.method

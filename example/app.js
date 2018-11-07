@@ -10,7 +10,6 @@ win.addEventListener('open', function() {
 			if (e.success)
 				handleDisto();
 		});
-
 });
 
 win.open();
