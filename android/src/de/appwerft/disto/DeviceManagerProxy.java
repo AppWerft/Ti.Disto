@@ -51,13 +51,13 @@ public class DeviceManagerProxy extends KrollProxy implements
 			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
 					MSG_STOP));
 	}
-	
+
 	private void handleStopFindingDevices() {
 		findDevicesRunning = false;
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
 	}
-	
+
 	@Override
 	public boolean handleMessage(Message msg) {
 		AsyncResult result = null;
@@ -81,7 +81,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 	}
 
 	private void handleFindAvailableDevices() {
-		LeicaSdk.setScanConfig(true, true, true, true);
+		// only YETI (X3*)
+		LeicaSdk.setScanConfig(false, false, true, false);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
@@ -114,7 +115,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		} else
 			Log.e(LCAT, "app == null");
 		// opened for all device types
-		
+
 	}
 
 	@Kroll.method
