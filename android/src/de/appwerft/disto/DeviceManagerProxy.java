@@ -32,7 +32,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	private DeviceManager deviceManager;
 	boolean findDevicesRunning = false;
 	boolean activityStopped = true;
-	KrollFunction onFoundCallback;
+	private KrollFunction onFoundCallback =null;
 	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
 	public static final String LCAT = TidistoModule.LCAT;
 	private static final int MSG_START = 500;
@@ -42,7 +42,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		super();
 		if (hasProperty(PROPERTY_ONFOUND)) {
 			onFoundCallback = (KrollFunction) getProperty(PROPERTY_ONFOUND);
-		} else Log.w(LCAT,"Missing property onFound");
+		} else Log.w(LCAT,"Missing property " +PROPERTY_ONFOUND);
 	}
 
 	@Kroll.method
@@ -107,18 +107,14 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "FOUND: " + device.getDeviceName());
 		KrollDict event = new KrollDict();
-		boolean isYeti = LeicaSdk.isYetiName(device.getDeviceName());
-		YetiDeviceProxy x3 = new YetiDeviceProxy(device);
-		event.put("device", x3);
-		event.put("isYeti", isYeti);
-		event.put("type", device.getClass().getName());
-
+		event.put("device",new YetiDeviceProxy(device));
+		event.put("type", device.getClass().getSimpleName());
 		event.put("success", true);
 		Log.i(LCAT, event.toString());
 		if (onFoundCallback != null) {
 			onFoundCallback.callAsync(getKrollObject(), event);
 		} else
-			Log.w(LCAT, "Missing callback property 'onFound'");
+			Log.w(LCAT, "Missing callback property "+ PROPERTY_ONFOUND);
 		deviceManager.stopFindingDevices();
 	}
 
