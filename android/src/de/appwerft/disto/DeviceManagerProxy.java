@@ -40,7 +40,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
-		
+
 	}
 
 	@Override
@@ -49,6 +49,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 			onFoundCallback = (KrollFunction) getProperty(PROPERTY_ONFOUND);
 		} else
 			Log.w(LCAT, "Missing property " + PROPERTY_ONFOUND);
+		if (options.containsKeyAndNotNull("onfound"))
+			onFoundCallback = (KrollFunction) options.get("onfound");
 		super.handleCreationDict(options);
 	}
 
