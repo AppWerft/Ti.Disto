@@ -125,7 +125,7 @@ DeviceManager.FoundAvailableDeviceListener, ErrorListener{
 		return this;
 	}
 	@Kroll.method
-	public void handleFindAvailableDevices() {
+	public void findAvailableDevices() {
 		TiApplication app = TiApplication.getInstance();
 		if (app != null) {
 			ctx = app.getApplicationContext();
