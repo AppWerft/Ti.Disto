@@ -25,7 +25,7 @@ import ch.leica.sdk.Listeners.ErrorListener;
 @Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { TidistoModule.PROPERTY_ONFOUND })
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
-	
+
 	private Context ctx;
 	private DeviceManager deviceManager;
 	boolean findDevicesRunning = false;
@@ -38,7 +38,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public DeviceManagerProxy() {
 		super();
 	}
-	
+
 	@Kroll.method
 	public void findAvailableDevices() {
 		if (TiApplication.isUIThread())
@@ -50,7 +50,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public boolean handleMessage(Message msg) {
-		Log.d(LCAT,"handleMessage " + msg.what);
+		Log.d(LCAT, "handleMessage " + msg.what);
 		AsyncResult result = null;
 		switch (msg.what) {
 		case MSG_START: {
@@ -102,6 +102,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 				"Model: " + device.getModel() + " Name: "
 						+ device.getDeviceName());
 	}
+
 	@Kroll.method
 	public void stopFindingDevices() {
 		if (TiApplication.isUIThread())
@@ -116,7 +117,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
 	}
-	
 
 	@Kroll.method
 	public KrollDict getConnectedDevices() {
@@ -129,13 +129,16 @@ public class DeviceManagerProxy extends KrollProxy implements
 		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
 		return res;
 	}
-	private class DummyActivity extends Activity  implements
-	DeviceManager.FoundAvailableDeviceListener{
+
+	private class DummyActivity extends Activity implements
+			DeviceManager.FoundAvailableDeviceListener {
 
 		@Override
-		public void onAvailableDeviceFound(Device arg0) {
-			// TODO Auto-generated method stub
-			
+		public void onAvailableDeviceFound(Device device) {
+			Log.i(LCAT,
+					"Model: " + device.getModel() + " Name: "
+							+ device.getDeviceName());
+
 		}
 
 	}
