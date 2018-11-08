@@ -96,7 +96,7 @@ public class YetiDeviceProxy extends KrollProxy implements
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
 		final String METHODTAG = ".onConnectionStateChanged";
-		KrollDict event = new KrollDict();
+		final KrollDict event = new KrollDict();
 		event.put("device", new YetiDeviceProxy(device));
 		event.put("state", connectionState.ordinal());
 
