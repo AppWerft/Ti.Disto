@@ -116,7 +116,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		event.put("success", true);
 		if (onFoundCallback!=null) {
 			onFoundCallback.callAsync(getKrollObject(), event);
-		}
+		} else Log.w(LCAT,"Missing callback property 'onFound'");
 		deviceManager.stopFindingDevices();
 	}
 
