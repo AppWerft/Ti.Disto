@@ -33,14 +33,10 @@ import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Types;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
-import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.IllegalArgumentCheckedException;
-import ch.leica.sdk.ErrorHandling.PermissionException;
-import ch.leica.sdk.Listeners.ErrorListener;
 
 @Kroll.module(name = "Tidisto", id = "de.appwerft.disto", propertyAccessors = { "onScanResult" })
-public class TidistoModule extends KrollModule  implements
-DeviceManager.FoundAvailableDeviceListener, ErrorListener{
+public class TidistoModule extends KrollModule {
 
 	/* Constants */
 	@Kroll.constant
@@ -86,7 +82,7 @@ DeviceManager.FoundAvailableDeviceListener, ErrorListener{
 	public static final String LCAT = "TiDisto";
 	public static final String PROPERTY_ONFOUND = "onFound";
 	private KrollFunction Callback;
-	boolean findDevicesRunning = false;
+
 	/**
 	 * Current selected device
 	 */
@@ -124,26 +120,7 @@ DeviceManager.FoundAvailableDeviceListener, ErrorListener{
 		LeicaSdk.setLogLevel(level);
 		return this;
 	}
-	@Kroll.method
-	public void findAvailableDevices() {
-		TiApplication app = TiApplication.getInstance();
-		if (app != null) {
-			ctx = app.getApplicationContext();
-			deviceManager = DeviceManager.getInstance(ctx);
-		} else
-			Log.e(LCAT, "app == null");
-		// only YETI (X3*)
-		LeicaSdk.setScanConfig(false, false, true, false);
-		deviceManager.setFoundAvailableDeviceListener(this);
-		deviceManager.setErrorListener(this);
-		try {
-			// method below crashes the app (lost reference?)
-			deviceManager.findAvailableDevices(ctx);
-		} catch (PermissionException e) {
-			Log.e(LCAT, "Missing permission: " + e.getMessage());
-		}
-		findDevicesRunning = true;
-	}
+
 	@Kroll.method
 	public void init() {
 		Log.i(LCAT, "====== START leica DISTO ========");
@@ -248,17 +225,6 @@ DeviceManager.FoundAvailableDeviceListener, ErrorListener{
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
 		super.onCreate(activity, savedInstanceState);
-	}
-	@Override
-	public void onError(ErrorObject err, Device device) {
-		Log.e(LCAT, err.getErrorMessage());
-	}
-
-	@Override
-	public void onAvailableDeviceFound(final Device device) {
-		Log.i(LCAT,
-				"Model: " + device.getModel() + " Name: "
-						+ device.getDeviceName());
 	}
 
 }
