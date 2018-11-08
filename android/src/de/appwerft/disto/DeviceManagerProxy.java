@@ -99,7 +99,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
-		Log.i(LCAT, "Hurra!");
+		Log.i(LCAT, "Hurra X3 is found!");
 		Log.i(LCAT,device.toString());
 	}
 
