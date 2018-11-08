@@ -80,7 +80,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.e(LCAT, "app == null");
 		// only YETI (X3*)
 		LeicaSdk.setScanConfig(false, false, true, false);
-		//deviceManager.setFoundAvailableDeviceListener(new DummyActivity());
+		deviceManager.setFoundAvailableDeviceListener(new DummyActivity());
 		//deviceManager.setErrorListener(this);
 		try {
 			// method below crashes the app (lost reference?)
