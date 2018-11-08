@@ -120,12 +120,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 			event.put("device", new YetiDeviceProxy(device));
 			event.put("type", device.getClass().getSimpleName());
 			event.put("success", true);
-			Log.i(LCAT, event.toString());
 			if (onFoundCallback != null) {
 				onFoundCallback.callAsync(getKrollObject(), event);
-			} else
-				Log.w(LCAT, "Missing callback property " + PROPERTY_ONFOUND);
-			deviceManager.stopFindingDevices();
+			} 
 		}
 	}
 
