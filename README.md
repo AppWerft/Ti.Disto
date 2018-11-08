@@ -81,5 +81,13 @@ Return a list of device. For every device you can the methods below:
 ### getDeviceName(): String
 ### connect()
 ### disconnect()
-### getAvailableCommands
-### sendCommand(): 
+### getAvailableCommands(): String[]
+### sendCommand():
+### setLaser(true | false)
+### getDistance()
+### startTracking()
+### stopTracking()
+### clear()
+### updateActivate()
+### updateWrite()
+### sendData()

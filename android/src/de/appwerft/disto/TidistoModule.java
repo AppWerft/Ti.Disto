@@ -227,4 +227,6 @@ public class TidistoModule extends KrollModule {
 		super.onCreate(activity, savedInstanceState);
 	}
 
+	
+
 }
