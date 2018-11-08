@@ -11,6 +11,7 @@ package de.appwerft.disto;
 import java.util.List;
 
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -35,99 +36,115 @@ import android.app.Activity;
 
 // This proxy can be created by calling Tidisto.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = TidistoModule.class)
-public class YetiDeviceProxy extends KrollProxy implements Device.ConnectionListener, ErrorListener, ReceivedDataListener {
+public class YetiDeviceProxy extends KrollProxy implements
+		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	// Standard Debugging variables
 	private static final String LCAT = TidistoModule.LCAT;
 	private Device currentDevice;
+	private KrollFunction connectCallback = null;
 
 	// Constructor
 	public YetiDeviceProxy() {
 		super();
 	}
+
 	public YetiDeviceProxy(Device device) {
 		super();
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);
-        currentDevice.setErrorListener(this);
-        currentDevice.setReceiveDataListener(this);
-        Log.i(LCAT,"YETI created");
+		currentDevice.setErrorListener(this);
+		currentDevice.setReceiveDataListener(this);
+		Log.i(LCAT, "YETI created");
 	}
-	
+
 	@Kroll.method
-	public void connect() {
+	public void connect(KrollFunction c) {
+		connectCallback = c;
 		currentDevice.connect();
 	}
-	
+
 	@Kroll.getProperty
 	@Kroll.method
 	public String getName() {
 		return currentDevice.getDeviceName();
 	}
+
 	@Kroll.getProperty
 	@Kroll.method
 	public String getId() {
 		return currentDevice.getDeviceID();
 	}
-	
+
 	@Kroll.getProperty
 	@Kroll.method
 	public KrollDict getAllCharacteristics() {
 		KrollDict res = new KrollDict();
 		try {
-			List<BleCharacteristic> characteristics = currentDevice.getAllCharacteristics();
+			List<BleCharacteristic> characteristics = currentDevice
+					.getAllCharacteristics();
 			for (BleCharacteristic characteristic : characteristics) {
-				
+
 			}
-			
+
 		} catch (DeviceException e) {
 			e.printStackTrace();
 		}
 		return res;
 	}
-	
-	@Override
-    public void onConnectionStateChanged(final Device device, final Device.ConnectionState connectionState) {
-        final String METHODTAG = ".onConnectionStateChanged";
-        Log.i(LCAT,"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: " + connectionState);
-        try {
-            if (connectionState == Device.ConnectionState.disconnected) {
-                return;
-            }
-            if(connectionState == Device.ConnectionState.connected){
-                try {
-                    if (currentDevice != null && currentDevice instanceof BleDevice ) {
-                        currentDevice.startBTConnection(new Device.BTConnectionCallback() {
-                            @Override
-                            public void onFinished() {
-                                Log.d(METHODTAG, "NOW YOU CAN SEND COMMANDS TO THE DEVICE");
-           
-                            }
-                        });
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return;
-            }
-        } catch (Exception e) {
-            Log.e(LCAT, METHODTAG, e);
-        }
-    }
 
-    @Override
-    public void onError(ErrorObject errorObject, Device device) {
-   //     uiHelper.setLog(this, log, "onError" + ": " + errorObject.getErrorMessage() + ", errorCode: " + errorObject.getErrorCode());
-    }
+	@Override
+	public void onConnectionStateChanged(final Device device,
+			final Device.ConnectionState connectionState) {
+		final String METHODTAG = ".onConnectionStateChanged";
+		KrollDict event = new KrollDict();
+		event.put("device", new YetiDeviceProxy(device));
+		event.put("state", connectionState.ordinal());
+
+		Log.i(LCAT, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: "
+				+ connectionState);
+		try {
+			if (connectionState == Device.ConnectionState.disconnected) {
+				return;
+			}
+			if (connectionState == Device.ConnectionState.connected) {
+				try {
+					if (currentDevice != null
+							&& currentDevice instanceof BleDevice) {
+						currentDevice
+								.startBTConnection(new Device.BTConnectionCallback() {
+									@Override
+									public void onFinished() {
+										
+										if (connectCallback != null) {
+											connectCallback.callAsync(
+													getKrollObject(), event);
+											
+										}
+									}
+								});
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return;
+			}
+		} catch (Exception e) {
+			Log.e(LCAT, METHODTAG, e);
+		}
+	}
+
+	@Override
+	public void onError(ErrorObject errorObject, Device device) {
+		// uiHelper.setLog(this, log, "onError" + ": " +
+		// errorObject.getErrorMessage() + ", errorCode: " +
+		// errorObject.getErrorCode());
+	}
 
 	@Override
 	public void onAsyncDataReceived(ReceivedData arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
-
-
 
 }
