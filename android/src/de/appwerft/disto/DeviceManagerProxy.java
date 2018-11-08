@@ -40,10 +40,16 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
+		
+	}
+
+	@Override
+	public void handleCreationDict(KrollDict options) {
 		if (hasProperty(PROPERTY_ONFOUND)) {
 			onFoundCallback = (KrollFunction) getProperty(PROPERTY_ONFOUND);
 		} else
 			Log.w(LCAT, "Missing property " + PROPERTY_ONFOUND);
+		super.handleCreationDict(options);
 	}
 
 	@Kroll.method
@@ -107,11 +113,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
 		if (device instanceof YetiDevice) {
-			YetiDevice yetiDevice = (YetiDevice)device;
-			Log.i(LCAT, yetiDevice.modelName);
-			Log.i(LCAT, yetiDevice.getCurrentSoftwareVersion());
-			
-			Log.i(LCAT, "FOUND: " + device.getDeviceName());
+			YetiDevice yetiDevice = (YetiDevice) device;
 			KrollDict event = new KrollDict();
 			event.put("device", new YetiDeviceProxy(device));
 			event.put("type", device.getClass().getSimpleName());
