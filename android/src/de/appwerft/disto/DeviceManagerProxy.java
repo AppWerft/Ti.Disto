@@ -50,7 +50,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public boolean handleMessage(Message msg) {
-		Log.d(LCAT,"handleMessage " + msgwhat);
+		Log.d(LCAT,"handleMessage " + msg.what);
 		AsyncResult result = null;
 		switch (msg.what) {
 		case MSG_START: {
