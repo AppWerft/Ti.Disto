@@ -136,6 +136,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 		@Override
 		public void onAvailableDeviceFound(Device device) {
+			Log.d(LCAT,"Hurra!");
 			/*Log.i(LCAT,
 					"Model: " + device.getModel() + " Name: "
 							+ device.getDeviceName());*/
