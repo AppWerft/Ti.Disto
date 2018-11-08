@@ -101,6 +101,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "Hurra X3 is found!");
 		Log.i(LCAT,device.getDeviceName());
+		Log.i(LCAT,device.getModel());
+		Log.i(LCAT,device.getDeviceID());
+		
+		
 	}
 
 	@Kroll.method
