@@ -31,6 +31,8 @@ import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
 import ch.leica.sdk.commands.ReceivedData;
+import ch.leica.sdk.commands.ReceivedWifiDataPacket;
+import ch.leica.sdk.commands.ReceivedYetiDataPacket;
 import ch.leica.sdk.connection.ble.BleCharacteristic;
 import android.app.Activity;
 
@@ -42,6 +44,7 @@ public class YetiDeviceProxy extends KrollProxy implements
 	private static final String LCAT = TidistoModule.LCAT;
 	private Device currentDevice;
 	private KrollFunction connectCallback = null;
+	private KrollFunction dataCallback = null;
 
 	// Constructor
 	public YetiDeviceProxy() {
@@ -58,8 +61,13 @@ public class YetiDeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void connect(KrollFunction c) {
-		connectCallback = c;
+	public void connect(KrollDict o) {
+		if (o.containsKeyAndNotNull("onconnect")) {
+			connectCallback = (KrollFunction) o.get("onconnect");
+		}
+		if (o.containsKeyAndNotNull("ondata")) {
+			dataCallback = (KrollFunction) o.get("ondata");
+		}
 		currentDevice.connect();
 	}
 
@@ -115,11 +123,11 @@ public class YetiDeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-										
+
 										if (connectCallback != null) {
 											connectCallback.callAsync(
 													getKrollObject(), event);
-											
+
 										}
 									}
 								});
@@ -142,9 +150,87 @@ public class YetiDeviceProxy extends KrollProxy implements
 	}
 
 	@Override
-	public void onAsyncDataReceived(ReceivedData arg0) {
-		// TODO Auto-generated method stub
+	public void onAsyncDataReceived(ReceivedData receivedData) {
+		if (receivedData.dataPacket instanceof ReceivedYetiDataPacket) {
+			getYetiInformation((ReceivedYetiDataPacket) receivedData.dataPacket);
+		}
 
+	}
+
+	private void getYetiInformation(ReceivedYetiDataPacket dataPacket) {
+		KrollDict data = new KrollDict();
+		KrollDict event = new KrollDict();
+		try {
+			data.put("Distance: ", dataPacket.getBasicMeasurements()
+					.getDistance());
+			data.put("DistanceUnit: ", dataPacket.getBasicMeasurements()
+					.getDistanceUnit());
+			data.put("Inclination: ", dataPacket.getBasicMeasurements()
+					.getInclination());
+			data.put("InclinationUnit: ", dataPacket.getBasicMeasurements()
+					.getInclinationUnit());
+			data.put("Direction: ", dataPacket.getBasicMeasurements()
+					.getDirection());
+			data.put("DirectionUnit: ", dataPacket.getBasicMeasurements()
+					.getDirectionUnit());
+			data.put("V_temp: ", dataPacket.getBasicMeasurements()
+					.getTimestampAndFlags());
+
+			data.put("HzAngle: ", dataPacket.getP2P().getHzAngle());
+			data.put("VeAngle: ", dataPacket.getP2P().getVeAngle());
+			data.put("InclinationStatus: ", dataPacket.getP2P()
+					.getInclinationStatus());
+			data.put("TimestampAndFlags: ", dataPacket.getP2P()
+					.getTimestampAndFlags());
+
+			data.put("Quaternion_X: ", dataPacket.getQuaternion()
+					.getQuaternion_X());
+			data.put("Quaternion_Y: ", dataPacket.getQuaternion()
+					.getQuaternion_Y());
+			data.put("Quaternion_Z: ", dataPacket.getQuaternion()
+					.getQuaternion_Z());
+			data.put("TimestampAndFlags: ", dataPacket.getQuaternion()
+					.getTimestampAndFlags());
+
+			data.put("Magnetometer_X: ", dataPacket.getMagnetometer()
+					.getMagnetometer_X());
+			data.put("Magnetometer_Y: ", dataPacket.getMagnetometer()
+					.getMagnetometer_Y());
+			data.put("Magnetometer_Z: ", dataPacket.getMagnetometer()
+					.getMagnetometer_Z());
+			data.put("TimestampAndFlags: ", dataPacket.getMagnetometer()
+					.getTimestampAndFlags());
+			data.put("Acceleration_X: ", dataPacket
+					.getAccelerationAndRotation().getAcceleration_X());
+			data.put("Acceleration_Y: ", dataPacket
+					.getAccelerationAndRotation().getAcceleration_Y());
+			data.put("Acceleration_Z: ", dataPacket
+					.getAccelerationAndRotation().getAcceleration_Z());
+			data.put("AccSensitivity: ", dataPacket
+					.getAccelerationAndRotation().getAccSensitivity());
+			data.put("Rotation_X: ", dataPacket.getAccelerationAndRotation()
+					.getRotation_X());
+			data.put("Rotation_Y: ", dataPacket.getAccelerationAndRotation()
+					.getRotation_Y());
+			data.put("Rotation_Z: ", dataPacket.getAccelerationAndRotation()
+					.getRotation_Z());
+			data.put("RotationSensitivity: ", dataPacket
+					.getAccelerationAndRotation().getRotationSensitivity());
+			data.put("TimestampAndFlags: ", dataPacket
+					.getAccelerationAndRotation().getTimestampAndFlags());
+			data.put("DistocomReceivedMessage: ",
+					dataPacket.getDistocomReceivedMessage());
+			data.put("Distocom: ", dataPacket.getDistocom().getRawString());
+			event.put("data", data);
+			event.put("success", true);
+				
+		} catch (Exception e) {
+			event.put("success", false);
+			event.put("error", e.getMessage());
+			
+		}
+		if (dataCallback != null)
+			dataCallback.callAsync(getKrollObject(), event);
 	}
 
 }
