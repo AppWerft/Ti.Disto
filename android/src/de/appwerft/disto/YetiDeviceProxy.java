@@ -88,41 +88,31 @@ public class YetiDeviceProxy extends KrollProxy implements Device.ConnectionList
 	@Override
     public void onConnectionStateChanged(final Device device, final Device.ConnectionState connectionState) {
         final String METHODTAG = ".onConnectionStateChanged";
+        Log.i(LCAT,"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: " + connectionState);
         try {
             if (connectionState == Device.ConnectionState.disconnected) {
                 return;
             }
             if(connectionState == Device.ConnectionState.connected){
-
-//                uiHelper.setLog(InformationActivity.this, log, "connected to device.");
-                // start bt connection
                 try {
                     if (currentDevice != null && currentDevice instanceof BleDevice ) {
                         currentDevice.startBTConnection(new Device.BTConnectionCallback() {
                             @Override
                             public void onFinished() {
                                 Log.d(METHODTAG, "NOW YOU CAN SEND COMMANDS TO THE DEVICE");
-            //                    uiHelper.setLog(InformationActivity.this, log, "NOW YOU CAN SEND COMMANDS TO THE DEVICE");
-
-
+           
                             }
                         });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-              
                 return;
             }
-
-
-
         } catch (Exception e) {
             Log.e(LCAT, METHODTAG, e);
         }
-
     }
 
     @Override
