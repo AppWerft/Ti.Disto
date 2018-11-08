@@ -24,7 +24,7 @@ import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
 
-@Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { TidistoModule.PROPERTY_ONFOUND })
+@Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
 
@@ -107,7 +107,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "FOUND: " + device.getDeviceName());
 		KrollDict event = new KrollDict();
-		event.put("device",new YetiDeviceProxy(device));
+		event.put("device", new YetiDeviceProxy(device));
 		event.put("type", device.getClass().getSimpleName());
 		event.put("success", true);
 		Log.i(LCAT, event.toString());
