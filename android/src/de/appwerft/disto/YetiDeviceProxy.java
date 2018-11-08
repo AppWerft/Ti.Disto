@@ -41,6 +41,9 @@ public class YetiDeviceProxy extends KrollProxy implements Device.ConnectionList
 	private Device currentDevice;
 
 	// Constructor
+	public YetiDeviceProxy() {
+		super();
+	}
 	public YetiDeviceProxy(Device device) {
 		super();
 		currentDevice = device;
@@ -48,6 +51,11 @@ public class YetiDeviceProxy extends KrollProxy implements Device.ConnectionList
         currentDevice.setErrorListener(this);
         currentDevice.setReceiveDataListener(this);
         Log.i(LCAT,"YETI created");
+	}
+	
+	@Kroll.method
+	public void connect() {
+		currentDevice.connect();
 	}
 	
 	@Kroll.getProperty
