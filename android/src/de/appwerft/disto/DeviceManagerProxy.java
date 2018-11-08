@@ -81,7 +81,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		// only YETI (X3*)
 		LeicaSdk.setScanConfig(false, false, true, false);
 		deviceManager.setFoundAvailableDeviceListener(new DummyActivity());
-		//deviceManager.setErrorListener(this);
+		deviceManager.setErrorListener(this);
 		try {
 			// method below crashes the app (lost reference?)
 			deviceManager.findAvailableDevices(ctx);
@@ -128,5 +128,15 @@ public class DeviceManagerProxy extends KrollProxy implements
 		}
 		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
 		return res;
+	}
+	private class DummyActivity extends Activity  implements
+	DeviceManager.FoundAvailableDeviceListener{
+
+		@Override
+		public void onAvailableDeviceFound(Device arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
 	}
 }
