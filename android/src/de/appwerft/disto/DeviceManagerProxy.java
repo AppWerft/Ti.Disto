@@ -35,6 +35,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 	private static final int MSG_START = 500;
 	private static final int MSG_STOP = 501;
 
+	public DeviceManagerProxy() {
+		super();
+	}
+	
 	@Kroll.method
 	public void findAvailableDevices() {
 		if (TiApplication.isUIThread())
@@ -44,23 +48,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 					MSG_START));
 	}
 
-	@Kroll.method
-	public void stopFindingDevices() {
-		if (TiApplication.isUIThread())
-			handleStopFindingDevices();
-		else
-			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
-					MSG_STOP));
-	}
-
-	private void handleStopFindingDevices() {
-		findDevicesRunning = false;
-		if (deviceManager != null)
-			deviceManager.stopFindingDevices();
-	}
-
 	@Override
 	public boolean handleMessage(Message msg) {
+		Log.d(LCAT,"handleMessage " + msgwhat);
 		AsyncResult result = null;
 		switch (msg.what) {
 		case MSG_START: {
@@ -112,14 +102,21 @@ public class DeviceManagerProxy extends KrollProxy implements
 				"Model: " + device.getModel() + " Name: "
 						+ device.getDeviceName());
 	}
-
-	public DeviceManagerProxy() {
-		super();
-		
-		
-		// opened for all device types
-
+	@Kroll.method
+	public void stopFindingDevices() {
+		if (TiApplication.isUIThread())
+			handleStopFindingDevices();
+		else
+			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
+					MSG_STOP));
 	}
+
+	private void handleStopFindingDevices() {
+		findDevicesRunning = false;
+		if (deviceManager != null)
+			deviceManager.stopFindingDevices();
+	}
+	
 
 	@Kroll.method
 	public KrollDict getConnectedDevices() {
