@@ -132,13 +132,13 @@ public class DeviceManagerProxy extends KrollProxy implements
 	}
 
 	private class DummyActivity extends Activity implements
-			DeviceManager.FoundAvailableDeviceListener,ErrorListener {
+			DeviceManager.FoundAvailableDeviceListener, ErrorListener {
 
 		@Override
 		public void onAvailableDeviceFound(Device device) {
-			Log.i(LCAT,
+			/*Log.i(LCAT,
 					"Model: " + device.getModel() + " Name: "
-							+ device.getDeviceName());
+							+ device.getDeviceName());*/
 
 		}
 
