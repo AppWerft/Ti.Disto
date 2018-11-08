@@ -32,7 +32,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	private DeviceManager deviceManager;
 	boolean findDevicesRunning = false;
 	boolean activityStopped = true;
-	KrollFunction onFoundCallback ;
+	KrollFunction onFoundCallback;
 	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
 	public static final String LCAT = TidistoModule.LCAT;
 	private static final int MSG_START = 500;
@@ -41,8 +41,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public DeviceManagerProxy() {
 		super();
 		if (hasProperty(PROPERTY_ONFOUND)) {
-			onFoundCallback=(KrollFunction)getProperty(PROPERTY_ONFOUND);
-		}
+			onFoundCallback = (KrollFunction) getProperty(PROPERTY_ONFOUND);
+		} else Log.w(LCAT,"Missing property onFound");
 	}
 
 	@Kroll.method
@@ -85,7 +85,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		} else
 			Log.e(LCAT, "app == null");
 		// only YETI (X3*)
-		
+
 		LeicaSdk.setScanConfig(false, false, true, false);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
@@ -105,18 +105,20 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
-		Log.i(LCAT, "FOUND: "+ device.getDeviceName());
+		Log.i(LCAT, "FOUND: " + device.getDeviceName());
 		KrollDict event = new KrollDict();
 		boolean isYeti = LeicaSdk.isYetiName(device.getDeviceName());
 		YetiDeviceProxy x3 = new YetiDeviceProxy(device);
-	 	event.put("device", x3);
+		event.put("device", x3);
 		event.put("isYeti", isYeti);
 		event.put("type", device.getClass().getName());
-		
+
 		event.put("success", true);
-		if (onFoundCallback!=null) {
+		Log.i(LCAT, event.toString());
+		if (onFoundCallback != null) {
 			onFoundCallback.callAsync(getKrollObject(), event);
-		} else Log.w(LCAT,"Missing callback property 'onFound'");
+		} else
+			Log.w(LCAT, "Missing callback property 'onFound'");
 		deviceManager.stopFindingDevices();
 	}
 
@@ -143,7 +145,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 		for (Device device : devices) {
 			deviceArray.add(new YetiDeviceProxy(device));
 		}
-		res.put("devices", deviceArray.toArray(new YetiDeviceProxy[devices.size()]));
+		res.put("devices",
+				deviceArray.toArray(new YetiDeviceProxy[devices.size()]));
 		return res;
 	}
 
