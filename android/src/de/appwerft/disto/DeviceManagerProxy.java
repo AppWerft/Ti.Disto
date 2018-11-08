@@ -82,6 +82,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 	}
 
 	private void handleFindAvailableDevices() {
+		TiApplication app = TiApplication.getInstance();
+		if (app != null) {
+			ctx = app.getApplicationContext();
+			deviceManager = DeviceManager.getInstance(ctx);
+		} else
+			Log.e(LCAT, "app == null");
 		// only YETI (X3*)
 		LeicaSdk.setScanConfig(false, false, true, false);
 		deviceManager.setFoundAvailableDeviceListener(this);
@@ -109,12 +115,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
-		TiApplication app = TiApplication.getInstance();
-		if (app != null) {
-			ctx = app.getApplicationContext();
-			deviceManager = DeviceManager.getInstance(ctx);
-		} else
-			Log.e(LCAT, "app == null");
+		
+		
 		// opened for all device types
 
 	}
