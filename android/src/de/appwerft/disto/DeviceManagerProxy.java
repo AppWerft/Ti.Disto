@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.AsyncResult;
@@ -31,6 +32,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	private DeviceManager deviceManager;
 	boolean findDevicesRunning = false;
 	boolean activityStopped = true;
+	KrollFunction onFoundCallback ;
 	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
 	public static final String LCAT = TidistoModule.LCAT;
 	private static final int MSG_START = 500;
@@ -38,6 +40,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public DeviceManagerProxy() {
 		super();
+		if (hasProperty(PROPERTY_ONFOUND)) {
+			onFoundCallback=(KrollFunction)getProperty(PROPERTY_ONFOUND);
+		}
 	}
 
 	@Kroll.method
@@ -100,12 +105,14 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
-		Log.i(LCAT, "Hurra X3 is found!");
-		Log.i(LCAT,device.getDeviceName());
-	//	Log.i(LCAT,device.getModel());
-		Log.i(LCAT,device.getDeviceID());
+		KrollDict event = new KrollDict();
+		YetiDeviceProxy x3 = new YetiDeviceProxy(device);
+		event.put("device", x3);
+		event.put("success", true);
+		if (onFoundCallback!=null) {
+			onFoundCallback.callAsync(getKrollObject(), event);
+		}
 		deviceManager.stopFindingDevices();
-		
 	}
 
 	@Kroll.method
