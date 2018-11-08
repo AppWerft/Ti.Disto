@@ -115,9 +115,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
 		if (device instanceof YetiDevice) {
-			YetiDevice yetiDevice = (YetiDevice) device;
 			KrollDict event = new KrollDict();
-			event.put("device", new YetiDeviceProxy(device));
+			event.put("device", new DeviceProxy(device));
 			event.put("type", device.getClass().getSimpleName());
 			event.put("success", true);
 			if (onFoundCallback != null) {
@@ -144,13 +143,13 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public KrollDict getConnectedDevices() {
 		KrollDict res = new KrollDict();
-		List<YetiDeviceProxy> deviceArray = new ArrayList<YetiDeviceProxy>();
+		List<DeviceProxy> deviceArray = new ArrayList<DeviceProxy>();
 		List<Device> devices = deviceManager.getConnectedDevices();
 		for (Device device : devices) {
-			deviceArray.add(new YetiDeviceProxy(device));
+			deviceArray.add(new DeviceProxy(device));
 		}
 		res.put("devices",
-				deviceArray.toArray(new YetiDeviceProxy[devices.size()]));
+				deviceArray.toArray(new DeviceProxy[devices.size()]));
 		return res;
 	}
 

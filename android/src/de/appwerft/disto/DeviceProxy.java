@@ -40,7 +40,7 @@ import android.app.Activity;
 
 // This proxy can be created by calling Tidisto.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = TidistoModule.class)
-public class YetiDeviceProxy extends KrollProxy implements
+public class DeviceProxy extends KrollProxy implements
 		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	// Standard Debugging variables
 	private static final String LCAT = TidistoModule.LCAT;
@@ -49,11 +49,11 @@ public class YetiDeviceProxy extends KrollProxy implements
 	private KrollFunction dataCallback = null;
 
 	// Constructor
-	public YetiDeviceProxy() {
+	public DeviceProxy() {
 		super();
 	}
 
-	public YetiDeviceProxy(Device device) {
+	public DeviceProxy(Device device) {
 		super();
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);
@@ -144,7 +144,7 @@ public class YetiDeviceProxy extends KrollProxy implements
 			final Device.ConnectionState connectionState) {
 		final String METHODTAG = ".onConnectionStateChanged";
 		final KrollDict event = new KrollDict();
-		event.put("device", new YetiDeviceProxy(device));
+		event.put("device", new DeviceProxy(device));
 		event.put("state", connectionState.ordinal());
 
 		Log.i(LCAT, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
