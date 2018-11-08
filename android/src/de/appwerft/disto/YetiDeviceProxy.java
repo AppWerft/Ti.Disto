@@ -35,13 +35,13 @@ import android.app.Activity;
 
 // This proxy can be created by calling Tidisto.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = TidistoModule.class)
-public class DeviceProxy extends KrollProxy implements Device.ConnectionListener, ErrorListener, ReceivedDataListener {
+public class YetiDeviceProxy extends KrollProxy implements Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	// Standard Debugging variables
 	private static final String LCAT = "ExampleProxy";
 	private Device currentDevice;
 
 	// Constructor
-	public DeviceProxy(Device device) {
+	public YetiDeviceProxy(Device device) {
 		super();
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);

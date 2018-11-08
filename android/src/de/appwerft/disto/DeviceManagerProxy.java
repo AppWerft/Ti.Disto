@@ -100,7 +100,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "Hurra X3 is found!");
-		Log.i(LCAT,device.toString());
+		Log.i(LCAT,device.getDeviceName());
 	}
 
 	@Kroll.method
@@ -121,12 +121,12 @@ public class DeviceManagerProxy extends KrollProxy implements
 	@Kroll.method
 	public KrollDict getConnectedDevices() {
 		KrollDict res = new KrollDict();
-		List<DeviceProxy> deviceArray = new ArrayList<DeviceProxy>();
+		List<YetiDeviceProxy> deviceArray = new ArrayList<YetiDeviceProxy>();
 		List<Device> devices = deviceManager.getConnectedDevices();
 		for (Device device : devices) {
-			deviceArray.add(new DeviceProxy(device));
+			deviceArray.add(new YetiDeviceProxy(device));
 		}
-		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
+		res.put("devices", deviceArray.toArray(new YetiDeviceProxy[devices.size()]));
 		return res;
 	}
 
