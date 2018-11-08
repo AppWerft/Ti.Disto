@@ -24,6 +24,7 @@ import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
 
+import ch.leica.sdk.Types;
 import ch.leica.sdk.Devices.BleDevice;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
@@ -33,6 +34,7 @@ import ch.leica.sdk.Listeners.ReceivedDataListener;
 import ch.leica.sdk.commands.ReceivedData;
 import ch.leica.sdk.commands.ReceivedWifiDataPacket;
 import ch.leica.sdk.commands.ReceivedYetiDataPacket;
+import ch.leica.sdk.commands.response.Response;
 import ch.leica.sdk.connection.ble.BleCharacteristic;
 import android.app.Activity;
 
@@ -81,6 +83,43 @@ public class YetiDeviceProxy extends KrollProxy implements
 	@Kroll.method
 	public String getId() {
 		return currentDevice.getDeviceID();
+	}
+
+	@Kroll.method
+	public String[] getAvailableCommands() {
+		if (currentDevice != null)
+			return currentDevice.getAvailableCommands();
+		else
+			return null;
+	}
+
+	@Kroll.method
+	public void sendCommand(KrollDict o) {
+		String cmd="";
+		KrollFunction onDataCallback;
+		if (o.containsKeyAndNotNull("command")) {
+			cmd = o.getString("command");
+		}
+		if (o.containsKeyAndNotNull("ondata")) {
+			onDataCallback = (KrollFunction)o.get("ondata");
+		}
+		final String command = cmd;
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Response response = currentDevice
+							.sendCommand(Types.Commands.valueOf(command));
+					response.waitForData();
+
+					//readDataFromResponseObject(response);
+				} catch (DeviceException e) {
+
+				}
+			}
+
+		}).start();
 	}
 
 	@Kroll.getProperty
@@ -223,11 +262,9 @@ public class YetiDeviceProxy extends KrollProxy implements
 			data.put("Distocom: ", dataPacket.getDistocom().getRawString());
 			event.put("data", data);
 			event.put("success", true);
-				
 		} catch (Exception e) {
 			event.put("success", false);
 			event.put("error", e.getMessage());
-			
 		}
 		if (dataCallback != null)
 			dataCallback.callAsync(getKrollObject(), event);

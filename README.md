@@ -10,18 +10,20 @@ const Disto = require("de.appwerft.disto");
 !Dist.isBluetoothAvailable() && Dist.enableBLE();
 
 if (Disto.verifyPermissions() == true) {
-	Disto.addLicence("1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+")
-		.addScanConfig(Disto.distoBle) //optional
-		.enableBLE()  //optional
+	Disto
+		.setLogLevel(Disto.DEBUG)
 		.enableDebugging() //optional
 		.setTimeout(2000) //optional
 		.init() 
 }
 const Dm = Disto.createDeviceManager();
 
-Dm.findAvailableDevices();
-Dm.onFound= function() {
-}
+Dm.findAvailableDevices({
+	onfound : function(e) {
+		console.log(e);
+	},
+	yeti : true
+});
 
 const DialogSelectDevice = require('dialog')();
 DialogSelectDevice.shwo();
@@ -35,13 +37,6 @@ DialogSelectDevice.onSelect() {
 
 }
 
-Disto.onAvailableDeviceFound(function(e) {
-	Disto.stopFindingDevices();
-	const Device = e.device;
-	console.log("DeviceId: "  + Device.getDeviceId());
-	console.log("DeviceName: " + Device.getDeviceName();
-	DialogSelectDevice.addDevice(Device);
-};
 
 ```
 ### Constants
@@ -64,10 +59,19 @@ Works only if BLUETOOTH_ADMIN permission is granted.
 ### getVersion(): String
 ### init();
 Reads the `command.json` in modules assets folder.
-### addLicence(String)
 ### verifyPermissions(): boolean
-### findAvailableDevices(Callback)
-Starts the scan. In every callback you will receive a device.
+
+### createDeviceManager()
+
+##Methods of DeviceManager 
+
+### findAvailableDevices({})
+
+#### Properties
+- yeti: true
+- onfound: Function 
+
+
 ### getConnectedDevices(): Device[]
 Return a list of device. For every device you can the methods below:	
 
@@ -75,7 +79,7 @@ Return a list of device. For every device you can the methods below:
 
 ### getDeviceID(): String
 ### getDeviceName(): String
-### getModel(): String
 ### connect()
 ### disconnect()
-### unpairDevice();
+### getAvailableCommands
+### sendCommand(): 
