@@ -18,6 +18,7 @@ import android.os.Message;
 import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
+import ch.leica.sdk.Devices.YetiDevice;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
@@ -101,9 +102,9 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void onAvailableDeviceFound(final Device device) {
 		Log.i(LCAT, "Hurra X3 is found!");
 		Log.i(LCAT,device.getDeviceName());
-		Log.i(LCAT,device.getModel());
-		Log.i(LCAT,device.getDeviceID());
-		
+	//	Log.i(LCAT,device.getModel());
+	//	Log.i(LCAT,device.getDeviceID());
+	//	deviceManager.stopFindingDevices();
 		
 	}
 
