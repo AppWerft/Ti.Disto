@@ -37,7 +37,7 @@ import android.app.Activity;
 @Kroll.proxy(creatableInModule = TidistoModule.class)
 public class YetiDeviceProxy extends KrollProxy implements Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	// Standard Debugging variables
-	private static final String LCAT = "ExampleProxy";
+	private static final String LCAT = TidistoModule.LCAT;
 	private Device currentDevice;
 
 	// Constructor
@@ -47,15 +47,9 @@ public class YetiDeviceProxy extends KrollProxy implements Device.ConnectionList
 		currentDevice.setConnectionListener(this);
         currentDevice.setErrorListener(this);
         currentDevice.setReceiveDataListener(this);
+        Log.i(LCAT,"YETI created");
 	}
-
 	
-	// Methods
-	@Kroll.method
-	public void printMessage(String message) {
-		Log.d(LCAT, "printing message: " + message);
-	}
-
 	@Kroll.getProperty
 	@Kroll.method
 	public String getName() {

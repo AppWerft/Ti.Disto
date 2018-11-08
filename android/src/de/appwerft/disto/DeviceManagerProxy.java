@@ -105,9 +105,14 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
+		Log.i(LCAT, "FOUND: "+ device.getDeviceName());
 		KrollDict event = new KrollDict();
+		boolean isYeti = LeicaSdk.isYetiName(device.getDeviceName());
 		YetiDeviceProxy x3 = new YetiDeviceProxy(device);
-		event.put("device", x3);
+	 	event.put("device", x3);
+		event.put("isYeti", isYeti);
+		event.put("type", device.getClass().getName());
+		
 		event.put("success", true);
 		if (onFoundCallback!=null) {
 			onFoundCallback.callAsync(getKrollObject(), event);
