@@ -36,6 +36,7 @@ import ch.leica.sdk.commands.ReceivedData;
 import ch.leica.sdk.commands.ReceivedWifiDataPacket;
 import ch.leica.sdk.commands.ReceivedYetiDataPacket;
 import ch.leica.sdk.commands.response.Response;
+import ch.leica.sdk.commands.response.ResponsePlain;
 import ch.leica.sdk.connection.ble.BleCharacteristic;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -140,7 +141,30 @@ public class DeviceProxy extends KrollProxy implements
 		commandDialog.show();
 	}
 
-	
+	public void readDataFromResponseObject(final Response response) {
+
+		final String METHODTAG = ".readDataFromResponseObject";
+		
+
+		runOnMainThread(new Runnable() {
+			@Override
+			public void run() {
+
+				if (response.getError() != null) {
+
+		
+					return;
+				}
+
+				if (response instanceof ResponsePlain) {
+					//extractDataFromPlainResponse((ResponsePlain) response);
+				}
+			}
+		});
+		
+
+
+}
 	
 	@Kroll.method
 	public void sendCommand(KrollDict o) {
