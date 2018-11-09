@@ -45,7 +45,7 @@ import android.content.DialogInterface;
 // This proxy can be created by calling Tidisto.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceProxy extends KrollProxy implements
-		Device.ConnectionListener, ErrorListener, ReceivedDataListener{
+		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	// Standard Debugging variables
 	private static final String LCAT = TidistoModule.LCAT;
 	private Device currentDevice;
@@ -164,6 +164,17 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
+	public void startTracker() {
+		if (currentDevice != null) {
+			currentDevice.setConnectionListener(this);
+			currentDevice.setReceiveDataListener(this);
+			currentDevice.setErrorListener(this);
+		}
+
+	}
+	
+	
+	@Kroll.method
 	public void sendCommand(KrollDict o) {
 		String cmd = "";
 
@@ -261,7 +272,9 @@ public class DeviceProxy extends KrollProxy implements
 	public void onAsyncDataReceived(ReceivedData receivedData) {
 		if (receivedData.dataPacket instanceof ReceivedYetiDataPacket) {
 			getYetiInformation((ReceivedYetiDataPacket) receivedData.dataPacket);
-		} else Log.w(LCAT, "receivedData type="+receivedData.dataPacket.getClass().getSimpleName());
+		} else
+			Log.w(LCAT, "receivedData type="
+					+ receivedData.dataPacket.getClass().getSimpleName());
 
 	}
 
@@ -329,7 +342,7 @@ public class DeviceProxy extends KrollProxy implements
 			data.put("DistocomReceivedMessage: ",
 					dataPacket.getDistocomReceivedMessage());
 			data.put("Distocom: ", dataPacket.getDistocom().getRawString());
-			Log.d(LCAT,data.toString());
+			Log.d(LCAT, data.toString());
 			event.put("data", data);
 			event.put("success", true);
 		} catch (Exception e) {
