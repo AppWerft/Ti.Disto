@@ -51,7 +51,7 @@ public class DeviceProxy extends KrollProxy implements
 	private Device currentDevice;
 	private KrollFunction connectCallback = null;
 	private KrollFunction dataCallback = null;
-	private AlertDialog commandDialog =null;
+	private AlertDialog commandDialog = null;
 
 	// Constructor
 	public DeviceProxy() {
@@ -100,43 +100,44 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void startBaseMode() {
-	//	if (currentDevice != null)
-		//	currentDevice.StartBaseMode();
+		// if (currentDevice != null)
+		// currentDevice.StartBaseMode();
 	}
-	
+
 	@Kroll.method
 	public void showCommandDialog() {
-
-		
-		
-
-		AlertDialog.Builder comandDialogBuilder = new AlertDialog.Builder(TiApplication.getAppCurrentActivity());
+		AlertDialog.Builder comandDialogBuilder = new AlertDialog.Builder(
+				TiApplication.getAppCurrentActivity());
 		comandDialogBuilder.setTitle("Select Command");
-		comandDialogBuilder.setItems(currentDevice.getAvailableCommands(), new DialogInterface.OnClickListener() {
+		comandDialogBuilder.setItems(currentDevice.getAvailableCommands(),
+				new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				final String command = currentDevice.getAvailableCommands()[which];
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						final String command = currentDevice
+								.getAvailableCommands()[which];
 
-				if (command.equals(Types.Commands.Custom.name())) {
-					//showCustomCommandDialog();
-				} else {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Response response = currentDevice.sendCommand(Types.Commands.valueOf(command));
-								response.waitForData();
+						if (command.equals(Types.Commands.Custom.name())) {
+							// showCustomCommandDialog();
+						} else {
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										Response response = currentDevice
+												.sendCommand(Types.Commands
+														.valueOf(command));
+										response.waitForData();
 
-								readDataFromResponseObject(response);
-							} catch (DeviceException e) {
-							}
+										readDataFromResponseObject(response);
+									} catch (DeviceException e) {
+									}
+								}
+
+							}).start();
 						}
-
-					}).start();
-				}
-			}
-		});
+					}
+				});
 		commandDialog = comandDialogBuilder.create();
 		commandDialog.show();
 	}
@@ -144,7 +145,6 @@ public class DeviceProxy extends KrollProxy implements
 	public void readDataFromResponseObject(final Response response) {
 
 		final String METHODTAG = ".readDataFromResponseObject";
-		
 
 		runOnMainThread(new Runnable() {
 			@Override
@@ -152,29 +152,26 @@ public class DeviceProxy extends KrollProxy implements
 
 				if (response.getError() != null) {
 
-		
 					return;
 				}
 
 				if (response instanceof ResponsePlain) {
-					//extractDataFromPlainResponse((ResponsePlain) response);
+					// extractDataFromPlainResponse((ResponsePlain) response);
 				}
 			}
 		});
-		
 
+	}
 
-}
-	
 	@Kroll.method
 	public void sendCommand(KrollDict o) {
-		String cmd="";
-		
+		String cmd = "";
+
 		if (o.containsKeyAndNotNull("command")) {
 			cmd = o.getString("command");
 		}
 		if (o.containsKeyAndNotNull("ondata")) {
-			dataCallback = (KrollFunction)o.get("ondata");
+			dataCallback = (KrollFunction) o.get("ondata");
 		}
 		final String command = cmd;
 		new Thread(new Runnable() {
@@ -186,7 +183,7 @@ public class DeviceProxy extends KrollProxy implements
 							.sendCommand(Types.Commands.valueOf(command));
 					response.waitForData();
 
-					//readDataFromResponseObject(response);
+					// readDataFromResponseObject(response);
 				} catch (DeviceException e) {
 
 				}
@@ -235,7 +232,6 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-
 										if (connectCallback != null) {
 											connectCallback.callAsync(
 													getKrollObject(), event);
@@ -333,6 +329,7 @@ public class DeviceProxy extends KrollProxy implements
 			data.put("DistocomReceivedMessage: ",
 					dataPacket.getDistocomReceivedMessage());
 			data.put("Distocom: ", dataPacket.getDistocom().getRawString());
+			Log.d(LCAT,data.toString());
 			event.put("data", data);
 			event.put("success", true);
 		} catch (Exception e) {
