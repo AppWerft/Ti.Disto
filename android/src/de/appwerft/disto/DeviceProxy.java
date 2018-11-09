@@ -13,6 +13,7 @@ import java.util.List;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
+import org.appcelerator.kroll.KrollObject;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiApplication;
@@ -32,6 +33,7 @@ import ch.leica.sdk.ErrorHandling.DeviceException;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
+import ch.leica.sdk.commands.ReceivedBleDataPacket;
 import ch.leica.sdk.commands.ReceivedData;
 import ch.leica.sdk.commands.ReceivedWifiDataPacket;
 import ch.leica.sdk.commands.ReceivedYetiDataPacket;
@@ -61,7 +63,7 @@ public class DeviceProxy extends KrollProxy implements
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
 		currentDevice.setReceiveDataListener(this);
-		Log.d(LCAT,"Deviceproxy created, listeners added");
+		Log.d(LCAT, "Deviceproxy created, listeners added");
 	}
 
 	@Kroll.method
@@ -107,8 +109,7 @@ public class DeviceProxy extends KrollProxy implements
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
 				if (connectCallback != null) {
-					connectCallback.callAsync(
-							getKrollObject(), event);
+					connectCallback.callAsync(getKrollObject(), event);
 
 				}
 				return;
@@ -121,9 +122,12 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-										event.put("model",currentDevice.getModel());
-										event.put("commands",currentDevice.getAvailableCommands());
-										event.put("type",currentDevice.getConnectionType().name());
+										event.put("model",
+												currentDevice.getModel());
+										event.put("commands", currentDevice
+												.getAvailableCommands());
+										event.put("type", currentDevice
+												.getConnectionType().name());
 										if (connectCallback != null) {
 											connectCallback.callAsync(
 													getKrollObject(), event);
@@ -151,87 +155,32 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Override
 	public void onAsyncDataReceived(ReceivedData receivedData) {
+		KrollObject ko = getKrollObject();
 		if (receivedData.dataPacket instanceof ReceivedYetiDataPacket) {
-			getYetiInformation((ReceivedYetiDataPacket) receivedData.dataPacket);
+			if (dataCallback != null)
+				dataCallback
+						.callAsync(
+								ko,
+								DataPacketToKrollDict
+										.getYetiInformation((ReceivedYetiDataPacket) receivedData.dataPacket));
+		} else if (receivedData.dataPacket instanceof ReceivedBleDataPacket) {
+			if (dataCallback != null)
+				dataCallback
+						.callAsync(
+								ko,
+								DataPacketToKrollDict
+										.getBleInformation((ReceivedBleDataPacket) receivedData.dataPacket));
+		} else if (receivedData.dataPacket instanceof ReceivedWifiDataPacket) {
+			if (dataCallback != null)
+				dataCallback
+						.callAsync(
+								ko,
+								DataPacketToKrollDict
+										.getWifiInformation((ReceivedWifiDataPacket) receivedData.dataPacket));
 		} else
 			Log.w(LCAT, "receivedData type="
 					+ receivedData.dataPacket.getClass().getSimpleName());
 
-	}
-
-	private void getYetiInformation(ReceivedYetiDataPacket dataPacket) {
-		KrollDict data = new KrollDict();
-		KrollDict event = new KrollDict();
-		try {
-			data.put("Distance: ", dataPacket.getBasicMeasurements()
-					.getDistance());
-			data.put("DistanceUnit: ", dataPacket.getBasicMeasurements()
-					.getDistanceUnit());
-			data.put("Inclination: ", dataPacket.getBasicMeasurements()
-					.getInclination());
-			data.put("InclinationUnit: ", dataPacket.getBasicMeasurements()
-					.getInclinationUnit());
-			data.put("Direction: ", dataPacket.getBasicMeasurements()
-					.getDirection());
-			data.put("DirectionUnit: ", dataPacket.getBasicMeasurements()
-					.getDirectionUnit());
-			data.put("V_temp: ", dataPacket.getBasicMeasurements()
-					.getTimestampAndFlags());
-
-			data.put("HzAngle: ", dataPacket.getP2P().getHzAngle());
-			data.put("VeAngle: ", dataPacket.getP2P().getVeAngle());
-			data.put("InclinationStatus: ", dataPacket.getP2P()
-					.getInclinationStatus());
-			data.put("TimestampAndFlags: ", dataPacket.getP2P()
-					.getTimestampAndFlags());
-
-			data.put("Quaternion_X: ", dataPacket.getQuaternion()
-					.getQuaternion_X());
-			data.put("Quaternion_Y: ", dataPacket.getQuaternion()
-					.getQuaternion_Y());
-			data.put("Quaternion_Z: ", dataPacket.getQuaternion()
-					.getQuaternion_Z());
-			data.put("TimestampAndFlags: ", dataPacket.getQuaternion()
-					.getTimestampAndFlags());
-
-			data.put("Magnetometer_X: ", dataPacket.getMagnetometer()
-					.getMagnetometer_X());
-			data.put("Magnetometer_Y: ", dataPacket.getMagnetometer()
-					.getMagnetometer_Y());
-			data.put("Magnetometer_Z: ", dataPacket.getMagnetometer()
-					.getMagnetometer_Z());
-			data.put("TimestampAndFlags: ", dataPacket.getMagnetometer()
-					.getTimestampAndFlags());
-			data.put("Acceleration_X: ", dataPacket
-					.getAccelerationAndRotation().getAcceleration_X());
-			data.put("Acceleration_Y: ", dataPacket
-					.getAccelerationAndRotation().getAcceleration_Y());
-			data.put("Acceleration_Z: ", dataPacket
-					.getAccelerationAndRotation().getAcceleration_Z());
-			data.put("AccSensitivity: ", dataPacket
-					.getAccelerationAndRotation().getAccSensitivity());
-			data.put("Rotation_X: ", dataPacket.getAccelerationAndRotation()
-					.getRotation_X());
-			data.put("Rotation_Y: ", dataPacket.getAccelerationAndRotation()
-					.getRotation_Y());
-			data.put("Rotation_Z: ", dataPacket.getAccelerationAndRotation()
-					.getRotation_Z());
-			data.put("RotationSensitivity: ", dataPacket
-					.getAccelerationAndRotation().getRotationSensitivity());
-			data.put("TimestampAndFlags: ", dataPacket
-					.getAccelerationAndRotation().getTimestampAndFlags());
-			data.put("DistocomReceivedMessage: ",
-					dataPacket.getDistocomReceivedMessage());
-			data.put("Distocom: ", dataPacket.getDistocom().getRawString());
-			Log.d(LCAT, data.toString());
-			event.put("data", data);
-			event.put("success", true);
-		} catch (Exception e) {
-			event.put("success", false);
-			event.put("error", e.getMessage());
-		}
-		if (dataCallback != null)
-			dataCallback.callAsync(getKrollObject(), event);
 	}
 
 }
