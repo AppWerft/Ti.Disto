@@ -45,7 +45,7 @@ import android.content.DialogInterface;
 // This proxy can be created by calling Tidisto.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceProxy extends KrollProxy implements
-		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
+		Device.ConnectionListener, ErrorListener, ReceivedDataListener{
 	// Standard Debugging variables
 	private static final String LCAT = TidistoModule.LCAT;
 	private Device currentDevice;
@@ -261,7 +261,7 @@ public class DeviceProxy extends KrollProxy implements
 	public void onAsyncDataReceived(ReceivedData receivedData) {
 		if (receivedData.dataPacket instanceof ReceivedYetiDataPacket) {
 			getYetiInformation((ReceivedYetiDataPacket) receivedData.dataPacket);
-		}
+		} else Log.w(LCAT, "receivedData type="+receivedData.dataPacket.getClass().getSimpleName());
 
 	}
 
