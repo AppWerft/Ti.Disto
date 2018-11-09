@@ -63,7 +63,7 @@ public class DeviceProxy extends KrollProxy implements
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
-		currentDevice.setReceiveDataListener(this);
+		
 		Log.i(LCAT, "YETI created");
 	}
 
@@ -163,16 +163,7 @@ public class DeviceProxy extends KrollProxy implements
 
 	}
 
-	@Kroll.method
-	public void startTracker() {
-		if (currentDevice != null) {
-			currentDevice.setConnectionListener(this);
-			currentDevice.setReceiveDataListener(this);
-			currentDevice.setErrorListener(this);
-			Log.d(LCAT, "listeners set to proxy, ready for data");
-		} else Log.w(LCAT, "currentDevice is null inside startTracker");
-
-	}
+	
 
 	@Kroll.method
 	public void sendCommand(KrollDict o) {
@@ -227,7 +218,6 @@ public class DeviceProxy extends KrollProxy implements
 		final KrollDict event = new KrollDict();
 		event.put("device", new DeviceProxy(device));
 		event.put("state", connectionState.ordinal());
-
 		Log.i(LCAT, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: "
 				+ connectionState);
@@ -243,6 +233,7 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
+										currentDevice.setReceiveDataListener(DeviceProxy.this);
 										if (connectCallback != null) {
 											connectCallback.callAsync(
 													getKrollObject(), event);
