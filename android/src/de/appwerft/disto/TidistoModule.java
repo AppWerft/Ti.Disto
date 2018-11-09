@@ -139,27 +139,27 @@ public class TidistoModule extends KrollModule {
 			return (bluetoothAdapter.isEnabled()) ? true : false;
 		}
 	}
+
 	@Kroll.method
 	public TidistoModule enableBluetooth() {
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
 				.getDefaultAdapter();
 		if (!bluetoothAdapter.isEnabled()) {
-		    bluetoothAdapter.enable(); 
-		} 
+			bluetoothAdapter.enable();
+		}
 		return this;
 	}
+
 	@Kroll.method
 	public TidistoModule disableBluetooth() {
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
 				.getDefaultAdapter();
 		if (bluetoothAdapter.isEnabled()) {
-		    bluetoothAdapter.disable(); 
-		} 
+			bluetoothAdapter.disable();
+		}
 		return this;
-		
+
 	}
-	
-	
 
 	@Kroll.method
 	public void init() {
@@ -169,6 +169,7 @@ public class TidistoModule extends KrollModule {
 			Log.i(LCAT, "====== START init ========");
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands.json");
+			Log.d(LCAT,initObject.toString());
 			try {
 				LeicaSdk.init(ctx, initObject);
 				LeicaSdk.setMethodCalledLog(true);
@@ -217,12 +218,6 @@ public class TidistoModule extends KrollModule {
 			if (!hasPermission("android.permission.ACCESS_FINE_LOCATION")
 					&& !hasPermission("android.permission.ACCESS_COARSE_LOCATION"))
 				granted = false;
-			Log.i(LCAT, "ACCESS_FINE_LOCATION="
-					+ hasPermission("android.permission.ACCESS_FINE_LOCATION"));
-			Log.i(LCAT,
-					"ACCESS_COARSE_LOCATION="
-							+ hasPermission("android.permission.ACCESS_COARSE_LOCATION"));
-
 			LocationManager locationManager = (LocationManager) ctx
 					.getSystemService(Context.LOCATION_SERVICE);
 			boolean network_enabled = false;
