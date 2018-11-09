@@ -24,6 +24,7 @@ import org.appcelerator.titanium.TiApplication;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -120,6 +121,45 @@ public class TidistoModule extends KrollModule {
 		LeicaSdk.setLogLevel(level);
 		return this;
 	}
+
+	@Kroll.method
+	public boolean isBluetoothAvailable() {
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
+				.getDefaultAdapter();
+		return (bluetoothAdapter == null) ? false : true;
+	}
+
+	@Kroll.method
+	public boolean isBluetoothEnabled() {
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
+				.getDefaultAdapter();
+		if (bluetoothAdapter == null) {
+			return false;
+		} else {
+			return (bluetoothAdapter.isEnabled()) ? true : false;
+		}
+	}
+	@Kroll.method
+	public TidistoModule enableBluetooth() {
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
+				.getDefaultAdapter();
+		if (!bluetoothAdapter.isEnabled()) {
+		    bluetoothAdapter.enable(); 
+		} 
+		return this;
+	}
+	@Kroll.method
+	public TidistoModule disableBluetooth() {
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
+				.getDefaultAdapter();
+		if (bluetoothAdapter.isEnabled()) {
+		    bluetoothAdapter.disable(); 
+		} 
+		return this;
+		
+	}
+	
+	
 
 	@Kroll.method
 	public void init() {
@@ -227,7 +267,5 @@ public class TidistoModule extends KrollModule {
 		Log.i(LCAT, ">>>>>>>>>>>>>>>>>>>>>>>>>  onCreate");
 		super.onCreate(activity, savedInstanceState);
 	}
-
-	
 
 }

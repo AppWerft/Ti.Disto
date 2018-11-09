@@ -53,8 +53,12 @@ DialogSelectDevice.onSelect() {
 
 
 ## Methods of module
+
 ### isBluetoothAvailable(): boolean
-### enableBLE()
+### isBluetoothEnabled(): boolean
+### enableBluetooth()
+###  disableBluetooth()
+
 Works only if BLUETOOTH_ADMIN permission is granted.
 ### getVersion(): String
 ### init();
