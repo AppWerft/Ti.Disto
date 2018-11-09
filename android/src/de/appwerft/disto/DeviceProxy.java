@@ -100,7 +100,6 @@ public class DeviceProxy extends KrollProxy implements
 			final Device.ConnectionState connectionState) {
 		final String METHODTAG = ".onConnectionStateChanged";
 		final KrollDict event = new KrollDict();
-		event.put("device", currentDevice);
 		event.put("state", connectionState.ordinal());
 		Log.i(LCAT, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: "
