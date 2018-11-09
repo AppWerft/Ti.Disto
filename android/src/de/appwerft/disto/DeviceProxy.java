@@ -94,6 +94,12 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
+	public void startBaseMode() {
+	//	if (currentDevice != null)
+		//	currentDevice.StartBaseMode();
+	}
+	
+	@Kroll.method
 	public void sendCommand(KrollDict o) {
 		String cmd="";
 		KrollFunction onDataCallback;
