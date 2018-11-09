@@ -62,6 +62,7 @@ public class DeviceProxy extends KrollProxy implements
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
+		currentDevice.setReceiveDataListener(this);
 		
 		Log.i(LCAT, "YETI created");
 	}
