@@ -169,11 +169,11 @@ public class DeviceProxy extends KrollProxy implements
 			currentDevice.setConnectionListener(this);
 			currentDevice.setReceiveDataListener(this);
 			currentDevice.setErrorListener(this);
-		}
+			Log.d(LCAT, "listeners set to proxy, ready for data");
+		} else Log.w(LCAT, "currentDevice is null inside startTracker");
 
 	}
-	
-	
+
 	@Kroll.method
 	public void sendCommand(KrollDict o) {
 		String cmd = "";
