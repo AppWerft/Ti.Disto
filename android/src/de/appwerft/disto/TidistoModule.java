@@ -142,6 +142,7 @@ public class TidistoModule extends KrollModule {
 
 	@Kroll.method
 	public TidistoModule enableBluetooth() {
+		DeviceManager.getInstance(TiApplication.getInstance().getApplicationContext()).enableBLE();
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
 				.getDefaultAdapter();
 		if (!bluetoothAdapter.isEnabled()) {
@@ -169,7 +170,6 @@ public class TidistoModule extends KrollModule {
 			Log.i(LCAT, "====== START init ========");
 			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands.json");
-			
 			try {
 				LeicaSdk.init(ctx, initObject);
 				LeicaSdk.setMethodCalledLog(true);
@@ -191,7 +191,7 @@ public class TidistoModule extends KrollModule {
 		ArrayList<String> keys = new ArrayList<>();
 		// adding key from properties:
 		String key = TiApplication.getInstance().getAppProperties()
-				.getString("DISTO_KEY", "");
+				.getString("DISTO_KEY", "1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+");
 		keys.add(key);
 		Log.d(LCAT, "=====================\n" + keys.toString());
 		LeicaSdk.setLicenses(keys);
