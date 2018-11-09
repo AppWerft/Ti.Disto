@@ -51,7 +51,6 @@ public class DeviceProxy extends KrollProxy implements
 	private Device currentDevice;
 	private KrollFunction connectCallback = null;
 	private KrollFunction dataCallback = null;
-	private AlertDialog commandDialog = null;
 
 	// Constructor
 	public DeviceProxy() {
@@ -96,119 +95,6 @@ public class DeviceProxy extends KrollProxy implements
 			return currentDevice.getAvailableCommands();
 		else
 			return null;
-	}
-
-	@Kroll.method
-	public void startBaseMode() {
-		// if (currentDevice != null)
-		// currentDevice.StartBaseMode();
-	}
-
-	@Kroll.method
-	public void showCommandDialog() {
-		AlertDialog.Builder comandDialogBuilder = new AlertDialog.Builder(
-				TiApplication.getAppCurrentActivity());
-		comandDialogBuilder.setTitle("Select Command");
-		comandDialogBuilder.setItems(currentDevice.getAvailableCommands(),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						final String command = currentDevice
-								.getAvailableCommands()[which];
-
-						if (command.equals(Types.Commands.Custom.name())) {
-							// showCustomCommandDialog();
-						} else {
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									try {
-										Response response = currentDevice
-												.sendCommand(Types.Commands
-														.valueOf(command));
-										response.waitForData();
-
-										readDataFromResponseObject(response);
-									} catch (DeviceException e) {
-									}
-								}
-
-							}).start();
-						}
-					}
-				});
-		commandDialog = comandDialogBuilder.create();
-		commandDialog.show();
-	}
-
-	public void readDataFromResponseObject(final Response response) {
-
-		final String METHODTAG = ".readDataFromResponseObject";
-
-		runOnMainThread(new Runnable() {
-			@Override
-			public void run() {
-
-				if (response.getError() != null) {
-
-					return;
-				}
-
-				if (response instanceof ResponsePlain) {
-					// extractDataFromPlainResponse((ResponsePlain) response);
-				}
-			}
-		});
-
-	}
-
-	
-
-	@Kroll.method
-	public void sendCommand(KrollDict o) {
-		String cmd = "";
-
-		if (o.containsKeyAndNotNull("command")) {
-			cmd = o.getString("command");
-		}
-		if (o.containsKeyAndNotNull("ondata")) {
-			dataCallback = (KrollFunction) o.get("ondata");
-		}
-		final String command = cmd;
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					Response response = currentDevice
-							.sendCommand(Types.Commands.valueOf(command));
-					response.waitForData();
-
-					// readDataFromResponseObject(response);
-				} catch (DeviceException e) {
-
-				}
-			}
-
-		}).start();
-	}
-
-	@Kroll.getProperty
-	@Kroll.method
-	public KrollDict getAllCharacteristics() {
-		KrollDict res = new KrollDict();
-		try {
-			List<BleCharacteristic> characteristics = currentDevice
-					.getAllCharacteristics();
-			for (BleCharacteristic characteristic : characteristics) {
-
-			}
-
-		} catch (DeviceException e) {
-			e.printStackTrace();
-		}
-		return res;
 	}
 
 	@Override
