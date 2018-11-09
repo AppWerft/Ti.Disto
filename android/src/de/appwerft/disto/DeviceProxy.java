@@ -15,6 +15,7 @@ import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiC;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
@@ -37,6 +38,8 @@ import ch.leica.sdk.commands.ReceivedYetiDataPacket;
 import ch.leica.sdk.commands.response.Response;
 import ch.leica.sdk.connection.ble.BleCharacteristic;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 // This proxy can be created by calling Tidisto.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = TidistoModule.class)
@@ -47,6 +50,7 @@ public class DeviceProxy extends KrollProxy implements
 	private Device currentDevice;
 	private KrollFunction connectCallback = null;
 	private KrollFunction dataCallback = null;
+	private AlertDialog commandDialog =null;
 
 	// Constructor
 	public DeviceProxy() {
@@ -100,14 +104,53 @@ public class DeviceProxy extends KrollProxy implements
 	}
 	
 	@Kroll.method
+	public void showCommandDialog() {
+
+		
+		
+
+		AlertDialog.Builder comandDialogBuilder = new AlertDialog.Builder(TiApplication.getAppCurrentActivity());
+		comandDialogBuilder.setTitle("Select Command");
+		comandDialogBuilder.setItems(currentDevice.getAvailableCommands(), new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				final String command = currentDevice.getAvailableCommands()[which];
+
+				if (command.equals(Types.Commands.Custom.name())) {
+					//showCustomCommandDialog();
+				} else {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								Response response = currentDevice.sendCommand(Types.Commands.valueOf(command));
+								response.waitForData();
+
+								readDataFromResponseObject(response);
+							} catch (DeviceException e) {
+							}
+						}
+
+					}).start();
+				}
+			}
+		});
+		commandDialog = comandDialogBuilder.create();
+		commandDialog.show();
+	}
+
+	
+	
+	@Kroll.method
 	public void sendCommand(KrollDict o) {
 		String cmd="";
-		KrollFunction onDataCallback;
+		
 		if (o.containsKeyAndNotNull("command")) {
 			cmd = o.getString("command");
 		}
 		if (o.containsKeyAndNotNull("ondata")) {
-			onDataCallback = (KrollFunction)o.get("ondata");
+			dataCallback = (KrollFunction)o.get("ondata");
 		}
 		final String command = cmd;
 		new Thread(new Runnable() {
