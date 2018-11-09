@@ -100,13 +100,18 @@ public class DeviceProxy extends KrollProxy implements
 			final Device.ConnectionState connectionState) {
 		final String METHODTAG = ".onConnectionStateChanged";
 		final KrollDict event = new KrollDict();
-		event.put("device", new DeviceProxy(device));
+		event.put("device", currentDevice);
 		event.put("state", connectionState.ordinal());
 		Log.i(LCAT, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: "
 				+ connectionState);
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
+				if (connectCallback != null) {
+					connectCallback.callAsync(
+							getKrollObject(), event);
+
+				}
 				return;
 			}
 			if (connectionState == Device.ConnectionState.connected) {
@@ -117,7 +122,9 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-										currentDevice.setReceiveDataListener(DeviceProxy.this);
+										event.put("model",currentDevice.getModel());
+										event.put("commands",currentDevice.getAvailableCommands());
+										event.put("type",currentDevice.getConnectionType().name());
 										if (connectCallback != null) {
 											connectCallback.callAsync(
 													getKrollObject(), event);
