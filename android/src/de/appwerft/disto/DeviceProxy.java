@@ -86,17 +86,12 @@ public class DeviceProxy extends KrollProxy implements
 	@Override
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
-		final String METHODTAG = ".onConnectionStateChanged";
 		final KrollDict event = new KrollDict();
 		event.put("state", connectionState.ordinal());
-		Log.i(LCAT, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		Log.i(LCAT, METHODTAG + ": " + device.getDeviceID() + ", state: "
-				+ connectionState);
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
 				if (connectCallback != null) {
 					connectCallback.callAsync(getKrollObject(), event);
-
 				}
 				return;
 			}
@@ -124,7 +119,6 @@ public class DeviceProxy extends KrollProxy implements
 				return;
 			}
 		} catch (Exception e) {
-			Log.e(LCAT, METHODTAG, e);
 		}
 	}
 

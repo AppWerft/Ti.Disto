@@ -118,6 +118,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 			KrollDict event = new KrollDict();
 			event.put("device", new DeviceProxy(device));
 			event.put("type", device.getClass().getSimpleName());
+			event.put("id", device.getDeviceID());
+			event.put("name", device.getDeviceName());
 			event.put("success", true);
 			if (onFoundCallback != null) {
 				onFoundCallback.callAsync(getKrollObject(), event);
