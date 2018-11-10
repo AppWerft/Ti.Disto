@@ -10,10 +10,12 @@ package de.appwerft.disto;
  */
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
+import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.io.TiBaseFile;
 import org.appcelerator.titanium.io.TiFileFactory;
 import org.appcelerator.titanium.proxy.TiViewProxy;
@@ -22,7 +24,9 @@ import org.appcelerator.titanium.util.TiUIHelper;
 import org.appcelerator.titanium.view.TiUIView;
 
 import android.app.Activity;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.SensorManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,20 +65,18 @@ public class ViewProxy extends TiViewProxy {
 		return view;
 	}
 
-	private Bitmap loadImageFromApplication(String imageName) {
-		Bitmap bitmap = null;
-		String url = null;
+	
+	private Bitmap loadImageFromAssets(String imageName) {
+		AssetManager assetManager = TiApplication.getInstance().getAssets();
 		try {
-			url = resolveUrl(null, imageName);
-			TiBaseFile file = TiFileFactory.createTitaniumFile(
-					new String[] { url }, false);
-			bitmap = TiUIHelper.createBitmap(file.getInputStream());
-		} catch (IOException e) {
-			Log.e(LCAT, " WheelView only supports local image files " + url);
-		}
+			InputStream is = assetManager.open(imageName+".png");
+			Bitmap  bitmap = BitmapFactory.decodeStream(is);
+			
+	    } catch (IOException e) {
+			Log.e(LCAT, e.getMessage());
+	    }
 		return bitmap;
 	}
-
 	// Constructor
 	public ViewProxy() {
 		super();
@@ -82,6 +84,7 @@ public class ViewProxy extends TiViewProxy {
 
 	public ViewProxy(String name) {
 		super();
+		bitmap = loadImageFromAssets(name);
 		this.name = name;
 	}
 
