@@ -1,37 +1,21 @@
 package de.appwerft.disto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.appcelerator.kroll.KrollDict;
-import org.appcelerator.kroll.KrollFunction;
-import org.appcelerator.kroll.KrollObject;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.kroll.common.Log;
 
 import ch.leica.sdk.Devices.BleDevice;
 import ch.leica.sdk.Devices.Device;
-import ch.leica.sdk.ErrorHandling.DeviceException;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
-import ch.leica.sdk.commands.ReceivedBleDataPacket;
 import ch.leica.sdk.commands.ReceivedData;
-import ch.leica.sdk.commands.ReceivedWifiDataPacket;
-import ch.leica.sdk.commands.ReceivedYetiDataPacket;
-import ch.leica.sdk.connection.ble.BleCharacteristic;
 
 @Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceProxy extends KrollProxy implements
 		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
-
 	private static final String LCAT = TidistoModule.LCAT;
 	private Device currentDevice;
-	// Callbacks for back communication to JS layer
-	private KrollFunction connectCallback = null;
-	private KrollFunction dataCallback = null;
-	private KrollFunction errorCallback = null;
 	private MessageDispatcher messageDispatcher;
 
 	public DeviceProxy() {
@@ -50,15 +34,7 @@ public class DeviceProxy extends KrollProxy implements
 	@Kroll.method
 	public void connect(KrollDict o) {
 		// importing callbacks from JS
-		if (o.containsKeyAndNotNull("onconnect")) {
-			connectCallback = (KrollFunction) o.get("onconnect");
-		}
-		if (o.containsKeyAndNotNull("ondata")) {
-			dataCallback = (KrollFunction) o.get("ondata");
-		}
-		if (o.containsKeyAndNotNull("onerror")) {
-			errorCallback = (KrollFunction) o.get("onerror");
-		}
+		messageDispatcher.registerCallbacks(o);
 		currentDevice.connect();
 	}
 
@@ -69,9 +45,7 @@ public class DeviceProxy extends KrollProxy implements
 			if (connectionState == Device.ConnectionState.disconnected) {
 				KrollDict event = new KrollDict();
 				event.put("connected", false);
-				if (connectCallback != null) {
-					connectCallback.callAsync(getKrollObject(), event);
-				}
+
 				return;
 			}
 			if (connectionState == Device.ConnectionState.connected) {
@@ -82,8 +56,8 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-										messageDispatcher.dispatchDevice(
-												connectCallback, currentDevice);
+										messageDispatcher
+												.dispatchDevice(currentDevice);
 									}
 								});
 					}
@@ -98,11 +72,11 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Override
 	public void onError(ErrorObject errorObject, Device device) {
-		messageDispatcher.dispatchError(errorCallback, errorObject);
+		messageDispatcher.dispatchError(errorObject);
 	}
 
 	@Override
 	public void onAsyncDataReceived(ReceivedData receivedData) {
-		messageDispatcher.dispatchData(dataCallback, receivedData);
+		messageDispatcher.dispatchData(receivedData);
 	}
 }

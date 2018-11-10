@@ -18,21 +18,36 @@ import ch.leica.sdk.connection.ble.BleCharacteristic;
 
 public class MessageDispatcher {
 	KrollObject krollObject;
+	private KrollFunction deviceCallback = null;
+	private KrollFunction dataCallback = null;
+	private KrollFunction errorCallback = null;
 	public MessageDispatcher() {
 	}
 	public MessageDispatcher(KrollObject o) {
 		krollObject = o;
 	}
-	public void dispatchError(KrollFunction Callback, ErrorObject errorObject) {
+	
+	public void registerCallbacks(KrollDict o) {
+		if (o.containsKeyAndNotNull("onconnect")) {
+			deviceCallback = (KrollFunction) o.get("onconnect");
+		}
+		if (o.containsKeyAndNotNull("ondata")) {
+			dataCallback = (KrollFunction) o.get("ondata");
+		}
+		if (o.containsKeyAndNotNull("onerror")) {
+			errorCallback = (KrollFunction) o.get("onerror");
+}
+	}
+	public void dispatchError(ErrorObject errorObject) {
 		KrollDict event = new KrollDict();
 		event.put("device", this);
 		event.put("message", errorObject.getErrorMessage());
 		event.put("code", errorObject.getErrorCode());
-		if (Callback != null) {
-			Callback.call(krollObject, event);
+		if (errorCallback != null) {
+			errorCallback.call(krollObject, event);
 		}
 	}
-	public void dispatchData(KrollFunction Callback,
+	public void dispatchData(
 			 ReceivedData receivedData) {
 		KrollDict data = new KrollDict();
 		KrollDict event = new KrollDict();
@@ -103,14 +118,14 @@ public class MessageDispatcher {
 				event.put("success", false);
 				event.put("error", e.getMessage());
 			} finally {
-				if (Callback != null) {
-					Callback.callAsync(krollObject, event);
+				if (dataCallback != null) {
+					dataCallback.callAsync(krollObject, event);
 				}
 			}
 		}
 	}
 
-	public void dispatchDevice(KrollFunction Callback,
+	public void dispatchDevice(
 			 Device currentDevice) {
 		KrollDict event = new KrollDict();
 		List<KrollDict> charList = new ArrayList<KrollDict>();
@@ -131,8 +146,8 @@ public class MessageDispatcher {
 		event.put("commands", currentDevice.getAvailableCommands());
 		event.put("type", currentDevice.getConnectionType().name());
 		event.put("connected", true);
-		if (Callback != null) {
-			Callback.call(krollObject, event);
+		if (deviceCallback != null) {
+			deviceCallback.call(krollObject, event);
 		}
 	}
 }
