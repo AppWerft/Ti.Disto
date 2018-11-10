@@ -48,6 +48,7 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void connect(KrollDict o) {
+		// importing callbacks from JS
 		if (o.containsKeyAndNotNull("onconnect")) {
 			connectCallback = (KrollFunction) o.get("onconnect");
 		}
@@ -101,9 +102,13 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Override
 	public void onError(ErrorObject errorObject, Device device) {
-		// uiHelper.setLog(this, log, "onError" + ": " +
-		// errorObject.getErrorMessage() + ", errorCode: " +
-		// errorObject.getErrorode());
+		KrollDict event = new KrollDict();
+		event.put("device", this);
+		event.put("message", errorObject.getErrorMessage());
+		event.put("code", errorObject.getErrorCode());
+		if (errorCallback != null) {
+			errorCallback.call(getKrollObject(),event);
+		}
 	}
 
 	@Override
