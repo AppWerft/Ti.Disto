@@ -16,18 +16,13 @@ import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.titanium.io.TiBaseFile;
-import org.appcelerator.titanium.io.TiFileFactory;
 import org.appcelerator.titanium.proxy.TiViewProxy;
-import org.appcelerator.titanium.util.TiSensorHelper;
-import org.appcelerator.titanium.util.TiUIHelper;
 import org.appcelerator.titanium.view.TiUIView;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.SensorManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -65,19 +60,17 @@ public class ViewProxy extends TiViewProxy {
 		return view;
 	}
 
-	
 	private Bitmap loadImageFromAssets(String imageName) {
-		AssetManager assetManager = TiApplication.getInstance().getAssets();
 		try {
-			InputStream is = assetManager.open(imageName+".png");
-			Bitmap  bitmap = BitmapFactory.decodeStream(is);
-			
-	    } catch (IOException e) {
+			return BitmapFactory.decodeStream(TiApplication.getInstance()
+					.getAssets()
+					.open(imageName.replace(" ", "").toLowerCase() + ".png"));
+		} catch (IOException e) {
 			Log.e(LCAT, e.getMessage());
-	    }
-		return bitmap;
+		}
+		return null;
 	}
-	// Constructor
+
 	public ViewProxy() {
 		super();
 	}
@@ -88,11 +81,9 @@ public class ViewProxy extends TiViewProxy {
 		this.name = name;
 	}
 
-	// Handle creation options
 	@Override
 	public void handleCreationDict(KrollDict opts) {
 		super.handleCreationDict(opts);
 
 	}
-
 }
