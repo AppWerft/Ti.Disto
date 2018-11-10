@@ -13,21 +13,11 @@ import java.util.List;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
-import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollObject;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.titanium.TiC;
 import org.appcelerator.kroll.common.Log;
-import org.appcelerator.kroll.common.TiConfig;
-import org.appcelerator.titanium.util.TiConvert;
-import org.appcelerator.titanium.proxy.TiViewProxy;
-import org.appcelerator.titanium.view.TiCompositeLayout;
-import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
-import org.appcelerator.titanium.view.TiUIView;
 
-import ch.leica.sdk.Types;
 import ch.leica.sdk.Devices.BleDevice;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
@@ -38,12 +28,7 @@ import ch.leica.sdk.commands.ReceivedBleDataPacket;
 import ch.leica.sdk.commands.ReceivedData;
 import ch.leica.sdk.commands.ReceivedWifiDataPacket;
 import ch.leica.sdk.commands.ReceivedYetiDataPacket;
-import ch.leica.sdk.commands.response.Response;
-import ch.leica.sdk.commands.response.ResponsePlain;
 import ch.leica.sdk.connection.ble.BleCharacteristic;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 @Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceProxy extends KrollProxy implements
@@ -127,7 +112,7 @@ public class DeviceProxy extends KrollProxy implements
 											connectCallback
 													.callAsync(
 															getKrollObject(),
-															DeviceToKrollDict(currentDevice));
+															KrollDictExporter.DeviceToKrollDict(currentDevice));
 										}
 
 									}
@@ -158,21 +143,21 @@ public class DeviceProxy extends KrollProxy implements
 				dataCallback
 						.callAsync(
 								ko,
-								DataPacketToKrollDict
+								KrollDictExporter
 										.getYetiInformation((ReceivedYetiDataPacket) receivedData.dataPacket));
 		} else if (receivedData.dataPacket instanceof ReceivedBleDataPacket) {
 			if (dataCallback != null)
 				dataCallback
 						.callAsync(
 								ko,
-								DataPacketToKrollDict
+								KrollDictExporter
 										.getBleInformation((ReceivedBleDataPacket) receivedData.dataPacket));
 		} else if (receivedData.dataPacket instanceof ReceivedWifiDataPacket) {
 			if (dataCallback != null)
 				dataCallback
 						.callAsync(
 								ko,
-								DataPacketToKrollDict
+								KrollDictExporter
 										.getWifiInformation((ReceivedWifiDataPacket) receivedData.dataPacket));
 		} else
 			Log.w(LCAT, "receivedData type="
@@ -180,26 +165,6 @@ public class DeviceProxy extends KrollProxy implements
 
 	}
 
-	private static KrollDict DeviceToKrollDict(Device currentDevice) {
-		KrollDict event = new KrollDict();
-		List<KrollDict> charList = new ArrayList<KrollDict>();
-		try {
-			for (BleCharacteristic characteristic : currentDevice
-					.getAllCharacteristics()) {
-				KrollDict c = new KrollDict();
-				c.put("id", characteristic.getId());
-				c.put("value", characteristic.getStrValue());
-				charList.add(c);
-			}
-			event.put("characteristics", charList.toArray());
-		} catch (DeviceException e) {
-			e.printStackTrace();
-		}
-		event.put("model", currentDevice.getModel());
-		event.put("device", currentDevice.getDeviceType().name());
-		event.put("commands", currentDevice.getAvailableCommands());
-		event.put("type", currentDevice.getConnectionType().name());
-		return event;
-	}
+	
 
 }

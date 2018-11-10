@@ -1,14 +1,20 @@
 package de.appwerft.disto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.appcelerator.kroll.KrollDict;
 
+import ch.leica.sdk.Devices.Device;
+import ch.leica.sdk.ErrorHandling.DeviceException;
 import ch.leica.sdk.commands.ReceivedBleDataPacket;
 import ch.leica.sdk.commands.ReceivedWifiDataPacket;
 import ch.leica.sdk.commands.ReceivedYetiDataPacket;
+import ch.leica.sdk.connection.ble.BleCharacteristic;
 
-public class DataPacketToKrollDict {
+public class KrollDictExporter {
 	
-	public DataPacketToKrollDict () {}
+	public KrollDictExporter () {}
 	public static KrollDict getBleInformation(ReceivedBleDataPacket dataPacket) {
 		KrollDict data = new KrollDict();
 		KrollDict event = new KrollDict();
@@ -92,6 +98,27 @@ public class DataPacketToKrollDict {
 			event.put("success", false);
 			event.put("error", e.getMessage());
 		}
+		return event;
+	}
+	public static KrollDict DeviceToKrollDict(Device currentDevice) {
+		KrollDict event = new KrollDict();
+		List<KrollDict> charList = new ArrayList<KrollDict>();
+		try {
+			for (BleCharacteristic characteristic : currentDevice
+					.getAllCharacteristics()) {
+				KrollDict c = new KrollDict();
+				c.put("id", characteristic.getId());
+				c.put("value", characteristic.getStrValue());
+				charList.add(c);
+			}
+			event.put("characteristics", charList.toArray());
+		} catch (DeviceException e) {
+			e.printStackTrace();
+		}
+		event.put("model", currentDevice.getModel());
+		event.put("device", currentDevice.getDeviceType().name());
+		event.put("commands", currentDevice.getAvailableCommands());
+		event.put("type", currentDevice.getConnectionType().name());
 		return event;
 	}
 }
