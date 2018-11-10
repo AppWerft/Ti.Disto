@@ -9,6 +9,7 @@ import org.appcelerator.kroll.KrollObject;
 
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
+import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.commands.ReceivedBleDataPacket;
 import ch.leica.sdk.commands.ReceivedData;
 import ch.leica.sdk.commands.ReceivedWifiDataPacket;
@@ -21,6 +22,15 @@ public class MessageDispatcher {
 	}
 	public MessageDispatcher(KrollObject o) {
 		krollObject = o;
+	}
+	public void dispatchError(KrollFunction Callback, ErrorObject errorObject) {
+		KrollDict event = new KrollDict();
+		event.put("device", this);
+		event.put("message", errorObject.getErrorMessage());
+		event.put("code", errorObject.getErrorCode());
+		if (Callback != null) {
+			Callback.call(krollObject, event);
+		}
 	}
 	public void dispatchData(KrollFunction Callback,
 			 ReceivedData receivedData) {
@@ -120,6 +130,7 @@ public class MessageDispatcher {
 		event.put("device", currentDevice.getDeviceType().name());
 		event.put("commands", currentDevice.getAvailableCommands());
 		event.put("type", currentDevice.getConnectionType().name());
+		event.put("connected", true);
 		if (Callback != null) {
 			Callback.call(krollObject, event);
 		}

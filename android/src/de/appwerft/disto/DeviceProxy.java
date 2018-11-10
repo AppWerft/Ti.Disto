@@ -41,7 +41,6 @@ public class DeviceProxy extends KrollProxy implements
 	public DeviceProxy(Device device) {
 		super();
 		currentDevice = device;
-		// setting all listeners
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
 		currentDevice.setReceiveDataListener(this);
@@ -66,10 +65,10 @@ public class DeviceProxy extends KrollProxy implements
 	@Override
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
-		final KrollDict event = new KrollDict();
-		event.put("state", connectionState.ordinal());
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
+				KrollDict event = new KrollDict();
+				event.put("connected", false);
 				if (connectCallback != null) {
 					connectCallback.callAsync(getKrollObject(), event);
 				}
@@ -99,13 +98,7 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Override
 	public void onError(ErrorObject errorObject, Device device) {
-		KrollDict event = new KrollDict();
-		event.put("device", this);
-		event.put("message", errorObject.getErrorMessage());
-		event.put("code", errorObject.getErrorCode());
-		if (errorCallback != null) {
-			errorCallback.call(getKrollObject(), event);
-		}
+		messageDispatcher.dispatchError(errorCallback, errorObject);
 	}
 
 	@Override
