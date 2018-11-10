@@ -193,7 +193,6 @@ public class TidistoModule extends KrollModule {
 		String key = TiApplication.getInstance().getAppProperties()
 				.getString("DISTO_KEY", "1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+");
 		keys.add(key);
-		Log.d(LCAT, "=====================\n" + keys.toString());
 		LeicaSdk.setLicenses(keys);
 		Log.i(LCAT, "====== END init ==========");
 
