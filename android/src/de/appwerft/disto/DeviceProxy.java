@@ -11,10 +11,8 @@ import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
 import ch.leica.sdk.commands.ReceivedData;
 
-@Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceProxy extends KrollProxy implements
 		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
-	private static final String LCAT = TidistoModule.LCAT;
 	private Device currentDevice;
 	private MessageDispatcher messageDispatcher;
 
@@ -24,11 +22,11 @@ public class DeviceProxy extends KrollProxy implements
 
 	public DeviceProxy(Device device) {
 		super();
+		messageDispatcher = new MessageDispatcher(this);
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
 		currentDevice.setReceiveDataListener(this);
-		messageDispatcher = new MessageDispatcher(this);
 	}
 
 	@Kroll.method
@@ -41,12 +39,6 @@ public class DeviceProxy extends KrollProxy implements
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
 		try {
-			if (connectionState == Device.ConnectionState.disconnected) {
-				KrollDict event = new KrollDict();
-				event.put("connected", false);
-
-				return;
-			}
 			if (connectionState == Device.ConnectionState.connected) {
 				try {
 					if (currentDevice != null
