@@ -32,6 +32,7 @@ public class DeviceProxy extends KrollProxy implements
 	private KrollFunction connectCallback = null;
 	private KrollFunction dataCallback = null;
 	private KrollFunction errorCallback = null;
+	private MessageDispatcher messageDispatcher;
 
 	public DeviceProxy() {
 		super();
@@ -44,6 +45,7 @@ public class DeviceProxy extends KrollProxy implements
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
 		currentDevice.setReceiveDataListener(this);
+		messageDispatcher = new MessageDispatcher(getKrollObject());
 	}
 
 	@Kroll.method
@@ -81,13 +83,8 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-										if (connectCallback != null) {
-											connectCallback
-													.callAsync(
-															getKrollObject(),
-															KrollDictExporter.DeviceToKrollDict(currentDevice));
-										}
-
+										messageDispatcher.dispatchDevice(
+												connectCallback, currentDevice);
 									}
 								});
 					}
@@ -107,40 +104,12 @@ public class DeviceProxy extends KrollProxy implements
 		event.put("message", errorObject.getErrorMessage());
 		event.put("code", errorObject.getErrorCode());
 		if (errorCallback != null) {
-			errorCallback.call(getKrollObject(),event);
+			errorCallback.call(getKrollObject(), event);
 		}
 	}
 
 	@Override
 	public void onAsyncDataReceived(ReceivedData receivedData) {
-		KrollObject ko = getKrollObject();
-		if (receivedData.dataPacket instanceof ReceivedYetiDataPacket) {
-			if (dataCallback != null)
-				dataCallback
-						.callAsync(
-								ko,
-								KrollDictExporter
-										.getYetiInformation((ReceivedYetiDataPacket) receivedData.dataPacket));
-		} else if (receivedData.dataPacket instanceof ReceivedBleDataPacket) {
-			if (dataCallback != null)
-				dataCallback
-						.callAsync(
-								ko,
-								KrollDictExporter
-										.getBleInformation((ReceivedBleDataPacket) receivedData.dataPacket));
-		} else if (receivedData.dataPacket instanceof ReceivedWifiDataPacket) {
-			if (dataCallback != null)
-				dataCallback
-						.callAsync(
-								ko,
-								KrollDictExporter
-										.getWifiInformation((ReceivedWifiDataPacket) receivedData.dataPacket));
-		} else
-			Log.w(LCAT, "receivedData type="
-					+ receivedData.dataPacket.getClass().getSimpleName());
-
+		messageDispatcher.dispatchData(dataCallback, receivedData);
 	}
-
-	
-
 }
