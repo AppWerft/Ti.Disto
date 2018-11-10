@@ -28,13 +28,12 @@ public class DeviceProxy extends KrollProxy implements
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
 		currentDevice.setReceiveDataListener(this);
-		messageDispatcher = new MessageDispatcher(getKrollObject());
+		messageDispatcher = new MessageDispatcher(this);
 	}
 
 	@Kroll.method
-	public void connect(KrollDict o) {
-		// importing callbacks from JS
-		messageDispatcher.registerCallbacks(o);
+	public void connect(KrollDict opts) {
+		messageDispatcher.registerCallbacks(opts);
 		currentDevice.connect();
 	}
 

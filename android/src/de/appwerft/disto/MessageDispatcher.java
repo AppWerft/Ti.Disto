@@ -6,6 +6,7 @@ import java.util.List;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollObject;
+import org.appcelerator.kroll.KrollProxy;
 
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
@@ -23,8 +24,9 @@ public class MessageDispatcher {
 	private KrollFunction errorCallback = null;
 	public MessageDispatcher() {
 	}
-	public MessageDispatcher(KrollObject o) {
-		krollObject = o;
+	
+	public MessageDispatcher(KrollProxy proxy) {
+		krollObject = proxy.getKrollObject();
 	}
 	
 	public void registerCallbacks(KrollDict o) {
