@@ -114,17 +114,20 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
-		if (device instanceof YetiDevice) {
+	//	if (device instanceof YetiDevice) {
+			String name= device.getDeviceName();
 			KrollDict event = new KrollDict();
 			event.put("device", new DeviceProxy(device));
 			event.put("type", device.getClass().getSimpleName());
 			event.put("id", device.getDeviceID());
-			event.put("name", device.getDeviceName());
+			event.put("name", name);
 			event.put("success", true);
+			event.put("icon", new ViewProxy(name));
+			
 			if (onFoundCallback != null) {
 				onFoundCallback.callAsync(getKrollObject(), event);
 			} 
-		}
+	//	}
 	}
 
 	@Kroll.method

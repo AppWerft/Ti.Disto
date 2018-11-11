@@ -46,6 +46,12 @@ public class TidistoModule extends KrollModule {
 	public static final int DEVICE_TYPE_DISTO = Types.DeviceType.Disto
 			.ordinal();
 	@Kroll.constant
+	public static final int CONNECTION_TYPE_WIFI_AP = Types.ConnectionType.wifiAP
+			.ordinal();
+	@Kroll.constant
+	public static final int CONNECTION_TYPE_WIFI_HOTSPOT = Types.ConnectionType.wifiHotspot
+			.ordinal();
+	@Kroll.constant
 	public static final int DEVICE_TYPE_YETI = Types.DeviceType.Yeti.ordinal();
 
 	@Kroll.constant
@@ -60,12 +66,7 @@ public class TidistoModule extends KrollModule {
 	@Kroll.constant
 	public static final int DEVICE_STATE_UPDATE = Device.DeviceState.update
 			.ordinal();
-	@Kroll.constant
-	public static final int CONNECTION_TYPE_WIFI_AP = Types.ConnectionType.wifiAP
-			.ordinal();
-	@Kroll.constant
-	public static final int CONNECTION_TYPE_WIFI_HOTSPOT = Types.ConnectionType.wifiHotspot
-			.ordinal();
+	
 
 	@Kroll.constant
 	public static final int VERBOSE = 2;
