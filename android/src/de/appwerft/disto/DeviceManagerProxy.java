@@ -93,9 +93,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			deviceManager = DeviceManager.getInstance(ctx);
 		} else
 			Log.e(LCAT, "app == null");
-		// only YETI (X3*)
-
-		LeicaSdk.setScanConfig(false, false, true, false);
+		LeicaSdk.setScanConfig(true, true, true, true);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
@@ -105,6 +103,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
 		findDevicesRunning = true;
+		Log.d(LCAT,"findAvailableDevices started");
 	}
 
 	@Override
