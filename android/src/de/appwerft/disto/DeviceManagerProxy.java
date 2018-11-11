@@ -24,7 +24,7 @@ import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
 
-@Kroll.proxy(creatableInModule = TidistoModule.class, propertyAccessors = { "onFound" })
+@Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceManagerProxy extends KrollProxy implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
 
@@ -33,7 +33,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	boolean findDevicesRunning = false;
 	boolean activityStopped = true;
 	private KrollFunction onFoundCallback = null;
-	public static final String PROPERTY_ONFOUND = TidistoModule.PROPERTY_ONFOUND;
+	
 	public static final String LCAT = TidistoModule.LCAT;
 	private static final int MSG_START = 500;
 	private static final int MSG_STOP = 501;
@@ -45,10 +45,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void handleCreationDict(KrollDict options) {
-		if (hasProperty(PROPERTY_ONFOUND)) {
-			onFoundCallback = (KrollFunction) getProperty(PROPERTY_ONFOUND);
-		} else
-			Log.w(LCAT, "Missing property " + PROPERTY_ONFOUND);
 		if (options.containsKeyAndNotNull("onfound"))
 			onFoundCallback = (KrollFunction) options.get("onfound");
 		super.handleCreationDict(options);
