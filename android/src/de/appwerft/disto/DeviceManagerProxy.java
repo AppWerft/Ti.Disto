@@ -122,7 +122,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			event.put("id", device.getDeviceID());
 			event.put("name", name);
 			event.put("success", true);
-			Log.d(LCAT,event.toString());
+			Log.i(LCAT,event.toString());
 			event.put("icon", new ViewProxy(name));
 			if (onFoundCallback != null) {
 				onFoundCallback.callAsync(getKrollObject(), event);
