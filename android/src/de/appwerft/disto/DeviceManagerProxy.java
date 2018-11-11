@@ -125,7 +125,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.d(LCAT,event.toString());
 			if (onFoundCallback != null) {
 				onFoundCallback.callAsync(getKrollObject(), event);
-			} 
+			} else Log.e(LCAT, "onFound not defined!");
 		}
 	}
 
