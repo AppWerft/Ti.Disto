@@ -62,9 +62,11 @@ public class ViewProxy extends TiViewProxy {
 
 	private Bitmap loadImageFromAssets(String imageName) {
 		try {
+			String filename = imageName.replace(" ", "").toLowerCase() + ".png";
+			Log.d(LCAT,filename);
 			return BitmapFactory.decodeStream(TiApplication.getInstance()
 					.getAssets()
-					.open(imageName.replace(" ", "").toLowerCase() + ".png"));
+					.open(filename));
 		} catch (IOException e) {
 			Log.e(LCAT, e.getMessage());
 		}
