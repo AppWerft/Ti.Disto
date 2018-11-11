@@ -40,6 +40,11 @@ public class DeviceProxy extends KrollProxy implements
 		currentDevice.connect();
 		Log.d(LCAT,"Device try to connect");
 	}
+	
+	@Kroll.method
+	public String getId() {
+		return currentDevice.getDeviceID();
+	}
 
 	@Override
 	public void onConnectionStateChanged(final Device device,
