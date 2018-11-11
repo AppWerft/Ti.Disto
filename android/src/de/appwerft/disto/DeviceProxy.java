@@ -3,6 +3,7 @@ package de.appwerft.disto;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.kroll.common.Log;
 
 import ch.leica.sdk.Devices.BleDevice;
 import ch.leica.sdk.Devices.Device;
@@ -17,6 +18,7 @@ public class DeviceProxy extends KrollProxy implements
 		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	private Device currentDevice;
 	private MessageDispatcher messageDispatcher;
+	private static String LCAT = TidistoModule.LCAT;
 
 	public DeviceProxy() {
 		super();
@@ -24,17 +26,19 @@ public class DeviceProxy extends KrollProxy implements
 
 	public DeviceProxy(Device device) {
 		super();
-		messageDispatcher = new MessageDispatcher(this);
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
 		currentDevice.setReceiveDataListener(this);
+		messageDispatcher = new MessageDispatcher(this);
+		Log.d(LCAT,"DeviceProxy created");
 	}
 
 	@Kroll.method
 	public void connect(KrollDict opts) {
 		messageDispatcher.registerCallbacks(opts);
 		currentDevice.connect();
+		Log.d(LCAT,"Device try to connect");
 	}
 
 	@Override
@@ -53,13 +57,14 @@ public class DeviceProxy extends KrollProxy implements
 												.dispatchDevice(currentDevice);
 									}
 								});
-					}
+					} else Log.d(LCAT,"device is no Bluetooth device.");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				return;
 			}
 		} catch (Exception e) {
+			Log.e(LCAT, e.getMessage());
 		}
 	}
 
