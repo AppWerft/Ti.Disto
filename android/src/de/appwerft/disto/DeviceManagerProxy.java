@@ -95,7 +95,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.e(LCAT, "app == null");
 		// only YETI (X3*)
 
-		LeicaSdk.setScanConfig(false, true, true, false);
+		LeicaSdk.setScanConfig(false, false, true, false);
 		deviceManager.setFoundAvailableDeviceListener(this);
 		deviceManager.setErrorListener(this);
 		try {
@@ -114,7 +114,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
-	//	if (device instanceof YetiDevice) {
+		if (device instanceof YetiDevice) {
 			String name= device.getDeviceName();
 			KrollDict event = new KrollDict();
 			event.put("device", new DeviceProxy(device));
@@ -122,12 +122,10 @@ public class DeviceManagerProxy extends KrollProxy implements
 			event.put("id", device.getDeviceID());
 			event.put("name", name);
 			event.put("success", true);
-			Log.i(LCAT,event.toString());
-			event.put("icon", new ViewProxy(name));
 			if (onFoundCallback != null) {
 				onFoundCallback.callAsync(getKrollObject(), event);
 			} 
-	//	}
+		}
 	}
 
 	@Kroll.method
