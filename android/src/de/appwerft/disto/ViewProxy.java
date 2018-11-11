@@ -63,10 +63,9 @@ public class ViewProxy extends TiViewProxy {
 	private Bitmap loadImageFromAssets(String imageName) {
 		try {
 			String filename = imageName.toLowerCase() + ".png";
-			Log.d(LCAT,filename);
 			return BitmapFactory.decodeStream(TiApplication.getInstance()
 					.getAssets()
-					.open(filename));
+					.open("leica.png"));
 		} catch (IOException e) {
 			Log.e(LCAT, e.getMessage());
 		}
