@@ -11,6 +11,7 @@ import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
 import ch.leica.sdk.commands.ReceivedData;
 
+@Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceProxy extends KrollProxy implements
 		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
 	private Device currentDevice;
