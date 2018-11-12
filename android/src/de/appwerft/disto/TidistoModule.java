@@ -36,7 +36,7 @@ import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.ErrorHandling.IllegalArgumentCheckedException;
 
-@Kroll.module(name = "Tidisto", id = "de.appwerft.disto", propertyAccessors = { "onScanResult" })
+@Kroll.module(name = "Tidisto", id = "de.appwerft.disto")
 public class TidistoModule extends KrollModule {
 
 	/* Constants */
@@ -82,8 +82,8 @@ public class TidistoModule extends KrollModule {
 	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
-	public static final String PROPERTY_ONFOUND = "onFound";
-	private KrollFunction Callback;
+	
+	
 
 	/**
 	 * Current selected device
