@@ -8,6 +8,7 @@ import org.appcelerator.kroll.common.Log;
 
 import android.os.Handler;
 import android.os.HandlerThread;
+import ch.leica.sdk.Types;
 import ch.leica.sdk.Devices.BleDevice;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
@@ -59,7 +60,7 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void sendCommand(final String cmd,final boolean custom,
+	public void sendCommand(final String cmd, final boolean custom,
 			@Kroll.argument(optional = true) KrollFunction callback) {
 		if (sendCustomCommandThread == null) {
 			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
@@ -75,14 +76,10 @@ public class DeviceProxy extends KrollProxy implements
 				@Override
 				public void run() {
 					try {
-						Response response ;
-						if (custom)
-						response = currentDevice.sendCustomCommand(
-								cmd, currentDevice.getTIMEOUT_NORMAL());
-						else response = currentDevice.sendCommand(
-								cmd, currentDevice.getTIMEOUT_NORMAL());
-						
-						response.waitForData();
+						Response response;
+							response = currentDevice.sendCommand(Types.Commands.DistanceDC,
+									currentDevice.getTIMEOUT_NORMAL());
+							response.waitForData();
 						if (response.getError() != null) {
 							Log.e(LCAT, ": error: "
 									+ response.getError().getErrorMessage());
