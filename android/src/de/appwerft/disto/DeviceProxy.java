@@ -96,12 +96,12 @@ public class DeviceProxy extends KrollProxy implements
 	@Override
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
-		currentDevice =device;
+		currentDevice = device;
 		final KrollDict event = new KrollDict();
 		event.put("device", this);
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
-				event.put("connected",false);
+				event.put("connected", false);
 				messageDispatcher.dispatchDevice(event);
 				return;
 			}
