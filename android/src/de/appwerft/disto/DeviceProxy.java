@@ -59,7 +59,7 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void sendCommand(final String cmd,
+	public void sendCommand(final String cmd,final boolean custom,
 			@Kroll.argument(optional = true) KrollFunction callback) {
 		if (sendCustomCommandThread == null) {
 			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
@@ -75,8 +75,13 @@ public class DeviceProxy extends KrollProxy implements
 				@Override
 				public void run() {
 					try {
-						Response response = currentDevice.sendCommand(
-								"StartTracking", currentDevice.getTIMEOUT_NORMAL());
+						Response response ;
+						if (custom)
+						response = currentDevice.sendCustomCommand(
+								cmd, currentDevice.getTIMEOUT_NORMAL());
+						else response = currentDevice.sendCommand(
+								cmd, currentDevice.getTIMEOUT_NORMAL());
+						
 						response.waitForData();
 						if (response.getError() != null) {
 							Log.e(LCAT, ": error: "
