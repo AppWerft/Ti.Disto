@@ -5,20 +5,27 @@ import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 
+import android.os.Handler;
+import android.os.HandlerThread;
 import ch.leica.sdk.Devices.BleDevice;
 import ch.leica.sdk.Devices.Device;
+import ch.leica.sdk.ErrorHandling.DeviceException;
 import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
 import ch.leica.sdk.commands.ReceivedData;
-
+import ch.leica.sdk.commands.response.Response;
+import ch.leica.sdk.connection.BaseConnectionManager.BleReceivedDataListener;
 
 @Kroll.proxy(creatableInModule = TidistoModule.class)
 public class DeviceProxy extends KrollProxy implements
-		Device.ConnectionListener, ErrorListener, ReceivedDataListener {
+		Device.ConnectionListener, ErrorListener, ReceivedDataListener,
+		BleReceivedDataListener {
 	private Device currentDevice;
 	private MessageDispatcher messageDispatcher;
 	private static String LCAT = TidistoModule.LCAT;
+	Handler sendCustomCommandHandler;
+	HandlerThread sendCustomCommandThread;
 
 	public DeviceProxy() {
 		super();
@@ -29,6 +36,7 @@ public class DeviceProxy extends KrollProxy implements
 		currentDevice = device;
 		currentDevice.setConnectionListener(this);
 		currentDevice.setErrorListener(this);
+
 		currentDevice.setReceiveDataListener(this);
 		messageDispatcher = new MessageDispatcher(this);
 	}
@@ -37,18 +45,61 @@ public class DeviceProxy extends KrollProxy implements
 	public void connect(KrollDict opts) {
 		messageDispatcher.registerCallbacks(opts);
 		currentDevice.connect();
-		Log.d(LCAT,"Device try to connect");
 	}
-	
+
 	@Kroll.method
 	public String getId() {
 		return currentDevice.getDeviceID();
 	}
 
+	@Kroll.method
+	public void sendCommand(String cmd) {
+		if (sendCustomCommandThread == null) {
+			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
+					+ System.currentTimeMillis(), HandlerThread.MAX_PRIORITY);
+
+			sendCustomCommandThread.start();
+			sendCustomCommandHandler = new Handler(
+					sendCustomCommandThread.getLooper());
+		}
+		// send any string to device
+		try {
+			sendCustomCommandHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Response response = currentDevice.sendCustomCommand(
+								cmd, currentDevice.getTIMEOUT_NORMAL());
+
+						response.waitForData();
+						if (response.getError() != null) {
+							Log.e(LCAT, ": error: "
+									+ response.getError().getErrorMessage());
+						}
+						Log.d(LCAT, "DistoComResponse set with ResponsePlain");
+					} catch (DeviceException e) {
+						Log.e(LCAT, "Error sending the command.", e);
+					}
+				}
+			});
+
+		} catch (Exception e) {
+			Log.e(LCAT, "Error showCustomCommandDialog ", e);
+		}
+
+	}
+
 	@Override
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
+		KrollDict event = new KrollDict();
+		event.put("connectionState", connectionState);
+		event.put("device", this);
+
 		try {
+			if (connectionState == Device.ConnectionState.disconnected) {
+				return;
+			}
 			if (connectionState == Device.ConnectionState.connected) {
 				try {
 					if (currentDevice != null
@@ -61,7 +112,8 @@ public class DeviceProxy extends KrollProxy implements
 												.dispatchDevice(currentDevice);
 									}
 								});
-					} else Log.d(LCAT,"device is no Bluetooth device.");
+					} else
+						Log.d(LCAT, "device is no Bluetooth device.");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -80,5 +132,13 @@ public class DeviceProxy extends KrollProxy implements
 	@Override
 	public void onAsyncDataReceived(ReceivedData receivedData) {
 		messageDispatcher.dispatchData(receivedData);
+	}
+
+	@Override
+	public void onBleDataReceived(ReceivedData receivedData,
+			ErrorObject errorObject) throws DeviceException {
+		Log.d(LCAT,
+				"//////////////////////////////" + receivedData.getCommandStr());
+
 	}
 }
