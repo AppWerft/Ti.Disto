@@ -1,6 +1,7 @@
 package de.appwerft.disto;
 
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
@@ -53,7 +54,7 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void sendCommand(final String cmd) {
+	public void sendCommand(final String cmd,@Kroll.argument(optional=true) KrollFunction callback) {
 		if (sendCustomCommandThread == null) {
 			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
 					+ System.currentTimeMillis(), HandlerThread.MAX_PRIORITY);
@@ -62,7 +63,7 @@ public class DeviceProxy extends KrollProxy implements
 			sendCustomCommandHandler = new Handler(
 					sendCustomCommandThread.getLooper());
 		}
-		// send any string to device
+		Log.d(LCAT,"send any string to device: " + cmd);
 		try {
 			sendCustomCommandHandler.post(new Runnable() {
 				@Override
@@ -82,11 +83,9 @@ public class DeviceProxy extends KrollProxy implements
 					}
 				}
 			});
-
 		} catch (Exception e) {
 			Log.e(LCAT, "Error showCustomCommandDialog ", e);
 		}
-
 	}
 
 	@Override
