@@ -169,11 +169,11 @@ public class TidistoModule extends KrollModule {
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
-			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
+			LeicaSdk.InitObject commandsJSON = new LeicaSdk.InitObject(
 					"commands_.json");
-			Log.d(LCAT,initObject.toString());
+			Log.d(LCAT,commandsJSON.toString());
 			try {
-				LeicaSdk.init(ctx, initObject);
+				LeicaSdk.init(ctx, commandsJSON);
 				LeicaSdk.setMethodCalledLog(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(true);
 			} catch (JSONException e) {
