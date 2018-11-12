@@ -66,7 +66,6 @@ public class TidistoModule extends KrollModule {
 	@Kroll.constant
 	public static final int DEVICE_STATE_UPDATE = Device.DeviceState.update
 			.ordinal();
-	
 
 	@Kroll.constant
 	public static final int VERBOSE = 2;
@@ -82,8 +81,6 @@ public class TidistoModule extends KrollModule {
 	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
 	public static final String LCAT = "TiDisto";
-	
-	
 
 	/**
 	 * Current selected device
@@ -143,7 +140,9 @@ public class TidistoModule extends KrollModule {
 
 	@Kroll.method
 	public TidistoModule enableBluetooth() {
-		DeviceManager.getInstance(TiApplication.getInstance().getApplicationContext()).enableBLE();
+		DeviceManager.getInstance(
+				TiApplication.getInstance().getApplicationContext())
+				.enableBLE();
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
 				.getDefaultAdapter();
 		if (!bluetoothAdapter.isEnabled()) {
@@ -169,11 +168,12 @@ public class TidistoModule extends KrollModule {
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
-			LeicaSdk.InitObject commandsJSON = new LeicaSdk.InitObject(
+			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
 					"commands_.json");
-			Log.d(LCAT,commandsJSON.toString());
+			Log.d(LCAT, initObject.toString());
 			try {
-				LeicaSdk.init(ctx, commandsJSON);
+				boolean res = LeicaSdk.init(ctx, initObject);
+				Log.d(LCAT, "result of LeicaSdk.init = " + res);
 				LeicaSdk.setMethodCalledLog(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(true);
 			} catch (JSONException e) {
