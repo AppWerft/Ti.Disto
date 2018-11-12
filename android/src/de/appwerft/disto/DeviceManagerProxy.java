@@ -128,19 +128,21 @@ public class DeviceManagerProxy extends KrollProxy implements
 		}
 	}
 
-	@Kroll.method
-	public void stopFindingDevices() {
+	/*
 		if (TiApplication.isUIThread())
 			handleStopFindingDevices();
 		else
 			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
 					MSG_STOP));
-	}
+	}*/
 
-	private void handleStopFindingDevices() {
+	
+@Kroll.method
+public void stopFindingDevices() {
 		findDevicesRunning = false;
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
+		else Log.w(LCAT, "try to stop findingDevices, but deviceManager is null");
 	}
 
 	@Kroll.method
