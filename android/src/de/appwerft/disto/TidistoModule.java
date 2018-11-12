@@ -166,13 +166,11 @@ public class TidistoModule extends KrollModule {
 	public void init() {
 		Log.i(LCAT, "====== START leica DISTO ========");
 		verifyPermissions();
-		if (LeicaSdk.isInit == false) {
+		//if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
-			LeicaSdk.InitObject initObject = new LeicaSdk.InitObject(
-					"commands.json");
-			Log.d(LCAT, initObject.toString());
 			try {
-				boolean res = LeicaSdk.init(ctx, initObject);
+				boolean res = LeicaSdk.init(ctx, new LeicaSdk.InitObject(
+						"commands.json"));
 				Log.d(LCAT, "result of LeicaSdk.init = " + res);
 				LeicaSdk.setMethodCalledLog(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(true);
@@ -187,9 +185,9 @@ public class TidistoModule extends KrollModule {
 			} catch (IOException e) {
 				Log.d(LCAT, e.getMessage());
 			}
-		} else
-			Log.w(LCAT, "was always initalized.");
-		Log.d(LCAT,"init done, now setScanconfig");
+		//} else
+		//	Log.w(LCAT, "was always initalized.");
+		Log.d(LCAT, "init done, now setScanconfig");
 		LeicaSdk.setScanConfig(true, true, true, true);
 		ArrayList<String> keys = new ArrayList<>();
 		// adding key from properties:
