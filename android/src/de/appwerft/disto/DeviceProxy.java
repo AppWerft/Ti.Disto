@@ -53,13 +53,14 @@ public class DeviceProxy extends KrollProxy implements
 		return currentDevice.getDeviceID();
 	}
 
-	
 	@Kroll.method
 	public String[] getAvailableCommands() {
 		return currentDevice.getAvailableCommands();
 	}
+
 	@Kroll.method
-	public void sendCommand(final String cmd,@Kroll.argument(optional=true) KrollFunction callback) {
+	public void sendCommand(final String cmd,
+			@Kroll.argument(optional = true) KrollFunction callback) {
 		if (sendCustomCommandThread == null) {
 			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
 					+ System.currentTimeMillis(), HandlerThread.MAX_PRIORITY);
@@ -68,7 +69,7 @@ public class DeviceProxy extends KrollProxy implements
 			sendCustomCommandHandler = new Handler(
 					sendCustomCommandThread.getLooper());
 		}
-		Log.d(LCAT,"send any string to device: " + cmd);
+		Log.d(LCAT, "send any string to device: " + cmd);
 		try {
 			sendCustomCommandHandler.post(new Runnable() {
 				@Override
@@ -97,13 +98,12 @@ public class DeviceProxy extends KrollProxy implements
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
 		final KrollDict event = new KrollDict();
-		event.put("connectionState", connectionState);
+		event.put("connectionState", connectionState.ordinal());
 		event.put("device", this);
 
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
-				messageDispatcher
-				.dispatchDevice(event);
+				messageDispatcher.dispatchDevice(event);
 				return;
 			}
 			if (connectionState == Device.ConnectionState.connected) {
@@ -114,13 +114,16 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-										event.put("model", currentDevice.getModel());
-										event.put("device", currentDevice.getDeviceType().name());
-										event.put("commands", currentDevice.getAvailableCommands());
-										event.put("type", currentDevice.getConnectionType().name());
-										event.put("connected", true);
-										messageDispatcher
-												.dispatchDevice(event);
+										event.put("model",
+												currentDevice.getModel());
+										event.put("device", currentDevice
+												.getDeviceType().name());
+										event.put("commands", currentDevice
+												.getAvailableCommands());
+										event.put("type", currentDevice
+												.getConnectionType().name());
+										Log.i(LCAT, event.toString());
+										messageDispatcher.dispatchDevice(event);
 									}
 								});
 					} else

@@ -20,17 +20,18 @@ import ch.leica.sdk.connection.ble.BleCharacteristic;
 
 public class MessageDispatcher {
 	KrollObject krollObject;
-	private final static String LCAT= TidistoModule.LCAT;
+	private final static String LCAT = TidistoModule.LCAT;
 	private KrollFunction deviceCallback = null;
 	private KrollFunction dataCallback = null;
 	private KrollFunction errorCallback = null;
+
 	public MessageDispatcher() {
 	}
-	
+
 	public MessageDispatcher(KrollProxy proxy) {
 		krollObject = proxy.getKrollObject();
 	}
-	
+
 	public void registerCallbacks(KrollDict o) {
 		if (o.containsKeyAndNotNull("onconnect")) {
 			deviceCallback = (KrollFunction) o.get("onconnect");
@@ -40,8 +41,9 @@ public class MessageDispatcher {
 		}
 		if (o.containsKeyAndNotNull("onerror")) {
 			errorCallback = (KrollFunction) o.get("onerror");
-}
+		}
 	}
+
 	public void dispatchError(ErrorObject errorObject) {
 		KrollDict event = new KrollDict();
 		event.put("device", this);
@@ -51,8 +53,8 @@ public class MessageDispatcher {
 			errorCallback.call(krollObject, event);
 		}
 	}
-	public void dispatchData(
-			 ReceivedData receivedData) {
+
+	public void dispatchData(ReceivedData receivedData) {
 		KrollDict data = new KrollDict();
 		KrollDict event = new KrollDict();
 		if (receivedData.dataPacket instanceof ReceivedYetiDataPacket) {
@@ -129,23 +131,19 @@ public class MessageDispatcher {
 		}
 	}
 
-	public void dispatchDevice(
-			 KrollDict event) {
-		List<KrollDict> charList = new ArrayList<KrollDict>();
-		/*try {
-			for (BleCharacteristic characteristic : currentDevice
-					.getAllCharacteristics()) {
-				KrollDict c = new KrollDict();
-				c.put("id", characteristic.getId());
-				c.put("value", characteristic.getStrValue());
-				charList.add(c);
-			}
-			event.put("characteristics", charList.toArray());
-		} catch (DeviceException e) {
-			e.printStackTrace();
-		}*/
+	public void dispatchDevice(KrollDict event) {
+		/*
+		 * List<KrollDict> charList = new ArrayList<KrollDict>(); try { for
+		 * (BleCharacteristic characteristic : currentDevice
+		 * .getAllCharacteristics()) { KrollDict c = new KrollDict();
+		 * c.put("id", characteristic.getId()); c.put("value",
+		 * characteristic.getStrValue()); charList.add(c); }
+		 * event.put("characteristics", charList.toArray()); } catch
+		 * (DeviceException e) { e.printStackTrace(); }
+		 */
 		if (deviceCallback != null) {
 			deviceCallback.call(krollObject, event);
-		}else Log.w(LCAT,"Missing deviceCallback 'onconnect'");
+		} else
+			Log.w(LCAT, "Missing deviceCallback 'onconnect'");
 	}
 }
