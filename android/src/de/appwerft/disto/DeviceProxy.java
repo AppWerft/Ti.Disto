@@ -53,7 +53,7 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void sendCommand(String cmd) {
+	public void sendCommand(final String cmd) {
 		if (sendCustomCommandThread == null) {
 			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
 					+ System.currentTimeMillis(), HandlerThread.MAX_PRIORITY);
