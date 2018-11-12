@@ -76,7 +76,7 @@ public class DeviceProxy extends KrollProxy implements
 				public void run() {
 					try {
 						Response response = currentDevice.sendCustomCommand(
-								cmd, currentDevice.getTIMEOUT_NORMAL());
+								"StartTracking", currentDevice.getTIMEOUT_NORMAL());
 						response.waitForData();
 						if (response.getError() != null) {
 							Log.e(LCAT, ": error: "
