@@ -75,7 +75,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 		}
 		case MSG_STOP: {
 			result = (AsyncResult) msg.obj;
-			handleStopFindingDevices();
+		//	handleStopFindingDevices();
 			result.setResult(null);
 			return true;
 		}
