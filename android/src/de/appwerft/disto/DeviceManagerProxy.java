@@ -33,6 +33,7 @@ public class DeviceManagerProxy extends KrollProxy implements
 	boolean findDevicesRunning = false;
 	boolean activityStopped = true;
 	private KrollFunction onFoundCallback = null;
+	private KrollFunction onErrorCallback = null;
 	
 	public static final String LCAT = TidistoModule.LCAT;
 	private static final int MSG_START = 500;
@@ -47,6 +48,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void handleCreationDict(KrollDict options) {
 		if (options.containsKeyAndNotNull("onfound"))
 			onFoundCallback = (KrollFunction) options.get("onfound");
+		if (options.containsKeyAndNotNull("onerror"))
+			onErrorCallback = (KrollFunction) options.get("onerror");
 		super.handleCreationDict(options);
 	}
 
