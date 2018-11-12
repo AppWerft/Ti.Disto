@@ -189,6 +189,7 @@ public class TidistoModule extends KrollModule {
 			}
 		} else
 			Log.w(LCAT, "was always initalized.");
+		Log.d(LCAT,"init done, now setScanconfig");
 		LeicaSdk.setScanConfig(true, true, true, true);
 		ArrayList<String> keys = new ArrayList<>();
 		// adding key from properties:
