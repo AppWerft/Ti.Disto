@@ -177,10 +177,16 @@ public class TidistoModule extends KrollModule {
 				LeicaSdk.setMethodCalledLog(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(true);
 			} catch (JSONException e) {
+				Log.e(LCAT,
+						"Error in the structure of the JSON File, closing the application");
 				Log.e(LCAT, e.getMessage());
 			} catch (IllegalArgumentCheckedException e) {
+				Log.e(LCAT,
+						"Error in the data of the JSON File, closing the application");
 				Log.e(LCAT, e.getMessage());
 			} catch (IOException e) {
+				Log.e(LCAT,
+						"Error not found");
 				Log.e(LCAT, e.getMessage());
 			}
 		} else
