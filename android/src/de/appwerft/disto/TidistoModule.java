@@ -170,22 +170,18 @@ public class TidistoModule extends KrollModule {
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
 			try {
-				Log.d(LCAT, "isinit false");
+				Log.d(LCAT, "isInit = false");
 				boolean res = LeicaSdk.init(ctx, new LeicaSdk.InitObject(
 						jsoncommandsFilename));
 				Log.d(LCAT, "result of LeicaSdk.init = " + res);
 				LeicaSdk.setMethodCalledLog(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(true);
 			} catch (JSONException e) {
-				Log.e(LCAT,
-						"Error in the structure of the JSON File, closing the application");
-				Log.d(LCAT, e.getMessage());
+				Log.e(LCAT, e.getMessage());
 			} catch (IllegalArgumentCheckedException e) {
-				Log.e(LCAT,
-						"Error in the data of the JSON File, closing the application");
-				Log.d(LCAT, e.getMessage());
+				Log.e(LCAT, e.getMessage());
 			} catch (IOException e) {
-				Log.d(LCAT, e.getMessage());
+				Log.e(LCAT, e.getMessage());
 			}
 		} else
 			Log.w(LCAT, "was always initalized.");
