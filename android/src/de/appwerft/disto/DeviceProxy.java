@@ -53,6 +53,11 @@ public class DeviceProxy extends KrollProxy implements
 		return currentDevice.getDeviceID();
 	}
 
+	
+	@Kroll.method
+	public String[] getAvailableCommands() {
+		return currentDevice.getAvailableCommands();
+	}
 	@Kroll.method
 	public void sendCommand(final String cmd,@Kroll.argument(optional=true) KrollFunction callback) {
 		if (sendCustomCommandThread == null) {
