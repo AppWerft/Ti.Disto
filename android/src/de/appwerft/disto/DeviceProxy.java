@@ -98,11 +98,10 @@ public class DeviceProxy extends KrollProxy implements
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
 		final KrollDict event = new KrollDict();
-		event.put("connectionState", connectionState.ordinal());
 		event.put("device", this);
-
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
+				event.put("connected",false);
 				messageDispatcher.dispatchDevice(event);
 				return;
 			}
@@ -114,6 +113,7 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
+										event.put("connected", true);
 										event.put("model",
 												currentDevice.getModel());
 										event.put("device", currentDevice
