@@ -7,6 +7,7 @@ import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollObject;
 import org.appcelerator.kroll.KrollProxy;
+import org.appcelerator.kroll.common.Log;
 
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
@@ -19,6 +20,7 @@ import ch.leica.sdk.connection.ble.BleCharacteristic;
 
 public class MessageDispatcher {
 	KrollObject krollObject;
+	private final static String LCAT= TidistoModule.LCAT;
 	private KrollFunction deviceCallback = null;
 	private KrollFunction dataCallback = null;
 	private KrollFunction errorCallback = null;
@@ -129,6 +131,7 @@ public class MessageDispatcher {
 
 	public void dispatchDevice(
 			 Device currentDevice) {
+		Log.d(LCAT,currentDevice.getDeviceID());
 		KrollDict event = new KrollDict();
 		List<KrollDict> charList = new ArrayList<KrollDict>();
 		try {
@@ -150,6 +153,6 @@ public class MessageDispatcher {
 		event.put("connected", true);
 		if (deviceCallback != null) {
 			deviceCallback.call(krollObject, event);
-		}
+		}else Log.w(LCAT,"Missing deviceCallback 'onconnect'");
 	}
 }
