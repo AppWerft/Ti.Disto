@@ -130,11 +130,9 @@ public class MessageDispatcher {
 	}
 
 	public void dispatchDevice(
-			 Device currentDevice) {
-		Log.d(LCAT,currentDevice.getDeviceID());
-		KrollDict event = new KrollDict();
+			 KrollDict event) {
 		List<KrollDict> charList = new ArrayList<KrollDict>();
-		try {
+		/*try {
 			for (BleCharacteristic characteristic : currentDevice
 					.getAllCharacteristics()) {
 				KrollDict c = new KrollDict();
@@ -145,12 +143,7 @@ public class MessageDispatcher {
 			event.put("characteristics", charList.toArray());
 		} catch (DeviceException e) {
 			e.printStackTrace();
-		}
-		event.put("model", currentDevice.getModel());
-		event.put("device", currentDevice.getDeviceType().name());
-		event.put("commands", currentDevice.getAvailableCommands());
-		event.put("type", currentDevice.getConnectionType().name());
-		event.put("connected", true);
+		}*/
 		if (deviceCallback != null) {
 			deviceCallback.call(krollObject, event);
 		}else Log.w(LCAT,"Missing deviceCallback 'onconnect'");

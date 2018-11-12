@@ -102,6 +102,8 @@ public class DeviceProxy extends KrollProxy implements
 
 		try {
 			if (connectionState == Device.ConnectionState.disconnected) {
+				messageDispatcher
+				.dispatchDevice(event);
 				return;
 			}
 			if (connectionState == Device.ConnectionState.connected) {
@@ -112,8 +114,13 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
+										event.put("model", currentDevice.getModel());
+										event.put("device", currentDevice.getDeviceType().name());
+										event.put("commands", currentDevice.getAvailableCommands());
+										event.put("type", currentDevice.getConnectionType().name());
+										event.put("connected", true);
 										messageDispatcher
-												.dispatchDevice(currentDevice);
+												.dispatchDevice(event);
 									}
 								});
 					} else
