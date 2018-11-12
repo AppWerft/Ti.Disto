@@ -75,9 +75,8 @@ public class DeviceProxy extends KrollProxy implements
 				@Override
 				public void run() {
 					try {
-						Response response = currentDevice.sendCustomCommand(
+						Response response = currentDevice.sendCommand(
 								cmd, currentDevice.getTIMEOUT_NORMAL());
-
 						response.waitForData();
 						if (response.getError() != null) {
 							Log.e(LCAT, ": error: "
@@ -90,7 +89,7 @@ public class DeviceProxy extends KrollProxy implements
 				}
 			});
 		} catch (Exception e) {
-			Log.e(LCAT, "Error showCustomCommandDialog ", e);
+			Log.e(LCAT, e.getMessage());
 		}
 	}
 
