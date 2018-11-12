@@ -66,7 +66,7 @@ public class TidistoModule extends KrollModule {
 	@Kroll.constant
 	public static final int DEVICE_STATE_UPDATE = Device.DeviceState.update
 			.ordinal();
-
+	public static final String JSONCOMMANDS= "commands.json";
 	@Kroll.constant
 	public static final int VERBOSE = 2;
 	@Kroll.constant
@@ -163,14 +163,15 @@ public class TidistoModule extends KrollModule {
 	}
 
 	@Kroll.method
-	public void init() {
+	public void init(@Kroll.argument(optional=true) String filename) {
+		String jsoncommandsFilename = (filename==null)? JSONCOMMANDS : filename;
 		Log.i(LCAT, "====== START leica DISTO ========");
 		verifyPermissions();
-		//if (LeicaSdk.isInit == false) {
+		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
 			try {
 				boolean res = LeicaSdk.init(ctx, new LeicaSdk.InitObject(
-						"commands.json"));
+						jsoncommandsFilename));
 				Log.d(LCAT, "result of LeicaSdk.init = " + res);
 				LeicaSdk.setMethodCalledLog(true);
 				LeicaSdk.scanConfig.setBleAdapterOn(true);
@@ -185,8 +186,8 @@ public class TidistoModule extends KrollModule {
 			} catch (IOException e) {
 				Log.d(LCAT, e.getMessage());
 			}
-		//} else
-		//	Log.w(LCAT, "was always initalized.");
+		} else
+			Log.w(LCAT, "was always initalized.");
 		Log.d(LCAT, "init done, now setScanconfig");
 		LeicaSdk.setScanConfig(true, true, true, true);
 		ArrayList<String> keys = new ArrayList<>();
