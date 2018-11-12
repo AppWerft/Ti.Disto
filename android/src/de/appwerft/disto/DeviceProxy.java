@@ -75,7 +75,7 @@ public class DeviceProxy extends KrollProxy implements
 				@Override
 				public void run() {
 					try {
-						Response response = currentDevice.sendCustomCommand(
+						Response response = currentDevice.sendCommand(
 								"StartTracking", currentDevice.getTIMEOUT_NORMAL());
 						response.waitForData();
 						if (response.getError() != null) {
