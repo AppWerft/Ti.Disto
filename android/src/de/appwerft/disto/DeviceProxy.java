@@ -75,7 +75,7 @@ public class DeviceProxy extends KrollProxy implements
 				@Override
 				public void run() {
 					try {
-						Response response = currentDevice.sendCommand(
+						Response response = currentDevice.sendCustomCommand(
 								cmd, currentDevice.getTIMEOUT_NORMAL());
 						response.waitForData();
 						if (response.getError() != null) {
@@ -96,6 +96,7 @@ public class DeviceProxy extends KrollProxy implements
 	@Override
 	public void onConnectionStateChanged(final Device device,
 			final Device.ConnectionState connectionState) {
+		currentDevice =device;
 		final KrollDict event = new KrollDict();
 		event.put("device", this);
 		try {
