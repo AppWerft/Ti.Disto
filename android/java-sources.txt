@@ -3,6 +3,7 @@
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/MessageDispatcher.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/TidistoModule.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/ViewProxy.java"
+"/Users/fuerst/Documents/MLearning/Ti.Disto/android/build/generated/java/de/appwerft/disto/TidistoBootstrap.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/build/generated/r/android/support/compat/R.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/build/generated/r/android/support/design/R.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/build/generated/r/android/support/v7/appcompat/R.java"
