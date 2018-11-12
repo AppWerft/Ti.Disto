@@ -34,10 +34,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 	boolean activityStopped = true;
 	private KrollFunction onFoundCallback = null;
 	private KrollFunction onErrorCallback = null;
-	
+
 	public static final String LCAT = TidistoModule.LCAT;
-	private static final int MSG_START = 500;
-	private static final int MSG_STOP = 501;
 
 	public DeviceManagerProxy() {
 		super();
@@ -55,37 +53,6 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void findAvailableDevices() {
-		if (TiApplication.isUIThread())
-			handleFindAvailableDevices();
-		else
-			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
-					MSG_START));
-	}
-
-	@Override
-	public boolean handleMessage(Message msg) {
-		Log.d(LCAT, "handleMessage " + msg.what);
-		AsyncResult result = null;
-		switch (msg.what) {
-		case MSG_START: {
-			result = (AsyncResult) msg.obj;
-			handleFindAvailableDevices();
-			result.setResult(null);
-			return true;
-		}
-		case MSG_STOP: {
-			result = (AsyncResult) msg.obj;
-		//	handleStopFindingDevices();
-			result.setResult(null);
-			return true;
-		}
-		default: {
-			return super.handleMessage(msg);
-		}
-		}
-	}
-
-	private void handleFindAvailableDevices() {
 		TiApplication app = TiApplication.getInstance();
 		if (app != null) {
 			ctx = app.getApplicationContext();
@@ -102,18 +69,21 @@ public class DeviceManagerProxy extends KrollProxy implements
 			Log.e(LCAT, "Missing permission: " + e.getMessage());
 		}
 		findDevicesRunning = true;
-		Log.d(LCAT,"findAvailableDevices started");
+		Log.d(LCAT, "findAvailableDevices started");
 	}
 
 	@Override
 	public void onError(ErrorObject err, Device device) {
-		Log.e(LCAT, err.getErrorMessage());
+		KrollDict event = new KrollDict();
+		event.put("error", err.getErrorMessage());
+		if (onErrorCallback !=null)
+			onErrorCallback.callAsync(getKrollObject(),event);
 	}
 
 	@Override
 	public void onAvailableDeviceFound(final Device device) {
 		if (device instanceof YetiDevice) {
-			String name= device.getDeviceName();
+			String name = device.getDeviceName();
 			KrollDict event = new KrollDict();
 			event.put("device", new DeviceProxy(device));
 			event.put("type", device.getClass().getSimpleName());
@@ -121,28 +91,27 @@ public class DeviceManagerProxy extends KrollProxy implements
 			event.put("name", name);
 			event.put("model", device.modelName);
 			event.put("success", true);
-			Log.d(LCAT,event.toString());
+			Log.d(LCAT, event.toString());
 			if (onFoundCallback != null) {
 				onFoundCallback.callAsync(getKrollObject(), event);
-			} else Log.e(LCAT, "onFound not defined!");
+			} else
+				Log.e(LCAT, "onFound not defined!");
 		}
 	}
 
 	/*
-		if (TiApplication.isUIThread())
-			handleStopFindingDevices();
-		else
-			TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
-					MSG_STOP));
-	}*/
+	 * if (TiApplication.isUIThread()) handleStopFindingDevices(); else
+	 * TiMessenger.sendBlockingMainMessage(getMainHandler().obtainMessage(
+	 * MSG_STOP)); }
+	 */
 
-	
-@Kroll.method
-public void stopFindingDevices() {
+	@Kroll.method
+	public void stopFindingDevices() {
 		findDevicesRunning = false;
 		if (deviceManager != null)
 			deviceManager.stopFindingDevices();
-		else Log.w(LCAT, "try to stop findingDevices, but deviceManager is null");
+		else
+			Log.w(LCAT, "try to stop findingDevices, but deviceManager is null");
 	}
 
 	@Kroll.method
@@ -153,8 +122,7 @@ public void stopFindingDevices() {
 		for (Device device : devices) {
 			deviceArray.add(new DeviceProxy(device));
 		}
-		res.put("devices",
-				deviceArray.toArray(new DeviceProxy[devices.size()]));
+		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
 		return res;
 	}
 
