@@ -79,7 +79,7 @@ public class MessageDispatcher {
 			try {
 				String id = receivedYetiDataPacket.dataId;
 				Log.i(LCAT, "receivedYetiDataPacket.dataId = " + id);
-				krolldata.put("dataid", id);
+				krolldata.put("type", id);
 				switch (id) {
 
 				// Distance Measurement
@@ -96,27 +96,31 @@ public class MessageDispatcher {
 					distanceValue.setUnit(data.getDistanceUnit());
 					distanceValue = MeasurementConverter
 							.convertDistance(distanceValue);
-					krolldata.put("distance",
-							distanceValue.getConvertedValueStrNoUnit());
-					krolldata.put("distanceUnit", distanceValue.getUnitStr());
-
+					krolldata
+							.put("distance",
+									getValue(
+											distanceValue.getUnitStr(),
+											distanceValue
+													.getConvertedValueStrNoUnit()));
 					inclinationValue = new MeasuredValue(data.getInclination());
 					inclinationValue.setUnit(data.getInclinationUnit());
 					inclinationValue = MeasurementConverter
 							.convertAngle(inclinationValue);
-					krolldata.put("inclination",
-							inclinationValue.getConvertedValueStrNoUnit());
-					krolldata.put("inclinationUnit",
-							inclinationValue.getUnitStr());
+					krolldata.put(
+							"inclination",
+							getValue(inclinationValue.getUnitStr(),
+									inclinationValue
+											.getConvertedValueStrNoUnit()));
 					directionValue = new MeasuredValue(data.getDirection());
 					directionValue.setUnit(data.getDirectionUnit());
 					directionValue = MeasurementConverter
 							.convertAngle(directionValue);
-					krolldata.put("direction",
-							directionValue.getConvertedValueStrNoUnit());
-					krolldata.put("directionUnit", directionValue.getUnitStr());
-					krolldata.put("timestamp",
-							String.valueOf(data.getTimestampAndFlags()));
+					krolldata
+							.put("direction",
+									getValue(
+											directionValue.getUnitStr(),
+											directionValue
+													.getConvertedValueStrNoUnit()));
 				}
 					break;
 				case Defines.ID_IMU_P2P: {
@@ -218,19 +222,30 @@ public class MessageDispatcher {
 				Log.i(LCAT, krolldata.toString());
 
 			} catch (IllegalArgumentCheckedException e) {
+				Log.e(LCAT,e.getMessage());
 				event.put("error", e.getMessage());
 			} catch (WrongDataException e) {
+				Log.e(LCAT,e.getMessage());
 				event.put("error", e.getMessage());
 			} catch (Exception e) {
+				Log.e(LCAT,e.getMessage());
 				event.put("error", e.getMessage());
 			}
-			
+
 			if (dataCallback != null) {
 				dataCallback.call(krollObject, event);
 
-			} else Log.w(LCAT, "dataCallback missing");
+			} else
+				Log.w(LCAT, "dataCallback missing");
 		}
 
+	}
+
+	private static KrollDict getValue(String u, String v) {
+		KrollDict res = new KrollDict();
+		res.put("value", v);
+		res.put("unit", u);
+		return res;
 	}
 
 	public void dispatchDevice(KrollDict event) {
