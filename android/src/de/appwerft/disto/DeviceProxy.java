@@ -77,7 +77,7 @@ public class DeviceProxy extends KrollProxy implements
 					try {
 						Log.d(LCAT,"inside new thread, preparing command. ");
 						Response response;
-							response = currentDevice.sendCommand(Types.Commands.DistanceDC,
+							response = currentDevice.sendCommand(cmd,
 									currentDevice.getTIMEOUT_NORMAL());
 							response.waitForData();
 						if (response.getError() != null) {
