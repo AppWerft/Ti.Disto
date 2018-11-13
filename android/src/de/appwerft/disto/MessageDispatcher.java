@@ -213,10 +213,17 @@ public class MessageDispatcher {
 				}
 					break;
 				}
+				event.put("data", krolldata);
 			} catch (IllegalArgumentCheckedException e) {
-
+				event.put("error", e.getMessage());
 			} catch (WrongDataException e) {
+				event.put("error", e.getMessage());
 			} catch (Exception e) {
+				event.put("error", e.getMessage());
+			}
+			if (dataCallback!=null) {
+				dataCallback.call(krollObject, event);
+				
 			}
 		}
 
