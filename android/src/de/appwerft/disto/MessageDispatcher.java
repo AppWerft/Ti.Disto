@@ -230,13 +230,16 @@ public class MessageDispatcher {
 			} catch (Exception e) {
 				Log.e(LCAT,e.getMessage());
 				event.put("error", e.getMessage());
+			} finally{
+				if (dataCallback != null) {
+					event.put("success", true);
+					dataCallback.call(krollObject, event);
+
+				} else
+					Log.w(LCAT, "dataCallback missing");
 			}
 
-			if (dataCallback != null) {
-				dataCallback.call(krollObject, event);
-
-			} else
-				Log.w(LCAT, "dataCallback missing");
+			
 		}
 
 	}
