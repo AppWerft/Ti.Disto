@@ -219,8 +219,6 @@ public class MessageDispatcher {
 					break;
 				}
 				event.put("data", krolldata);
-				Log.i(LCAT, krolldata.toString());
-
 			} catch (IllegalArgumentCheckedException e) {
 				Log.e(LCAT,e.getMessage());
 				event.put("error", e.getMessage());
