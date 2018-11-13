@@ -78,12 +78,12 @@ public class MessageDispatcher {
 		if (receivedYetiDataPacket != null) {
 			try {
 				String id = receivedYetiDataPacket.dataId;
-
+				Log.i(LCAT,"receivedYetiDataPacket.dataId = " + id);
 				switch (id) {
 
 				// Distance Measurement
 				case Defines.ID_IMU_BASIC_MEASUREMENTS: {
-
+					
 					MeasuredValue distanceValue;
 					MeasuredValue inclinationValue;
 					MeasuredValue directionValue;
