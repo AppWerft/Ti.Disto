@@ -65,17 +65,17 @@ public class DeviceProxy extends KrollProxy implements
 		if (sendCustomCommandThread == null) {
 			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
 					+ System.currentTimeMillis(), HandlerThread.MAX_PRIORITY);
-
 			sendCustomCommandThread.start();
 			sendCustomCommandHandler = new Handler(
 					sendCustomCommandThread.getLooper());
-		}
+		} else Log.d(LCAT,"sendCustomCommandThread != null");
 		Log.d(LCAT, "send any string to device: " + cmd);
 		try {
 			sendCustomCommandHandler.post(new Runnable() {
 				@Override
 				public void run() {
 					try {
+						Log.d(LCAT,"inside new thread, preparing command. ");
 						Response response;
 							response = currentDevice.sendCommand(Types.Commands.DistanceDC,
 									currentDevice.getTIMEOUT_NORMAL());
