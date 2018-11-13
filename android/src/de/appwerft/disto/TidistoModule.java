@@ -9,6 +9,7 @@
 package de.appwerft.disto;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -169,6 +171,13 @@ public class TidistoModule extends KrollModule {
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
+			AssetManager assetManager = ctx.getAssets();
+			try {
+				InputStream is = assetManager.open(jsoncommandsFilename);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			try {
 				Log.d(LCAT, "isInit = false");
 				boolean res = LeicaSdk.init(ctx, new LeicaSdk.InitObject(
