@@ -102,7 +102,7 @@ public class TidistoModule extends KrollModule {
 
 	public TidistoModule() {
 		super();
-		ctx = TiApplication.getInstance().getApplicationContext();
+		ctx = TiApplication.getInstance();
 		deviceManager = DeviceManager.getInstance(ctx);
 	}
 
@@ -175,7 +175,6 @@ public class TidistoModule extends KrollModule {
 			try {
 				InputStream is = assetManager.open(jsoncommandsFilename);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			try {
