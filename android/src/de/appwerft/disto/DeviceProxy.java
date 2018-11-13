@@ -75,9 +75,8 @@ public class DeviceProxy extends KrollProxy implements
 				@Override
 				public void run() {
 					try {
-						Log.i(LCAT,"inside new thread, preparing command. "+ cmd);
 						Response response;
-							response = currentDevice.sendCommand(cmd,
+							response = currentDevice.sendCustomCommand(cmd,
 									currentDevice.getTIMEOUT_NORMAL());
 							response.waitForData();
 						if (response.getError() != null) {
