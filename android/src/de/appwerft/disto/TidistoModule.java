@@ -89,7 +89,7 @@ public class TidistoModule extends KrollModule {
 	 */
 	Device currentDevice;
 	Context ctx;
-	DeviceManager deviceManager;
+	
 	// needed for connection timeout
 	Timer connectionTimeoutTimer;
 	TimerTask connectionTimeoutTask;
@@ -103,7 +103,6 @@ public class TidistoModule extends KrollModule {
 	public TidistoModule() {
 		super();
 		ctx = TiApplication.getInstance();
-		deviceManager = DeviceManager.getInstance(ctx);
 	}
 
 	@Kroll.method
@@ -171,15 +170,9 @@ public class TidistoModule extends KrollModule {
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
-			AssetManager assetManager = ctx.getAssets();
-			try {
-				InputStream is = assetManager.open(jsoncommandsFilename);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
 			try {
 				Log.d(LCAT, "isInit = false");
-				boolean res = LeicaSdk.init(ctx, new LeicaSdk.InitObject(
+				boolean res = LeicaSdk.init(TiApplication.getAppRootOrCurrentActivity(), new LeicaSdk.InitObject(
 						jsoncommandsFilename));
 				Log.d(LCAT, "result of LeicaSdk.init = " + res);
 				LeicaSdk.setMethodCalledLog(true);
