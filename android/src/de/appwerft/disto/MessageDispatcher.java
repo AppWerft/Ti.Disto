@@ -78,12 +78,13 @@ public class MessageDispatcher {
 		if (receivedYetiDataPacket != null) {
 			try {
 				String id = receivedYetiDataPacket.dataId;
-				Log.i(LCAT,"receivedYetiDataPacket.dataId = " + id);
+				Log.i(LCAT, "receivedYetiDataPacket.dataId = " + id);
+				krolldata.put("dataid", id);
 				switch (id) {
 
 				// Distance Measurement
 				case Defines.ID_IMU_BASIC_MEASUREMENTS: {
-					
+
 					MeasuredValue distanceValue;
 					MeasuredValue inclinationValue;
 					MeasuredValue directionValue;
@@ -214,6 +215,8 @@ public class MessageDispatcher {
 					break;
 				}
 				event.put("data", krolldata);
+				Log.i(LCAT, krolldata.toString());
+
 			} catch (IllegalArgumentCheckedException e) {
 				event.put("error", e.getMessage());
 			} catch (WrongDataException e) {
@@ -221,10 +224,11 @@ public class MessageDispatcher {
 			} catch (Exception e) {
 				event.put("error", e.getMessage());
 			}
-			if (dataCallback!=null) {
+			
+			if (dataCallback != null) {
 				dataCallback.call(krollObject, event);
-				
-			}
+
+			} else Log.w(LCAT, "dataCallback missing");
 		}
 
 	}
