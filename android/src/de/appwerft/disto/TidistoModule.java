@@ -22,6 +22,7 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.io.TiFileFactory;
 import org.json.JSONException;
 
 import android.app.Activity;
@@ -170,6 +171,8 @@ public class TidistoModule extends KrollModule {
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
+			String json = loadJSONFromAsset(jsoncommandsFilename);
+			Log.i(LCAT, json);
 			try {
 				Log.d(LCAT, "isInit = false");
 				LeicaSdk.init(TiApplication.getInstance(), new LeicaSdk.InitObject(
@@ -266,4 +269,21 @@ public class TidistoModule extends KrollModule {
 		super.onCreate(activity, savedInstanceState);
 	}
 
+	public String loadJSONFromAsset(String filename)
+	{
+		String json = null;
+
+		try {
+			String url = this.resolveUrl(null, filename);
+			InputStream inStream = TiFileFactory.createTitaniumFile(new String[] { url }, false).getInputStream();
+			byte[] buffer = new byte[inStream.available()];
+			inStream.read(buffer);
+			inStream.close();
+			json = new String(buffer, "UTF-8");
+		} catch (IOException ex) {
+			Log.e(LCAT, "Error opening file: " + ex.getMessage());
+			return "";
+		}
+		return json;
+}
 }
