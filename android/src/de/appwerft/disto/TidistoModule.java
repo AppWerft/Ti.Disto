@@ -38,6 +38,7 @@ import ch.leica.sdk.Types;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.ErrorHandling.IllegalArgumentCheckedException;
+import ch.leica.sdk.commands.CommandsParser;
 
 @Kroll.module(name = "Tidisto", id = "de.appwerft.disto")
 public class TidistoModule extends KrollModule {
@@ -69,7 +70,7 @@ public class TidistoModule extends KrollModule {
 	@Kroll.constant
 	public static final int DEVICE_STATE_UPDATE = Device.DeviceState.update
 			.ordinal();
-	public static final String JSONCOMMANDS= "commands.json";
+	public static final String JSONCOMMANDS = "commands.json";
 	@Kroll.constant
 	public static final int VERBOSE = 2;
 	@Kroll.constant
@@ -90,7 +91,7 @@ public class TidistoModule extends KrollModule {
 	 */
 	Device currentDevice;
 	Context ctx;
-	
+
 	// needed for connection timeout
 	Timer connectionTimeoutTimer;
 	TimerTask connectionTimeoutTask;
@@ -165,18 +166,19 @@ public class TidistoModule extends KrollModule {
 	}
 
 	@Kroll.method
-	public void init(@Kroll.argument(optional=true) String filename) {
-		String jsoncommandsFilename = (filename==null)? JSONCOMMANDS : filename;
+	public void init(@Kroll.argument(optional = true) String filename) {
+		String jsoncommandsFilename = (filename == null) ? JSONCOMMANDS
+				: filename;
 		Log.i(LCAT, "====== START leica DISTO ========");
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
-			String json = loadJSONFromAsset(jsoncommandsFilename);
+			String json = loadJSONFromResources(jsoncommandsFilename);
 			Log.i(LCAT, json);
 			try {
 				Log.d(LCAT, "isInit = false");
-				LeicaSdk.init(TiApplication.getInstance(), new LeicaSdk.InitObject(
-						jsoncommandsFilename));
+				LeicaSdk.init(TiApplication.getInstance(),
+						new LeicaSdk.InitObject(jsoncommandsFilename));
 			} catch (JSONException e) {
 				Log.e(LCAT,
 						"Error in the structure of the JSON File, closing the application");
@@ -186,8 +188,7 @@ public class TidistoModule extends KrollModule {
 						"Error in the data of the JSON File, closing the application");
 				Log.e(LCAT, e.getMessage());
 			} catch (IOException e) {
-				Log.e(LCAT,
-						"File not found: "+ e.getMessage());
+				Log.e(LCAT, "File not found: " + e.getMessage());
 			}
 			LeicaSdk.setMethodCalledLog(true);
 			LeicaSdk.scanConfig.setBleAdapterOn(true);
@@ -269,21 +270,33 @@ public class TidistoModule extends KrollModule {
 		super.onCreate(activity, savedInstanceState);
 	}
 
-	public String loadJSONFromAsset(String filename)
-	{
+	public boolean loadJSONFromResources(String filename) {
 		String json = null;
-
-		try {
 			String url = this.resolveUrl(null, filename);
-			InputStream inStream = TiFileFactory.createTitaniumFile(new String[] { url }, false).getInputStream();
-			byte[] buffer = new byte[inStream.available()];
-			inStream.read(buffer);
-			inStream.close();
-			json = new String(buffer, "UTF-8");
-		} catch (IOException ex) {
-			Log.e(LCAT, "Error opening file: " + ex.getMessage());
-			return "";
-		}
-		return json;
-}
+			InputStream inStream;
+			try {
+				inStream = TiFileFactory.createTitaniumFile(
+						new String[] { url }, false).getInputStream();
+				try {
+					new CommandsParser(inStream);
+					return true;
+				} catch (IllegalArgumentCheckedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return false;
+	}
 }
