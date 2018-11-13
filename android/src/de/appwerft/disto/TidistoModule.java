@@ -172,7 +172,7 @@ public class TidistoModule extends KrollModule {
 			Log.i(LCAT, "====== START init ========");
 			try {
 				Log.d(LCAT, "isInit = false");
-				LeicaSdk.init(getActivity(), new LeicaSdk.InitObject(
+				LeicaSdk.init(TiApplication.getInstance(), new LeicaSdk.InitObject(
 						jsoncommandsFilename));
 			} catch (JSONException e) {
 				Log.e(LCAT,
