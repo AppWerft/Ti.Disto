@@ -173,23 +173,7 @@ public class TidistoModule extends KrollModule {
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
 			Log.i(LCAT, "====== START init ========");
-			String json = loadJSONFromResources(jsoncommandsFilename);
-			Log.i(LCAT, json);
-			try {
-				Log.d(LCAT, "isInit = false");
-				LeicaSdk.init(TiApplication.getInstance(),
-						new LeicaSdk.InitObject(jsoncommandsFilename));
-			} catch (JSONException e) {
-				Log.e(LCAT,
-						"Error in the structure of the JSON File, closing the application");
-				Log.e(LCAT, e.getMessage());
-			} catch (IllegalArgumentCheckedException e) {
-				Log.e(LCAT,
-						"Error in the data of the JSON File, closing the application");
-				Log.e(LCAT, e.getMessage());
-			} catch (IOException e) {
-				Log.e(LCAT, "File not found: " + e.getMessage());
-			}
+			importCommands(jsoncommandsFilename);
 			LeicaSdk.setMethodCalledLog(true);
 			LeicaSdk.scanConfig.setBleAdapterOn(true);
 		} else
@@ -270,7 +254,7 @@ public class TidistoModule extends KrollModule {
 		super.onCreate(activity, savedInstanceState);
 	}
 
-	public boolean loadJSONFromResources(String filename) {
+	public boolean importCommands(String filename) {
 		String json = null;
 			String url = this.resolveUrl(null, filename);
 			InputStream inStream;
