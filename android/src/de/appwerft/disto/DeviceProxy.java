@@ -72,12 +72,13 @@ public class DeviceProxy extends KrollProxy implements
 					response.waitForData();
 
 					if (response.getError() != null) {
-						
+						Log.e(LCAT,response.getError().getErrorMessage());
 					} else {
 						Log.i(LCAT,response.getReceivedDataString());
 					}
 
 				} catch (DeviceException e) {
+					Log.e(LCAT,e.getMessage());
 				}
 			}
 		}).start();
