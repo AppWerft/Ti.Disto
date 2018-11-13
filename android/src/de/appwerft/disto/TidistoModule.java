@@ -186,8 +186,7 @@ public class TidistoModule extends KrollModule {
 				Log.e(LCAT, e.getMessage());
 			} catch (IOException e) {
 				Log.e(LCAT,
-						"Error not found");
-				Log.e(LCAT, e.getMessage());
+						"Error not found: "+ e.getMessage());
 			}
 		} else
 			Log.w(LCAT, "was always initalized.");
