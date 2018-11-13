@@ -17,6 +17,7 @@ import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
 import ch.leica.sdk.commands.ReceivedData;
 import ch.leica.sdk.commands.response.Response;
+import ch.leica.sdk.commands.response.ResponsePlain;
 import ch.leica.sdk.connection.BaseConnectionManager.BleReceivedDataListener;
 
 @Kroll.proxy(creatableInModule = TidistoModule.class)
@@ -60,7 +61,30 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void sendCommand(final String cmd,
+	public void getDistance(
+			@Kroll.argument(optional = true) KrollFunction callback) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					//Measure polar
+					final ResponsePlain response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.DistanceDC);
+					response.waitForData();
+
+					if (response.getError() != null) {
+						
+					} else {
+						Log.i(LCAT,response.getReceivedDataString());
+					}
+
+				} catch (DeviceException e) {
+				}
+			}
+		}).start();
+
+	}
+	@Kroll.method
+	public void sendCustomeCommand(final String cmd,
 			@Kroll.argument(optional = true) KrollFunction callback) {
 		if (sendCustomCommandThread == null) {
 			sendCustomCommandThread = new HandlerThread("getDeviceStateThread"
@@ -76,7 +100,7 @@ public class DeviceProxy extends KrollProxy implements
 				public void run() {
 					try {
 						Response response;
-							response = currentDevice.sendCommand(Types.Commands.LaserOn,
+							response = currentDevice.sendCustomCommand(cmd,
 									currentDevice.getTIMEOUT_NORMAL());
 							response.waitForData();
 						if (response.getError() != null) {
