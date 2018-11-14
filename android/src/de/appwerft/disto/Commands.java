@@ -46,6 +46,7 @@ public class Commands {
 			@Override
 			public void run() {
 				try {
+					Log.i(LCAT, "===== start Tracking =====");
 					final ResponsePlain response = (ResponsePlain) currentDevice
 							.sendCommand(Types.Commands.StartTracking);
 					response.waitForData();
