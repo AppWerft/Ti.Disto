@@ -35,6 +35,11 @@ public class DeviceManagerModule extends KrollModule implements
 		super();
 
 	}
+	@Override
+	public void handleCreationDict(KrollDict options) {
+		
+		super.handleCreationDict(options);
+	}
 
 	@Kroll.method
 	public void findAvailableDevices(KrollDict options) {
