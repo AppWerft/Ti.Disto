@@ -26,18 +26,20 @@ public class Commands {
 				try {
 					final ResponsePlain response = (ResponsePlain) currentDevice
 							.sendCommand(Types.Commands.DistanceDC);
+					Log.i(LCAT,"sendCommand");
 					response.waitForData();
+					Log.i(LCAT,"waitForData");
 					if (response.getError() != null) {
 						Log.e(LCAT, response.getError().getErrorMessage());
 					} else {
 						Log.i(LCAT, response.getReceivedDataString());
 					}
+					Log.i(LCAT,"after proceeding");
 				} catch (DeviceException e) {
 					Log.e(LCAT, e.getMessage());
 				}
 			}
 		}).start();
-
 	}
 	
 	
