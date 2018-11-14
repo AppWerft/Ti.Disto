@@ -8,6 +8,7 @@
  */
 package de.appwerft.disto;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.io.TiBaseFile;
 import org.appcelerator.titanium.io.TiFileFactory;
 import org.json.JSONException;
 
@@ -254,33 +256,36 @@ public class TidistoModule extends KrollModule {
 		super.onCreate(activity, savedInstanceState);
 	}
 
-	public boolean importCommands(String filename) {
-		String json = null;
-			String url = this.resolveUrl(null, filename);
-			InputStream inStream;
+	public boolean importCommands(String filename) throws IOException {
+		
+		boolean error = false;
+		
+		InputStream inStream = null;
+		TiBaseFile resFile = TiFileFactory.createTitaniumFile(new String[] { this.resolveUrl(null, filename) },
+				false);
+		TiBaseFile assetFile = TiFileFactory.createTitaniumFile(new String[] {resolveUrl(null,filename) }, false);
+		
+		inStream = resFile.getInputStream();
+		
+		if (inStream == null) {
+           
+		}
+		if (inStream != null) {
 			try {
-				inStream = TiFileFactory.createTitaniumFile(
-						new String[] { url }, false).getInputStream();
-				try {
-					new CommandsParser(inStream);
-					return true;
-				} catch (IllegalArgumentCheckedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return false;
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return false;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return false;
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				new CommandsParser(inStream);
+				error = true;
+			} catch (IllegalArgumentCheckedException e) {
+				error = true;
+			} catch (JSONException e) {
+				error = true;
+			} catch (IOException e) {
+				error = true;
 			}
-			return false;
+		}
+
+		if (error == false)
+			return true;
+		return false;
 	}
+	
 }

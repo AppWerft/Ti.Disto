@@ -74,6 +74,13 @@ public class MessageDispatcher {
 			Log.d(LCAT,
 					"Async Data modelName"
 							+ receivedBleDataPacket.getModelName());
+			krolldata.put("model", receivedBleDataPacket.getModelName());
+			krolldata.put("batteryLevel", receivedBleDataPacket.getBatteryLevel());
+			krolldata.put("firmwareRevision", receivedBleDataPacket.getFirmwareRevision());
+			krolldata.put("hardwareRevision", receivedBleDataPacket.getHardwareRevision());
+			
+			
+			
 		}
 		if (receivedYetiDataPacket != null) {
 			try {
@@ -81,17 +88,12 @@ public class MessageDispatcher {
 				Log.i(LCAT, "receivedYetiDataPacket.dataId = " + id);
 				krolldata.put("type", id);
 				switch (id) {
-
-				// Distance Measurement
 				case Defines.ID_IMU_BASIC_MEASUREMENTS: {
-
 					MeasuredValue distanceValue;
 					MeasuredValue inclinationValue;
 					MeasuredValue directionValue;
-
 					ReceivedYetiDataPacket.YetiBasicMeasurements data = receivedYetiDataPacket
 							.getBasicMeasurements();
-
 					distanceValue = new MeasuredValue(data.getDistance());
 					distanceValue.setUnit(data.getDistanceUnit());
 					distanceValue = MeasurementConverter
@@ -156,7 +158,7 @@ public class MessageDispatcher {
 							String.valueOf(data.getQuaternion_Z()));
 					krolldata.put("Quaternion_W",
 							String.valueOf(data.getQuaternion_W()));
-					krolldata.put("timestamp_Quaternion_Measurements",
+					krolldata.put("timestamp",
 							String.valueOf(data.getTimestampAndFlags()));
 				}
 					break;
@@ -179,22 +181,20 @@ public class MessageDispatcher {
 							String.valueOf(data.getRotation_Z()));
 					krolldata.put("RotationSensitivity",
 							String.valueOf(data.getRotationSensitivity()));
-					krolldata.put("timestamp_ACCRotation_Measurements",
+					krolldata.put("timestamp",
 							String.valueOf(data.getTimestampAndFlags()));
 				}
 					break;
 				case Defines.ID_IMU_MAGNETOMETER: {
 					ReceivedYetiDataPacket.YetiMagnetometer data;
-
 					data = receivedYetiDataPacket.getMagnetometer();
-
 					krolldata.put("Magnetometer_X",
 							String.valueOf(data.getMagnetometer_X()));
 					krolldata.put("Magnetometer_Y",
 							String.valueOf(data.getMagnetometer_Y()));
 					krolldata.put("Magnetometer_Z",
 							String.valueOf(data.getMagnetometer_Z()));
-					krolldata.put("timestamp_Magnetometer_Measurements",
+					krolldata.put("timestamp",
 							String.valueOf(data.getTimestampAndFlags()));
 				}
 					break;
