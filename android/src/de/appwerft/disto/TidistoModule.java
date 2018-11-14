@@ -187,7 +187,6 @@ public class TidistoModule extends KrollModule {
 		keys.add(key);
 		LeicaSdk.setLicenses(keys);
 		Log.i(LCAT, "====== END init ==========");
-
 	}
 
 	private boolean hasPermission(String permission) {
@@ -273,8 +272,6 @@ public class TidistoModule extends KrollModule {
 			}
 		} catch (IOException e1) {
 			return false;
-			
 		}
-		
 	}
 }
