@@ -39,17 +39,22 @@ public class DeviceProxy extends KrollProxy implements
 	public DeviceProxy(Device device) {
 		super();
 		currentDevice = device;
-		currentDevice.setConnectionListener(this);
-		currentDevice.setErrorListener(this);
-
-		currentDevice.setReceiveDataListener(this);
+		
 		messageDispatcher = new MessageDispatcher(this);
 	}
 
 	@Kroll.method
 	public void connect(KrollDict opts) {
+		currentDevice.setConnectionListener(this);
+		currentDevice.setErrorListener(this);
+		currentDevice.setReceiveDataListener(this);
 		messageDispatcher.registerCallbacks(opts);
 		currentDevice.connect();
+	}
+	
+	@Kroll.method
+	public void disconnect() {
+		currentDevice.disconnect();
 	}
 
 	@Kroll.method
