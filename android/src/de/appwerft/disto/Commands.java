@@ -10,6 +10,7 @@ import org.appcelerator.kroll.common.Log;
 import ch.leica.sdk.Types;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.ErrorHandling.DeviceException;
+import ch.leica.sdk.commands.response.ResponseMeasurement;
 import ch.leica.sdk.commands.response.ResponsePlain;
 
 public class Commands {
@@ -47,13 +48,13 @@ public class Commands {
 			public void run() {
 				try {
 					Log.i(LCAT, "===== start Tracking =====");
-					final ResponsePlain response = (ResponsePlain) currentDevice
+					final ResponseMeasurement response = (ResponseMeasurement) currentDevice
 							.sendCommand(Types.Commands.StartTracking);
 					response.waitForData();
 					if (response.getError() != null) {
 						Log.e(LCAT, response.getError().getErrorMessage());
 					} else {
-						Log.i(LCAT, "RESPONSE="+response.getReceivedDataString());
+						Log.i(LCAT, "RESPONSE="+response.getDistanceValue().toString());
 					}
 					Log.i(LCAT, "after proceeding");
 				} catch (DeviceException e) {
