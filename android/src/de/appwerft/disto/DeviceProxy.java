@@ -99,6 +99,17 @@ public class DeviceProxy extends KrollProxy implements
 		}
 		deviceIsInTrackingMode = true;
 	}
+	@Kroll.method
+	public void stopTracking(
+			@Kroll.argument(optional = true) KrollFunction callback) {
+		try {
+			currentDevice.sendCommand(Types.Commands.StopTracking);
+		} catch (DeviceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		deviceIsInTrackingMode = false;
+	}
 
 	@Kroll.method
 	public void getDistance(
