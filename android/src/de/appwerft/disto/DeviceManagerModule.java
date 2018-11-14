@@ -5,17 +5,12 @@ import java.util.List;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
-import org.appcelerator.kroll.KrollProxy;
+import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.kroll.common.AsyncResult;
 import org.appcelerator.kroll.common.Log;
-import org.appcelerator.kroll.common.TiMessenger;
 import org.appcelerator.titanium.TiApplication;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Message;
 import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
@@ -24,10 +19,9 @@ import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
 
-@Kroll.proxy(creatableInModule = TidistoModule.class)
-public class DeviceManagerProxy extends KrollProxy implements
+@Kroll.module(parentModule = TidistoModule.class)
+public class DeviceManagerModule extends KrollModule implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
-
 	private Context ctx;
 	private DeviceManager deviceManager;
 	boolean findDevicesRunning = false;
@@ -37,22 +31,23 @@ public class DeviceManagerProxy extends KrollProxy implements
 
 	public static final String LCAT = TidistoModule.LCAT;
 
-	public DeviceManagerProxy() {
+	public DeviceManagerModule() {
 		super();
 
 	}
-
 	@Override
 	public void handleCreationDict(KrollDict options) {
-		if (options.containsKeyAndNotNull("onfound"))
-			onFoundCallback = (KrollFunction) options.get("onfound");
-		if (options.containsKeyAndNotNull("onerror"))
-			onErrorCallback = (KrollFunction) options.get("onerror");
+		
 		super.handleCreationDict(options);
 	}
 
 	@Kroll.method
-	public void findAvailableDevices() {
+	public void findAvailableDevices(KrollDict options) {
+		if (options.containsKeyAndNotNull("onfound"))
+			onFoundCallback = (KrollFunction) options.get("onfound");
+		if (options.containsKeyAndNotNull("onerror"))
+			onErrorCallback = (KrollFunction) options.get("onerror");
+		Log.d(LCAT, "handleCreationDict finished");
 		TiApplication app = TiApplication.getInstance();
 		if (app != null) {
 			ctx = app.getApplicationContext();
@@ -76,8 +71,8 @@ public class DeviceManagerProxy extends KrollProxy implements
 	public void onError(ErrorObject err, Device device) {
 		KrollDict event = new KrollDict();
 		event.put("error", err.getErrorMessage());
-		if (onErrorCallback !=null)
-			onErrorCallback.callAsync(getKrollObject(),event);
+		if (onErrorCallback != null)
+			onErrorCallback.callAsync(getKrollObject(), event);
 	}
 
 	@Override
