@@ -254,28 +254,27 @@ public class TidistoModule extends KrollModule {
 		super.onCreate(activity, savedInstanceState);
 	}
 
-	public boolean importCommands(String filename) throws IOException{
-		boolean error = false;
-			String url = this.resolveUrl(null, filename);
-			InputStream inStream;
+	public boolean importCommands(String filename) {
+		String url = this.resolveUrl(null, filename);
+		InputStream inStream;
+		try {
+			inStream = TiFileFactory.createTitaniumFile(new String[] { url },
+					false).getInputStream();
 			try {
-				inStream = TiFileFactory.createTitaniumFile(
-						new String[] { url }, false).getInputStream();
-				try {
-					new CommandsParser(inStream);
-					error=true;
-				} catch (IllegalArgumentCheckedException e) {
-					error=true;
-				} catch (JSONException e) {
-					error=true;
-				} catch (IOException e) {
-					
-					error=true;
-				}
-			} catch (IOException e1) {
-				error=true;;
+				new CommandsParser(inStream);
+				return false;
+			} catch (IllegalArgumentCheckedException e) {
+				return false;
+			} catch (JSONException e) {
+				return false;
+			} catch (IOException e) {
+
+				return false;
 			}
-			if (error==false) return true;
+		} catch (IOException e1) {
 			return false;
+			
+		}
+		
 	}
 }
