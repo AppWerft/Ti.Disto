@@ -1,6 +1,5 @@
 package de.appwerft.disto;
 
-
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
@@ -30,6 +29,7 @@ public class DeviceProxy extends KrollProxy implements
 	private static String LCAT = TidistoModule.LCAT;
 	Handler sendCustomCommandHandler;
 	HandlerThread sendCustomCommandThread;
+
 	public DeviceProxy() {
 		super();
 	}
@@ -37,7 +37,7 @@ public class DeviceProxy extends KrollProxy implements
 	public DeviceProxy(Device device) {
 		super();
 		currentDevice = device;
-		
+
 		messageDispatcher = new MessageDispatcher(this);
 	}
 
@@ -49,10 +49,26 @@ public class DeviceProxy extends KrollProxy implements
 		messageDispatcher.registerCallbacks(opts);
 		currentDevice.connect();
 	}
-	
+
 	@Kroll.method
 	public void disconnect() {
-		currentDevice.disconnect();
+		if (currentDevice != null && currentDevice instanceof BleDevice) {
+			try {
+				currentDevice
+						.pauseBTConnection(new Device.BTConnectionCallback() {
+							@Override
+							public void onFinished() {
+								Log.d("onStop",
+										"NOW Notifications are deactivated in the device");
+								currentDevice.disconnect();
+							}
+						});
+			} catch (DeviceException e) {
+				e.printStackTrace();
+			}
+		} else if (currentDevice != null) {
+			currentDevice.disconnect();
+		}
 	}
 
 	@Kroll.method
@@ -68,7 +84,7 @@ public class DeviceProxy extends KrollProxy implements
 	@Kroll.method
 	public void getDeviceInfo(
 			@Kroll.argument(optional = true) KrollFunction callback) {
-		Commands.getDeviceInfo(currentDevice, this,callback);
+		Commands.getDeviceInfo(currentDevice, this, callback);
 	}
 
 	@Kroll.method
