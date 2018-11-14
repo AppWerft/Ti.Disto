@@ -17,7 +17,6 @@ import ch.leica.sdk.Listeners.ErrorListener;
 import ch.leica.sdk.Listeners.ReceivedDataListener;
 import ch.leica.sdk.commands.ReceivedData;
 import ch.leica.sdk.commands.response.Response;
-import ch.leica.sdk.commands.response.ResponsePlain;
 import ch.leica.sdk.connection.BaseConnectionManager.BleReceivedDataListener;
 
 @Kroll.proxy(creatableInModule = TidistoModule.class)
@@ -28,7 +27,7 @@ public class DeviceProxy extends KrollProxy implements
 	private MessageDispatcher messageDispatcher;
 	private static String LCAT = TidistoModule.LCAT;
 	Handler sendCustomCommandHandler;
-	private boolean deviceIsInTrackingMode=false;
+	private boolean deviceIsInTrackingMode = false;
 	HandlerThread sendCustomCommandThread;
 
 	public DeviceProxy() {
@@ -87,18 +86,19 @@ public class DeviceProxy extends KrollProxy implements
 			@Kroll.argument(optional = true) KrollFunction callback) {
 		Commands.getDeviceInfo(currentDevice, this, callback);
 	}
-	
+
 	@Kroll.method
-	public void startTracking(
-			@Kroll.argument(optional = true) KrollFunction callback) {
+	public void startTracking() {
 		try {
+			if (currentDevice == null || currentDevice.isInUpdateMode())
+				return;
 			currentDevice.sendCommand(Types.Commands.StartTracking);
 		} catch (DeviceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		deviceIsInTrackingMode = true;
 	}
+
 	@Kroll.method
 	public void stopTracking(
 			@Kroll.argument(optional = true) KrollFunction callback) {
