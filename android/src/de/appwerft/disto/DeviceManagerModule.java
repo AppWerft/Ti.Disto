@@ -37,7 +37,6 @@ public class DeviceManagerModule extends TidistoModule implements
 	}
 	@Override
 	public void handleCreationDict(KrollDict options) {
-		
 		super.handleCreationDict(options);
 	}
 
@@ -120,5 +119,4 @@ public class DeviceManagerModule extends TidistoModule implements
 		res.put("devices", deviceArray.toArray(new DeviceProxy[devices.size()]));
 		return res;
 	}
-
 }
