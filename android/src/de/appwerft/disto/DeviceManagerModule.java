@@ -19,8 +19,7 @@ import ch.leica.sdk.ErrorHandling.ErrorObject;
 import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
 
-@Kroll.module(parentModule = TidistoModule.class, propertyAccessors = {
-		"onFound", "onError" })
+@Kroll.module(parentModule = TidistoModule.class)
 public class DeviceManagerModule extends KrollModule implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
 	private Context ctx;
