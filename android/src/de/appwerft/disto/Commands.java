@@ -14,122 +14,145 @@ import ch.leica.sdk.commands.response.ResponsePlain;
 
 public class Commands {
 	private static String LCAT = TidistoModule.LCAT;
-	public Commands() {}
-	
-	
-	
-	public static void getDistance(final
-			Device currentDevice, KrollProxy proxy, KrollFunction callback) {
+
+	public Commands() {
+	}
+
+	public static void getDistance(final Device currentDevice,
+			KrollProxy proxy, KrollFunction callback) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					final ResponsePlain response = (ResponsePlain) currentDevice
 							.sendCommand(Types.Commands.DistanceDC);
-					Log.i(LCAT,"sendCommand");
+					Log.i(LCAT, "sendCommand");
 					response.waitForData();
-					Log.i(LCAT,"waitForData");
+					Log.i(LCAT,response.getReceivedDataString());
 					if (response.getError() != null) {
 						Log.e(LCAT, response.getError().getErrorMessage());
 					} else {
 						Log.i(LCAT, response.getReceivedDataString());
 					}
-					Log.i(LCAT,"after proceeding");
+					Log.i(LCAT, "after proceeding");
 				} catch (DeviceException e) {
 					Log.e(LCAT, e.getMessage());
 				}
 			}
 		}).start();
 	}
-	
-	
-	
-	public static void getDeviceInfo(final Device currentDevice,KrollProxy proxy,
-			 KrollFunction callback) {
+
+	public static void getDeviceInfo(final Device currentDevice,
+			KrollProxy proxy, KrollFunction callback) {
 		final CountDownLatch deviceInfoLatch = new CountDownLatch(1);
 
 		try {
-			if (currentDevice != null && currentDevice.isInUpdateMode() == false) {
+			if (currentDevice != null
+					&& currentDevice.isInUpdateMode() == false) {
 				return;
 			}
-			proxy.runOnMainThread(new Runnable() {
+			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					ResponsePlain response = null;
 					try {
 
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetBrandDistocom);
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetBrandDistocom);
 						response.waitForData();
 						String logCommandTag = "getBrand";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetIDDistocom);
+
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetIDDistocom);
 						response.waitForData();
 						logCommandTag = "getId";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetSoftwareVersionAPPDistocom);
+
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetSoftwareVersionAPPDistocom);
 						response.waitForData();
 						logCommandTag = "GetSoftwareVersionAPPDistocom";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetSoftwareVersionEDMDistocom);
+
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetSoftwareVersionEDMDistocom);
 						response.waitForData();
 						logCommandTag = "GetSoftwareVersionEDMDistocom";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetSoftwareVersionFTADistocom);
+
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetSoftwareVersionFTADistocom);
 						response.waitForData();
 						logCommandTag = "GetSoftwareVersionFTADistocom";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetSerialAPPDistocom);
+
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetSerialAPPDistocom);
 						response.waitForData();
 						logCommandTag = "GetSerialAPPDistocom";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetSerialEDMDistocom);
+
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetSerialEDMDistocom);
 						response.waitForData();
 						logCommandTag = "GetSerialEDMDistocom";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
-						response = (ResponsePlain) currentDevice.sendCommand(Types.Commands.GetSerialFTADistocom);
+
+						response = (ResponsePlain) currentDevice
+								.sendCommand(Types.Commands.GetSerialFTADistocom);
 						response.waitForData();
 						logCommandTag = "GetSerialFTADistocom";
 						if (response.getError() != null) {
-							Log.d("getDeviceInfo", logCommandTag + " error: " + response.getError().getErrorMessage());
+							Log.d("getDeviceInfo", logCommandTag + " error: "
+									+ response.getError().getErrorMessage());
 						} else {
-							Log.d("getDeviceInfo", logCommandTag + ": " + response.getReceivedDataString());
+							Log.d("getDeviceInfo", logCommandTag + ": "
+									+ response.getReceivedDataString());
 						}
-						
+
 						deviceInfoLatch.countDown();
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -139,7 +162,7 @@ public class Commands {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-return;
+		return;
 	}
 
 }
