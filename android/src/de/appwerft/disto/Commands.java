@@ -18,7 +18,7 @@ public class Commands {
 	
 	
 	
-	public static void getDistance(
+	public static void getDistance(final
 			Device currentDevice, KrollProxy proxy, KrollFunction callback) {
 		new Thread(new Runnable() {
 			@Override
@@ -42,7 +42,7 @@ public class Commands {
 	
 	
 	
-	public static void getDeviceInfo(Device currentDevice,KrollProxy proxy,
+	public static void getDeviceInfo(final Device currentDevice,KrollProxy proxy,
 			 KrollFunction callback) {
 		final CountDownLatch deviceInfoLatch = new CountDownLatch(1);
 
