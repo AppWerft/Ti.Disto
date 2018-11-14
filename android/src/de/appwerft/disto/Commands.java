@@ -32,7 +32,7 @@ public class Commands {
 					if (response.getError() != null) {
 						Log.e(LCAT, response.getError().getErrorMessage());
 					} else {
-						Log.i(LCAT, response.getReceivedDataString());
+						Log.i(LCAT, "RESPONSE="+response.getReceivedDataString());
 					}
 					Log.i(LCAT, "after proceeding");
 				} catch (DeviceException e) {
