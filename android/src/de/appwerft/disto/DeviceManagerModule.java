@@ -20,7 +20,7 @@ import ch.leica.sdk.ErrorHandling.PermissionException;
 import ch.leica.sdk.Listeners.ErrorListener;
 
 @Kroll.module(parentModule = TidistoModule.class)
-public class DeviceManagerModule extends TidistoModule implements
+public class DevicemanagerModule extends TidistoModule implements
 		DeviceManager.FoundAvailableDeviceListener, ErrorListener {
 	private Context ctx;
 	private DeviceManager deviceManager;
@@ -31,10 +31,11 @@ public class DeviceManagerModule extends TidistoModule implements
 
 	public static final String LCAT = TidistoModule.LCAT;
 
-	public DeviceManagerModule() {
+	public DevicemanagerModule() {
 		super();
 
 	}
+
 	@Override
 	public void handleCreationDict(KrollDict options) {
 		super.handleCreationDict(options);
