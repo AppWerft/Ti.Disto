@@ -90,7 +90,7 @@ public class DeviceProxy extends KrollProxy implements
 	@Kroll.method
 	public void StartTracking(
 			@Kroll.argument(optional = true) KrollFunction callback) {
-		Commands.StartTracking(currentDevice, this, callback);
+		Commands.startTracking(currentDevice, this, callback);
 	}
 
 	@Kroll.method
