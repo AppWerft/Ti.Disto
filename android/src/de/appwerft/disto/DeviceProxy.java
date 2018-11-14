@@ -28,6 +28,7 @@ public class DeviceProxy extends KrollProxy implements
 	private MessageDispatcher messageDispatcher;
 	private static String LCAT = TidistoModule.LCAT;
 	Handler sendCustomCommandHandler;
+	private boolean deviceIsInTrackingMode=false;
 	HandlerThread sendCustomCommandThread;
 
 	public DeviceProxy() {
@@ -90,7 +91,13 @@ public class DeviceProxy extends KrollProxy implements
 	@Kroll.method
 	public void startTracking(
 			@Kroll.argument(optional = true) KrollFunction callback) {
-		Commands.startTracking(currentDevice, this, callback);
+		try {
+			currentDevice.sendCommand(Types.Commands.StartTracking);
+		} catch (DeviceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		deviceIsInTrackingMode = true;
 	}
 
 	@Kroll.method
