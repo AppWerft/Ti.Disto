@@ -8,7 +8,6 @@
  */
 package de.appwerft.disto;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.titanium.io.TiBaseFile;
 import org.appcelerator.titanium.io.TiFileFactory;
 import org.json.JSONException;
 
@@ -256,36 +254,28 @@ public class TidistoModule extends KrollModule {
 		super.onCreate(activity, savedInstanceState);
 	}
 
-	public boolean importCommands(String filename) throws IOException {
-		
+	public boolean importCommands(String filename) throws IOException{
 		boolean error = false;
-		
-		InputStream inStream = null;
-		TiBaseFile resFile = TiFileFactory.createTitaniumFile(new String[] { this.resolveUrl(null, filename) },
-				false);
-		TiBaseFile assetFile = TiFileFactory.createTitaniumFile(new String[] {resolveUrl(null,filename) }, false);
-		
-		inStream = resFile.getInputStream();
-		
-		if (inStream == null) {
-           
-		}
-		if (inStream != null) {
+			String url = this.resolveUrl(null, filename);
+			InputStream inStream;
 			try {
-				new CommandsParser(inStream);
-				error = true;
-			} catch (IllegalArgumentCheckedException e) {
-				error = true;
-			} catch (JSONException e) {
-				error = true;
-			} catch (IOException e) {
-				error = true;
+				inStream = TiFileFactory.createTitaniumFile(
+						new String[] { url }, false).getInputStream();
+				try {
+					new CommandsParser(inStream);
+					error=true;
+				} catch (IllegalArgumentCheckedException e) {
+					error=true;
+				} catch (JSONException e) {
+					error=true;
+				} catch (IOException e) {
+					
+					error=true;
+				}
+			} catch (IOException e1) {
+				error=true;;
 			}
-		}
-
-		if (error == false)
-			return true;
-		return false;
+			if (error==false) return true;
+			return false;
 	}
-	
 }
