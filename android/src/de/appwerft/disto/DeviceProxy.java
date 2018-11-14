@@ -86,6 +86,12 @@ public class DeviceProxy extends KrollProxy implements
 			@Kroll.argument(optional = true) KrollFunction callback) {
 		Commands.getDeviceInfo(currentDevice, this, callback);
 	}
+	
+	@Kroll.method
+	public void StartTracking(
+			@Kroll.argument(optional = true) KrollFunction callback) {
+		Commands.StartTracking(currentDevice, this, callback);
+	}
 
 	@Kroll.method
 	public void getDistance(
