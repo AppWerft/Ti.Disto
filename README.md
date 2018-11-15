@@ -7,15 +7,12 @@ Axway Titaniums module for connecting to Disto devices via bluetooth.
 ```javascript
 const LeicaSDK = require("de.appwerft.disto");
 
-
-
 if (LeicaSDK.verifyPermissions() == true) {
 	LeicaSDK
 		.setLogLevel(LeicaSDK.DEBUG)
 		.enableBluetooth()
 		.init() 
 }
-
 LeicaSDK.Devicemanager.findAvailableDevices({
 	onfound : function(e) {
 		const currentDevive = e.device;
