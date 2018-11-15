@@ -197,7 +197,7 @@ public class DeviceProxy extends KrollProxy implements
 								.startBTConnection(new Device.BTConnectionCallback() {
 									@Override
 									public void onFinished() {
-										event.put("connected", true);
+										event.put("started", true);
 										event.put("model",
 												currentDevice.getModel());
 										event.put("device", currentDevice
