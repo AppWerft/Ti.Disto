@@ -1,0 +1,1972 @@
+{
+  "commands": [
+    {
+      "name": "Terminator",
+      "value": "\r\n",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Ping",
+      "value": "a",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Discover",
+      "value": "who",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Clear",
+      "value": "c",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Off",
+      "value": "b",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Get",
+      "value": "get",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetIPAdress",
+      "value": "get",
+      "parameter1": "1",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetSoftwareVersion",
+      "value": "get",
+      "parameter1": "17",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetSoftwareName",
+      "value": "get",
+      "parameter1": "16",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetSerialNumber",
+      "value": "get",
+      "parameter1": "12",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetMacAddress",
+      "value": "get",
+      "parameter1": "99",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetWifiModuleVersion",
+      "value": "get",
+      "parameter1": "100",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetWifiChannelNumber",
+      "value": "get",
+      "parameter1": "102",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetUsrVind",
+      "value": "get",
+      "parameter1": "1033",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetUsr_CamLasX",
+      "value": "get",
+      "parameter1": "3012",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetUsr_CamLasY",
+      "value": "get",
+      "parameter1": "3013",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetWlanESSID",
+      "value": "get",
+      "parameter1": "105",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Face",
+      "value": "gf",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Set",
+      "value": "set",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Reset",
+      "value": "ruc",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ResetCalibrationAll",
+      "value": "ruc",
+      "parameter1": "0",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ResetCalibrationCoordinates",
+      "value": "ruc",
+      "parameter1": "4",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ResetCalibrationLevel",
+      "value": "ruc",
+      "parameter1": "5",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ResetCalibrationMonitor",
+      "value": "ruc",
+      "parameter1": "6",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ResetCalibrationCamera",
+      "value": "ruc",
+      "parameter1": "7",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ResetCalibrationCMD",
+      "value": "ruc",
+      "parameter1": "8",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Save",
+      "value": "suc",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "SaveCalibrationAll",
+      "value": "suc",
+      "parameter1": "0",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "SaveCalibrationCoordinates",
+      "value": "suc",
+      "parameter1": "4",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "SaveCalibrationLevel",
+      "value": "suc",
+      "parameter1": "5",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "SaveCalibrationMonitor",
+      "value": "suc",
+      "parameter1": "6",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "SaveCalibrationCamera",
+      "value": "suc",
+      "parameter1": "7",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "SaveCalibrationCMD",
+      "value": "suc",
+      "parameter1": "8",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PIN",
+      "value": "pin",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "SetPIN",
+      "value": "pin",
+      "parameter1": "s",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "CheckPIN",
+      "value": "pin",
+      "parameter1": "c",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PUK",
+      "value": "puk",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "CheckPUK",
+      "value": "puk",
+      "parameter1": "c",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "Laser",
+      "value": "la",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LaserBlink",
+      "value": "la",
+      "parameter1": "B",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LaserOn",
+      "value": "la",
+      "parameter1": "C",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LaserOff",
+      "value": "la",
+      "parameter1": "O",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LaserPoint",
+      "value": "la",
+      "parameter1": "P",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "MeasureIncline",
+      "value": "mi",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LevelMode",
+      "value": "lm",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LevelModeEnable",
+      "value": "lm",
+      "parameter1": "E",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LevelModeDisable",
+      "value": "lm",
+      "parameter1": "D",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LevelModeLock",
+      "value": "lm",
+      "parameter1": "L",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LevelModeUnlock",
+      "value": "lm",
+      "parameter1": "U",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LevelModeImmediate",
+      "value": "lm",
+      "parameter1": "I",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LevelModeCalibrate",
+      "value": "lm",
+      "parameter1": "C",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "MeasureAngle",
+      "value": "ma",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "MeasurePolar",
+      "value": "mp",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetTemperature",
+      "value": "gt",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetTemperatureHZ",
+      "value": "gt",
+      "parameter1": "51",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetTemperatureV",
+      "value": "gt",
+      "parameter1": "52",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetTemperatureEDM",
+      "value": "gt",
+      "parameter1": "53",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetBattery",
+      "value": "gb",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionVelocity",
+      "value": "pv",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionVelocityHorizontal",
+      "value": "pv",
+      "parameter1": "H",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionVelocityVertical",
+      "value": "pv",
+      "parameter1": "V",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionVelocityBoth",
+      "value": "pv",
+      "parameter1": "B",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionDirection",
+      "value": "pd",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionDirectionHorizontalPositive",
+      "value": "pd",
+      "parameter1": "H",
+      "parameter2": "P",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionDirectionVerticalPositive",
+      "value": "pd",
+      "parameter1": "V",
+      "parameter2": "P",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionDirectionHorizontalNegative",
+      "value": "pd",
+      "parameter1": "H",
+      "parameter2": "N",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionDirectionVerticalNegative",
+      "value": "pd",
+      "parameter1": "V",
+      "parameter2": "N",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionGo",
+      "value": "pg",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionGoHorizontal",
+      "value": "pg",
+      "parameter1": "H",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionGoVertical",
+      "value": "pg",
+      "parameter1": "V",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionGoBoth",
+      "value": "pg",
+      "parameter1": "B",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionStop",
+      "value": "ps",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionStopHorizontal",
+      "value": "ps",
+      "parameter1": "H",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionStopVertical",
+      "value": "ps",
+      "parameter1": "V",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionStopBoth",
+      "value": "ps",
+      "parameter1": "B",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionAbsolute",
+      "value": "pa",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "PositionRelative",
+      "value": "pr",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "MotorStatus",
+      "value": "gms",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "MotorStatusHorizontal",
+      "value": "gms",
+      "parameter1": "H",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "MotorStatusVertical",
+      "value": "gms",
+      "parameter1": "V",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "MotorStatusBoth",
+      "value": "gms",
+      "parameter1": "B",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageMode",
+      "value": "im",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageModeStop",
+      "value": "im",
+      "parameter1": "S",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageModeRun",
+      "value": "im",
+      "parameter1": "R",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LiveImage",
+      "value": "l",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageZoom",
+      "value": "iz",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageZoomWide",
+      "value": "iz",
+      "parameter1": "W",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageZoomNormal",
+      "value": "iz",
+      "parameter1": "N",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageZoomTele",
+      "value": "iz",
+      "parameter1": "T",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageZoomSuper",
+      "value": "iz",
+      "parameter1": "S",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageBrightness",
+      "value": "ib",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageBrightnessHigh",
+      "value": "ib",
+      "parameter1": "H",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageBrightnessMiddle",
+      "value": "ib",
+      "parameter1": "M",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageBrightnessNormal",
+      "value": "ib",
+      "parameter1": "N",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageBrightnessLow",
+      "value": "ib",
+      "parameter1": "L",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageBrightnessDark",
+      "value": "ib",
+      "parameter1": "D",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageSnapshotMega",
+      "value": "is",
+      "parameter1": "M",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageSnapshotHigh",
+      "value": "is",
+      "parameter1": "H",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageSnapshotNormal",
+      "value": "is",
+      "parameter1": "N",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageSnapshotLow",
+      "value": "is",
+      "parameter1": "L",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "ImageSnapshotViewfinder",
+      "value": "is",
+      "parameter1": "V",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "GetSensitivityMode",
+      "value": "get",
+      "parameter1": "2100",
+      "parameter2": "",
+      "protocol": "wifi"
+    },
+    {
+      "name": "LaserOn",
+      "value": "o",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "LaserOff",
+      "value": "p",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "Distance",
+      "value": "g",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "StartTracking",
+      "value": "t",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "StopTracking",
+      "value": "s",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "Clear",
+      "value": "p",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "UpdateActivate",
+      "value": "activate",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "UpdateWrite",
+      "value": "update",
+      "parameter1": "write",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "UpdateChecksum",
+      "value": "update",
+      "parameter1": "checksum",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "InUpdateMode",
+      "value": "inSwdMode",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "SendData",
+      "value": "senddata",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetBrandDistocom",
+      "value": "getBrand",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetIDDistocom",
+      "value": "getID",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSoftwareVersionDistocom",
+      "value": "getSoftwareVersion",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSoftwareVersionAPPDistocom",
+      "value": "getSoftwareVersion",
+      "parameter1": "app",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSoftwareVersionEDMDistocom",
+      "value": "getSoftwareVersion",
+      "parameter1": "edm",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSoftwareVersionFTADistocom",
+      "value": "getSoftwareVersion",
+      "parameter1": "fta",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSerialDistocom",
+      "value": "getSerial",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSerialAPPDistocom",
+      "value": "getSerial",
+      "parameter1": "app",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSerialEDMDistocom",
+      "value": "getSerial",
+      "parameter1": "edm",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "GetSerialFTADistocom",
+      "value": "getSerial",
+      "parameter1": "fta",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "UpdateSetFlag",
+      "value": "updateSetFlag",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "StartMeasurePlan",
+      "value": "raiseEvent",
+      "parameter1": "100",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "StartSmartRoom",
+      "value": "raiseEvent",
+      "parameter1": "200",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "StartBaseMode",
+      "value": "raiseEvent",
+      "parameter1": "300",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "DistanceDC",
+      "value": "raiseEvent",
+      "parameter1": "10",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "ResetDevice",
+      "value": "reset",
+      "parameter1": "",
+      "parameter2": "",
+      "protocol": "ble"
+    },
+    {
+      "name": "1",
+      "value": "No answer (from subsystem / driver)",
+      "parameter1": "Basic",
+      "parameter2": "1",
+      "protocol": "error"
+    },
+    {
+      "name": "2",
+      "value": "Timeout",
+      "parameter1": "Basic",
+      "parameter2": "2",
+      "protocol": "error"
+    },
+    {
+      "name": "3",
+      "value": "Wrong command or parameter (SkyCom Commands)",
+      "parameter1": "Basic",
+      "parameter2": "3",
+      "protocol": "error"
+    },
+    {
+      "name": "4",
+      "value": "no valid answer",
+      "parameter1": "Basic",
+      "parameter2": "4",
+      "protocol": "error"
+    },
+    {
+      "name": "5",
+      "value": "busy (function / subsystem is use an cannot accept new commands)",
+      "parameter1": "Basic",
+      "parameter2": "5",
+      "protocol": "error"
+    },
+    {
+      "name": "6",
+      "value": "system call error (operating system return parameter2s < 0)",
+      "parameter1": "Basic",
+      "parameter2": "6",
+      "protocol": "error"
+    },
+    {
+      "name": "7",
+      "value": "Temperature out of range",
+      "parameter1": "Basic",
+      "parameter2": "7",
+      "protocol": "error"
+    },
+    {
+      "name": "201",
+      "value": "Timeout / EDM-Task is busy, no commands accepted",
+      "parameter1": "EDM",
+      "parameter2": "201",
+      "protocol": "error"
+    },
+    {
+      "name": "203",
+      "value": "DMM: wrong command or wrong parameter",
+      "parameter1": "EDM",
+      "parameter2": "203",
+      "protocol": "error"
+    },
+    {
+      "name": "206",
+      "value": "Memory Access Error",
+      "parameter1": "COL",
+      "parameter2": "206",
+      "protocol": "error"
+    },
+    {
+      "name": "210",
+      "value": "Unexpected (unknown) DMM answer (serial communication error)",
+      "parameter1": "EDM",
+      "parameter2": "210",
+      "protocol": "error"
+    },
+    {
+      "name": "211",
+      "value": "UART1 read/write error",
+      "parameter1": "EDM",
+      "parameter2": "211",
+      "protocol": "error"
+    },
+    {
+      "name": "212",
+      "value": "EDM <-> DMM send/receive timeout (no answer in time frame)",
+      "parameter1": "EDM",
+      "parameter2": "212",
+      "protocol": "error"
+    },
+    {
+      "name": "213",
+      "value": "EDM (critical error) ",
+      "parameter1": "EDM",
+      "parameter2": "213",
+      "protocol": "error"
+    },
+    {
+      "name": "214",
+      "value": "EDM (distance out of range)",
+      "parameter1": "EDM",
+      "parameter2": "214",
+      "protocol": "error"
+    },
+    {
+      "name": "220",
+      "value": "DMM: UART error (serial communication error)",
+      "parameter1": "EDM",
+      "parameter2": "220",
+      "protocol": "error"
+    },
+    {
+      "name": "230",
+      "value": "General Camera Error",
+      "parameter1": "CAM",
+      "parameter2": "230",
+      "protocol": "error"
+    },
+    {
+      "name": "251",
+      "value": "Battery Voltage too low",
+      "parameter1": "MON",
+      "parameter2": "251",
+      "protocol": "error"
+    },
+    {
+      "name": "252",
+      "value": "DMM: Temperature too high",
+      "parameter1": "EDM",
+      "parameter2": "252",
+      "protocol": "error"
+    },
+    {
+      "name": "253",
+      "value": "DMM: Temperature too low",
+      "parameter1": "EDM",
+      "parameter2": "253",
+      "protocol": "error"
+    },
+    {
+      "name": "255",
+      "value": "DMM: Signal to low or distance not in range",
+      "parameter1": "EDM",
+      "parameter2": "255",
+      "protocol": "error"
+    },
+    {
+      "name": "256",
+      "value": "DMM: Signal to high",
+      "parameter1": "EDM",
+      "parameter2": "256",
+      "protocol": "error"
+    },
+    {
+      "name": "257",
+      "value": "DMM: Too much background light",
+      "parameter1": "EDM",
+      "parameter2": "257",
+      "protocol": "error"
+    },
+    {
+      "name": "260",
+      "value": "DMM: Coarse phase don’t match / general measure error",
+      "parameter1": "EDM",
+      "parameter2": "260",
+      "protocol": "error"
+    },
+    {
+      "name": "270",
+      "value": "DMM: oscillator -> ASIC Error",
+      "parameter1": "EDM",
+      "parameter2": "270",
+      "protocol": "error"
+    },
+    {
+      "name": "280",
+      "value": "Inclination Sensor Error",
+      "parameter1": "EDM",
+      "parameter2": "280",
+      "protocol": "error"
+    },
+    {
+      "name": "284",
+      "value": "DMM: Laser Error",
+      "parameter1": "EDM",
+      "parameter2": "284",
+      "protocol": "error"
+    },
+    {
+      "name": "286",
+      "value": "DMM: APD in break",
+      "parameter1": "EDM",
+      "parameter2": "286",
+      "protocol": "error"
+    },
+    {
+      "name": "288",
+      "value": "DMM: APD Adjust Error",
+      "parameter1": "EDM",
+      "parameter2": "288",
+      "protocol": "error"
+    },
+    {
+      "name": "290",
+      "value": "DMM: Reference signal out of range",
+      "parameter1": "EDM",
+      "parameter2": "290",
+      "protocol": "error"
+    },
+    {
+      "name": "301",
+      "value": "Unknown command or wrong parameter ",
+      "parameter1": "CMD",
+      "parameter2": "301",
+      "protocol": "error"
+    },
+    {
+      "name": "302",
+      "value": "Receive Buffer Overflow (command string to long)",
+      "parameter1": "CMD",
+      "parameter2": "302",
+      "protocol": "error"
+    },
+    {
+      "name": "303",
+      "value": "TCP/IP Socket Error on event channel (impossible to send event messages) ",
+      "parameter1": "CMD",
+      "parameter2": "303",
+      "protocol": "error"
+    },
+    {
+      "name": "402",
+      "value": "SPI-Error (Hz-axis)",
+      "parameter1": "AXH",
+      "parameter2": "402",
+      "protocol": "error"
+    },
+    {
+      "name": "403",
+      "value": "SPI-Command String to long (Hz-axis)",
+      "parameter1": "AXH",
+      "parameter2": "403",
+      "protocol": "error"
+    },
+    {
+      "name": "404",
+      "value": "SPI wrong answer (format error)",
+      "parameter1": "AXH",
+      "parameter2": "404",
+      "protocol": "error"
+    },
+    {
+      "name": "405",
+      "value": "SPI Timeout",
+      "parameter1": "AXH",
+      "parameter2": "405",
+      "protocol": "error"
+    },
+    {
+      "name": "406",
+      "value": "Hz-Motor busy (running)",
+      "parameter1": "AXH",
+      "parameter2": "406",
+      "protocol": "error"
+    },
+    {
+      "name": "502",
+      "value": "SPI-Error (V-axis)",
+      "parameter1": "AXV",
+      "parameter2": "502",
+      "protocol": "error"
+    },
+    {
+      "name": "503",
+      "value": "SPI-Command String to long (V-axis)",
+      "parameter1": "AXV",
+      "parameter2": "503",
+      "protocol": "error"
+    },
+    {
+      "name": "504",
+      "value": "SPI wrong answer (format error)",
+      "parameter1": "AXV",
+      "parameter2": "504",
+      "protocol": "error"
+    },
+    {
+      "name": "505",
+      "value": "SPI Timeout",
+      "parameter1": "AXV",
+      "parameter2": "505",
+      "protocol": "error"
+    },
+    {
+      "name": "506",
+      "value": "V-Motor busy (running)",
+      "parameter1": "AXV",
+      "parameter2": "506",
+      "protocol": "error"
+    },
+    {
+      "name": "601",
+      "value": "General Camera Error (I2C)",
+      "parameter1": "CAM",
+      "parameter2": "601",
+      "protocol": "error"
+    },
+    {
+      "name": "602",
+      "value": "Camera Damaged (Subsystem not starting)",
+      "parameter1": "CAM",
+      "parameter2": "602",
+      "protocol": "error"
+    },
+    {
+      "name": "603",
+      "value": "Camera ROI Error",
+      "parameter1": "CAM",
+      "parameter2": "603",
+      "protocol": "error"
+    },
+    {
+      "name": "604",
+      "value": "No DeadPixelCorrection set",
+      "parameter1": "CAM",
+      "parameter2": "604",
+      "protocol": "error"
+    },
+    {
+      "name": "605",
+      "value": "Bad dead pixel correction",
+      "parameter1": "CAM",
+      "parameter2": "605",
+      "protocol": "error"
+    },
+    {
+      "name": "606",
+      "value": "Too many dead pixels detected",
+      "parameter1": "CAM",
+      "parameter2": "606",
+      "protocol": "error"
+    },
+    {
+      "name": "700",
+      "value": "Plane initialization phase",
+      "parameter1": "LEV",
+      "parameter2": "700",
+      "protocol": "error"
+    },
+    {
+      "name": "701",
+      "value": "Bubble out of working range",
+      "parameter1": "LEV",
+      "parameter2": "701",
+      "protocol": "error"
+    },
+    {
+      "name": "702",
+      "value": "Invalid Parameters",
+      "parameter1": "LEV",
+      "parameter2": "702",
+      "protocol": "error"
+    },
+    {
+      "name": "703",
+      "value": "Plane is out of date",
+      "parameter1": "LEV",
+      "parameter2": "703",
+      "protocol": "error"
+    },
+    {
+      "name": "704",
+      "value": "Good snapshot gone bad",
+      "parameter1": "LEV",
+      "parameter2": "704",
+      "protocol": "error"
+    },
+    {
+      "name": "705",
+      "value": "Image too dark to be calculated",
+      "parameter1": "LEV",
+      "parameter2": "705",
+      "protocol": "error"
+    },
+    {
+      "name": "706",
+      "value": "Camera not properly adjusted",
+      "parameter1": "LEV",
+      "parameter2": "706",
+      "protocol": "error"
+    },
+    {
+      "name": "708",
+      "value": "Bubble damaged",
+      "parameter1": "LEV",
+      "parameter2": "708",
+      "protocol": "error"
+    },
+    {
+      "name": "709",
+      "value": "Bad object for housing found",
+      "parameter1": "LEV",
+      "parameter2": "709",
+      "protocol": "error"
+    },
+    {
+      "name": "725",
+      "value": "Too many bad edges for position of bubble",
+      "parameter1": "LEV",
+      "parameter2": "725",
+      "protocol": "error"
+    },
+    {
+      "name": "734",
+      "value": "Undefined object found for bubble",
+      "parameter1": "LEV",
+      "parameter2": "734",
+      "protocol": "error"
+    },
+    {
+      "name": "750",
+      "value": "Too many bad edges for position of glass body",
+      "parameter1": "LEV",
+      "parameter2": "750",
+      "protocol": "error"
+    },
+    {
+      "name": "760",
+      "value": "Compensator not Calibrated -> cannot be switched on and used",
+      "parameter1": "LEV",
+      "parameter2": "760",
+      "protocol": "error"
+    },
+    {
+      "name": "770",
+      "value": "Selfcalibration not possible because of too high instrument error",
+      "parameter1": "LEV",
+      "parameter2": "770",
+      "protocol": "error"
+    },
+    {
+      "name": "771",
+      "value": "Selfcalibration successful and calibration updated",
+      "parameter1": "LEV",
+      "parameter2": "771",
+      "protocol": "error"
+    },
+    {
+      "name": "773",
+      "value": "Selfcalibration Canceled by User",
+      "parameter1": "LEV",
+      "parameter2": "773",
+      "protocol": "error"
+    },
+    {
+      "name": "789",
+      "value": "No bitmap in filesystem",
+      "parameter1": "LEV",
+      "parameter2": "789",
+      "protocol": "error"
+    },
+    {
+      "name": "793",
+      "value": "Lighting Regulation failed",
+      "parameter1": "LEV",
+      "parameter2": "793",
+      "protocol": "error"
+    },
+    {
+      "name": "794",
+      "value": "Selfcalibration cannot be done -> too many image errors",
+      "parameter1": "LEV",
+      "parameter2": "794",
+      "protocol": "error"
+    },
+    {
+      "name": "798",
+      "value": "Sensor was moved during calibration -> calibration canceled",
+      "parameter1": "LEV",
+      "parameter2": "798",
+      "protocol": "error"
+    },
+    {
+      "name": "799",
+      "value": "Level Pool locked",
+      "parameter1": "LEV",
+      "parameter2": "799",
+      "protocol": "error"
+    },
+    {
+      "name": "1002",
+      "value": "file open error (occurrence: get WLAN or Operating System settings)",
+      "parameter1": "MON",
+      "parameter2": "1002",
+      "protocol": "error"
+    },
+    {
+      "name": "1003",
+      "value": "file size error (the file is to large, it doesn’t fit into the read buffer)",
+      "parameter1": "MON",
+      "parameter2": "1003",
+      "protocol": "error"
+    },
+    {
+      "name": "1004",
+      "value": "no information about U-Boot version available",
+      "parameter1": "MON",
+      "parameter2": "1004",
+      "protocol": "error"
+    },
+    {
+      "name": "1005",
+      "value": "no information about UBL version available",
+      "parameter1": "MON",
+      "parameter2": "1005",
+      "protocol": "error"
+    },
+    {
+      "name": "1006",
+      "value": "file not exist, or no WLAN Card found (pnp Plug & Play ID file missing)",
+      "parameter1": "MON",
+      "parameter2": "1006",
+      "protocol": "error"
+    },
+    {
+      "name": "1007",
+      "value": "no WLAN Card (token “SD_0001” not found)",
+      "parameter1": "MON",
+      "parameter2": "1007",
+      "protocol": "error"
+    },
+    {
+      "name": "1008",
+      "value": "file creation error",
+      "parameter1": "MON",
+      "parameter2": "1008",
+      "protocol": "error"
+    },
+    {
+      "name": "1009",
+      "value": "file is empty (0 bytes read)",
+      "parameter1": "MON",
+      "parameter2": "1009",
+      "protocol": "error"
+    },
+    {
+      "name": "1010",
+      "value": "token in WLAN info file not found (e.g. “Frequency:”,  “ESSID:”)",
+      "parameter1": "MON",
+      "parameter2": "1010",
+      "protocol": "error"
+    },
+    {
+      "name": "1011",
+      "value": "device locked (anti theft protection)",
+      "parameter1": "MON",
+      "parameter2": "1011",
+      "protocol": "error"
+    },
+    {
+      "name": "1012",
+      "value": "PIN or PUC entry required (anti theft protection)",
+      "parameter1": "MON",
+      "parameter2": "1012",
+      "protocol": "error"
+    },
+    {
+      "name": "1013",
+      "value": "PUC entry required (anti theft protection) PIN entry is locked",
+      "parameter1": "MON",
+      "parameter2": "1013",
+      "protocol": "error"
+    },
+    {
+      "name": "1102",
+      "value": "either HZ-motor or V-motor or both motors are running ",
+      "parameter1": "MOT",
+      "parameter2": "1102",
+      "protocol": "error"
+    },
+    {
+      "name": "2101",
+      "value": "Wrong command or wrong parameter",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2101",
+      "protocol": "error"
+    },
+    {
+      "name": "3101",
+      "value": "Wrong command or wrong parameter",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3101",
+      "protocol": "error"
+    },
+    {
+      "name": "2102",
+      "value": "invalid parameter",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2102",
+      "protocol": "error"
+    },
+    {
+      "name": "3102",
+      "value": "invalid parameter",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3102",
+      "protocol": "error"
+    },
+    {
+      "name": "2103",
+      "value": "no answer expected",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2103",
+      "protocol": "error"
+    },
+    {
+      "name": "3103",
+      "value": "no answer expected",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3103",
+      "protocol": "error"
+    },
+    {
+      "name": "2104",
+      "value": "no cr received",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2104",
+      "protocol": "error"
+    },
+    {
+      "name": "3104",
+      "value": "no cr received",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3104",
+      "protocol": "error"
+    },
+    {
+      "name": "2105",
+      "value": "SPI sync lost",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2105",
+      "protocol": "error"
+    },
+    {
+      "name": "3105",
+      "value": "SPI sync lost",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3105",
+      "protocol": "error"
+    },
+    {
+      "name": "2106",
+      "value": "production write lock",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2106",
+      "protocol": "error"
+    },
+    {
+      "name": "3106",
+      "value": "production write lock",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3106",
+      "protocol": "error"
+    },
+    {
+      "name": "2121",
+      "value": "Flash read error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2121",
+      "protocol": "error"
+    },
+    {
+      "name": "3121",
+      "value": "Flash read error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3121",
+      "protocol": "error"
+    },
+    {
+      "name": "2122",
+      "value": "Flash write error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2122",
+      "protocol": "error"
+    },
+    {
+      "name": "3122",
+      "value": "Flash write error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3122",
+      "protocol": "error"
+    },
+    {
+      "name": "2123",
+      "value": "Flash erase error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2123",
+      "protocol": "error"
+    },
+    {
+      "name": "3123",
+      "value": "Flash erase error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3123",
+      "protocol": "error"
+    },
+    {
+      "name": "2124",
+      "value": "Flash sector error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2124",
+      "protocol": "error"
+    },
+    {
+      "name": "3124",
+      "value": "Flash sector error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3124",
+      "protocol": "error"
+    },
+    {
+      "name": "2151",
+      "value": "motor already running",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2151",
+      "protocol": "error"
+    },
+    {
+      "name": "3151",
+      "value": "motor already running",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3151",
+      "protocol": "error"
+    },
+    {
+      "name": "2152",
+      "value": "motor blocking",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2152",
+      "protocol": "error"
+    },
+    {
+      "name": "3152",
+      "value": "motor blocking",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3152",
+      "protocol": "error"
+    },
+    {
+      "name": "2153",
+      "value": "motor reach or is in forbidden angle area (V print only)",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2153",
+      "protocol": "error"
+    },
+    {
+      "name": "3153",
+      "value": "motor reach or is in forbidden angle area (V print only)",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3153",
+      "protocol": "error"
+    },
+    {
+      "name": "2154",
+      "value": "target position not reached",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2154",
+      "protocol": "error"
+    },
+    {
+      "name": "3154",
+      "value": "target position not reached",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3154",
+      "protocol": "error"
+    },
+    {
+      "name": "2201",
+      "value": "angles invalid",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2201",
+      "protocol": "error"
+    },
+    {
+      "name": "3201",
+      "value": "angles invalid",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3201",
+      "protocol": "error"
+    },
+    {
+      "name": "2211",
+      "value": "write access angle register not allowed",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2211",
+      "protocol": "error"
+    },
+    {
+      "name": "3211",
+      "value": "write access angle register not allowed",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3211",
+      "protocol": "error"
+    },
+    {
+      "name": "2212",
+      "value": "register parameter2 out of range",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2212",
+      "protocol": "error"
+    },
+    {
+      "name": "3212",
+      "value": "register parameter2 out of range",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3212",
+      "protocol": "error"
+    },
+    {
+      "name": "2219",
+      "value": "picture height out of range",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2219",
+      "protocol": "error"
+    },
+    {
+      "name": "3219",
+      "value": "picture height out of range",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3219",
+      "protocol": "error"
+    },
+    {
+      "name": "2220",
+      "value": "positive exposure dynamic overflow",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2220",
+      "protocol": "error"
+    },
+    {
+      "name": "3220",
+      "value": "positive exposure dynamic overflow",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3220",
+      "protocol": "error"
+    },
+    {
+      "name": "2221",
+      "value": "negative exposure dynamic overflow",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2221",
+      "protocol": "error"
+    },
+    {
+      "name": "3221",
+      "value": "negative exposure dynamic overflow",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3221",
+      "protocol": "error"
+    },
+    {
+      "name": "2222",
+      "value": "exposure time overflow",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2222",
+      "protocol": "error"
+    },
+    {
+      "name": "3222",
+      "value": "exposure time overflow",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3222",
+      "protocol": "error"
+    },
+    {
+      "name": "2223",
+      "value": "picture underexposured",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2223",
+      "protocol": "error"
+    },
+    {
+      "name": "3223",
+      "value": "picture underexposured",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3223",
+      "protocol": "error"
+    },
+    {
+      "name": "2224",
+      "value": "picture overexposured",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2224",
+      "protocol": "error"
+    },
+    {
+      "name": "3244",
+      "value": "too many peaks found",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3244",
+      "protocol": "error"
+    },
+    {
+      "name": "2245",
+      "value": "too less peaks found",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2245",
+      "protocol": "error"
+    },
+    {
+      "name": "3245",
+      "value": "too less peaks found",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3245",
+      "protocol": "error"
+    },
+    {
+      "name": "2246",
+      "value": "peak too slim",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2246",
+      "protocol": "error"
+    },
+    {
+      "name": "3246",
+      "value": "peak too slim",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3246",
+      "protocol": "error"
+    },
+    {
+      "name": "2247",
+      "value": "peak to wide",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2247",
+      "protocol": "error"
+    },
+    {
+      "name": "3247",
+      "value": "peak to wide",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3247",
+      "protocol": "error"
+    },
+    {
+      "name": "2248",
+      "value": "bad peak difference",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2248",
+      "protocol": "error"
+    },
+    {
+      "name": "3248",
+      "value": "bad peak difference",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3248",
+      "protocol": "error"
+    },
+    {
+      "name": "2249",
+      "value": "too less peak amplitude",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2249",
+      "protocol": "error"
+    },
+    {
+      "name": "3249",
+      "value": "too less peak amplitude",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3249",
+      "protocol": "error"
+    },
+    {
+      "name": "2250",
+      "value": "peak  topp enc  topp ences too big",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2250",
+      "protocol": "error"
+    },
+    {
+      "name": "3250",
+      "value": "peak  topp enc  topp ences too big",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3250",
+      "protocol": "error"
+    },
+    {
+      "name": "2251",
+      "value": "no peak decoding possible",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2251",
+      "protocol": "error"
+    },
+    {
+      "name": "3251",
+      "value": "no peak decoding possible",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3251",
+      "protocol": "error"
+    },
+    {
+      "name": "2252",
+      "value": "peak decoding not stable",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2252",
+      "protocol": "error"
+    },
+    {
+      "name": "3252",
+      "value": "peak decoding not stable",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3252",
+      "protocol": "error"
+    },
+    {
+      "name": "2253",
+      "value": "too less valid finepeaks",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2253",
+      "protocol": "error"
+    },
+    {
+      "name": "3253",
+      "value": "too less valid finepeaks",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2253",
+      "protocol": "error"
+    },
+    {
+      "name": "2260",
+      "value": "hardware failure",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2260",
+      "protocol": "error"
+    },
+    {
+      "name": "3260",
+      "value": "hardware failure",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3260",
+      "protocol": "error"
+    },
+    {
+      "name": "2261",
+      "value": "initialization error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "2261",
+      "protocol": "error"
+    },
+    {
+      "name": "3261",
+      "value": "initialization error",
+      "parameter1": "AXH/AXV",
+      "parameter2": "3261",
+      "protocol": "error"
+    },
+    {
+      "name": "4255",
+      "value": "DMM: Signal to low or distance not in range",
+      "parameter1": "EDM",
+      "parameter2": "255",
+      "protocol": "error"
+    }
+
+  ]
+}

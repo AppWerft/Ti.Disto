@@ -11,9 +11,9 @@ if (LeicaSDK.verifyPermissions() == true) {
 	LeicaSDK
 		.setLogLevel(LeicaSDK.DEBUG)
 		.enableBluetooth()
-		.init() 
+		.init("commands.json")  // don't forget commands.json in Resources folder! 
 }
-LeicaSDK.Devicemanager.findAvailableDevices({
+	LeicaSDK.Devicemanager.findAvailableDevices({
 	onfound : function(e) {
 		const currentDevive = e.device;
 		currentDevice.connect({
