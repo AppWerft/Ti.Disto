@@ -23,7 +23,7 @@ import ch.leica.sdk.connection.BaseConnectionManager.BleReceivedDataListener;
 public class DeviceProxy extends KrollProxy implements
 		Device.ConnectionListener, ErrorListener, ReceivedDataListener,
 		BleReceivedDataListener {
-	private Device currentDevice;
+	private static Device currentDevice;
 	private MessageDispatcher messageDispatcher;
 	private static String LCAT = TidistoModule.LCAT;
 	Handler sendCustomCommandHandler;
@@ -148,7 +148,7 @@ public class DeviceProxy extends KrollProxy implements
 			if (currentDevice == null)
 				return;
 			Log.i(LCAT, ">>>>>>> startTracking 1");
-			currentDevice.sendCommand(Types.Commands.StartTracking);
+			currentDevice.sendCommand(Types.Commands.StartTracking,currentDevice.getTIMEOUT_LONG());
 			Log.i(LCAT, ">>>>>>> startTracking 2");
 		} catch (DeviceException e) {
 			e.printStackTrace();
