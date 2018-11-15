@@ -88,6 +88,12 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
+	public void unpair() {
+		if (currentDevice != null)
+		currentDevice.unpairDevice();
+	}
+	
+	@Kroll.method
 	public KrollDict getConnectionState() {
 		if (currentDevice == null)
 			return null;
@@ -148,7 +154,8 @@ public class DeviceProxy extends KrollProxy implements
 			if (currentDevice == null)
 				return;
 			Log.i(LCAT, ">>>>>>> startTracking 1");
-			currentDevice.sendCommand(Types.Commands.StartTracking,currentDevice.getTIMEOUT_LONG());
+			currentDevice.sendCommand(Types.Commands.StartTracking,
+					currentDevice.getTIMEOUT_NORMAL());
 			Log.i(LCAT, ">>>>>>> startTracking 2");
 		} catch (DeviceException e) {
 			e.printStackTrace();

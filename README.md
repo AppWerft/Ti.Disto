@@ -85,6 +85,7 @@ Return a list of device. For every device you can the methods below:
 ### startBaseMode()
 ### startMeasurePlan()
 ### startSmartRoom()
+### unpair()
 
 ### sendCustomCommand(String cmd, Callback)
 
