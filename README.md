@@ -5,37 +5,31 @@ Axway Titaniums module for connecting to Disto devices via bluetooth.
 ## Usage concept
 
 ```javascript
-const Disto = require("de.appwerft.disto");
+const LeicaSDK = require("de.appwerft.disto");
 
-!Dist.isBluetoothAvailable() && Dist.enableBLE();
 
-if (Disto.verifyPermissions() == true) {
-	Disto
-		.setLogLevel(Disto.DEBUG)
-		.enableDebugging() //optional
-		.setTimeout(2000) //optional
+
+if (LeicaSDK.verifyPermissions() == true) {
+	LeicaSDK
+		.setLogLevel(LeicaSDK.DEBUG)
+		.enableBluetooth()
 		.init() 
 }
-const Dm = Disto.createDeviceManager();
 
-Dm.findAvailableDevices({
+LeicaSDK.Devicemanager.findAvailableDevices({
 	onfound : function(e) {
-		console.log(e);
-	},
-	yeti : true
+		const currentDevive = e.device;
+		currentDevice.connect({
+			ondata : function(data) {
+				console.log(data);
+			},
+			onconnect : function() {
+				currentDevice.startTracking();
+			}
+		})
+	}
 });
 
-const DialogSelectDevice = require('dialog')();
-DialogSelectDevice.shwo();
-DialogSelectDevice.onSelect() {
-		DialogSelectDevice.hide();
-		Device.registerListeners({
-		onAsyncDataReceived : onAsyncDataReceived,
-		onError : onError,
-		onConnectionStateChanged : onConnectionStateChanged
-	});
-
-}
 
 
 ```
@@ -65,14 +59,15 @@ Works only if BLUETOOTH_ADMIN permission is granted.
 Reads the `command.json` in modules assets folder.
 ### verifyPermissions(): boolean
 
-### createDeviceManager()
 
 ##Methods of DeviceManager 
+
+DeviceManager ist available under `LeicaSDK.Devicemanager`
 
 ### findAvailableDevices({})
 
 #### Properties
-- yeti: true
+
 - onfound: Function 
 
 
@@ -86,12 +81,5 @@ Return a list of device. For every device you can the methods below:
 ### connect()
 ### disconnect()
 ### getAvailableCommands(): String[]
-### sendCommand():
-### setLaser(true | false)
-### getDistance()
 ### startTracking()
 ### stopTracking()
-### clear()
-### updateActivate()
-### updateWrite()
-### sendData()
