@@ -77,6 +77,7 @@ Return a list of device. For every device you can the methods below:
 ### getDeviceName(): String
 ### connect()
 ### disconnect()
+### getConnectionState(): {name:,code:}
 ### getAvailableCommands(): String[]
 ### startTracking()
 ### stopTracking()

@@ -87,6 +87,16 @@ public class DeviceProxy extends KrollProxy implements
 		Commands.getDeviceInfo(currentDevice, this, callback);
 	}
 
+
+	@Kroll.method
+	public KrollDict getConnectionState() {
+		if (currentDevice==null) return null;
+		KrollDict event = new KrollDict();
+		event.put("name", currentDevice.getConnectionState().name());
+		event.put("code", currentDevice.getConnectionState().ordinal());
+		return event;
+	}	
+	
 	@Kroll.method
 	public void startTracking() {
 		try {
