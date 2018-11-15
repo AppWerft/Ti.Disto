@@ -63,7 +63,7 @@ public class MessageDispatcher {
 
 	public void dispatchData(ReceivedData receivedData) {
 
-		KrollDict krolldata = new KrollDict();
+		KrollDict payload = new KrollDict();
 		KrollDict event = new KrollDict();
 		ReceivedYetiDataPacket receivedYetiDataPacket = null;
 		ReceivedBleDataPacket receivedBleDataPacket = null;
@@ -74,19 +74,19 @@ public class MessageDispatcher {
 			Log.d(LCAT,
 					"Async Data modelName"
 							+ receivedBleDataPacket.getModelName());
-			krolldata.put("model", receivedBleDataPacket.getModelName());
-			krolldata.put("batteryLevel", receivedBleDataPacket.getBatteryLevel());
-			krolldata.put("firmwareRevision", receivedBleDataPacket.getFirmwareRevision());
-			krolldata.put("hardwareRevision", receivedBleDataPacket.getHardwareRevision());
-			
-			
-			
+			payload.put("model", receivedBleDataPacket.getModelName());
+			payload.put("batteryLevel", receivedBleDataPacket.getBatteryLevel());
+			payload.put("firmwareRevision",
+					receivedBleDataPacket.getFirmwareRevision());
+			payload.put("hardwareRevision",
+					receivedBleDataPacket.getHardwareRevision());
+
 		}
 		if (receivedYetiDataPacket != null) {
 			try {
 				String id = receivedYetiDataPacket.dataId;
 				Log.i(LCAT, "receivedYetiDataPacket.dataId = " + id);
-				krolldata.put("type", id);
+				payload.put("type", id);
 				switch (id) {
 				case Defines.ID_IMU_BASIC_MEASUREMENTS: {
 					MeasuredValue distanceValue;
@@ -98,17 +98,15 @@ public class MessageDispatcher {
 					distanceValue.setUnit(data.getDistanceUnit());
 					distanceValue = MeasurementConverter
 							.convertDistance(distanceValue);
-					krolldata
-							.put("distance",
-									getValue(
-											distanceValue.getUnitStr(),
-											distanceValue
-													.getConvertedValueStrNoUnit()));
+					payload.put(
+							"distance",
+							getValue(distanceValue.getUnitStr(),
+									distanceValue.getConvertedValueStrNoUnit()));
 					inclinationValue = new MeasuredValue(data.getInclination());
 					inclinationValue.setUnit(data.getInclinationUnit());
 					inclinationValue = MeasurementConverter
 							.convertAngle(inclinationValue);
-					krolldata.put(
+					payload.put(
 							"inclination",
 							getValue(inclinationValue.getUnitStr(),
 									inclinationValue
@@ -117,12 +115,10 @@ public class MessageDispatcher {
 					directionValue.setUnit(data.getDirectionUnit());
 					directionValue = MeasurementConverter
 							.convertAngle(directionValue);
-					krolldata
-							.put("direction",
-									getValue(
-											directionValue.getUnitStr(),
-											directionValue
-													.getConvertedValueStrNoUnit()));
+					payload.put(
+							"direction",
+							getValue(directionValue.getUnitStr(),
+									directionValue.getConvertedValueStrNoUnit()));
 				}
 					break;
 				case Defines.ID_IMU_P2P: {
@@ -133,16 +129,16 @@ public class MessageDispatcher {
 					HzP2PValue = new MeasuredValue(data.getHzAngle());
 					HzP2PValue.setUnit(defaultDirectionAngleUnit);
 					HzP2PValue = MeasurementConverter.convertAngle(HzP2PValue);
-					krolldata.put("HZAngle",
+					payload.put("HZAngle",
 							HzP2PValue.getConvertedValueStrNoUnit());
 					VeP2PValue = new MeasuredValue(data.getVeAngle());
 					VeP2PValue.setUnit(defaultDirectionAngleUnit);
 					VeP2PValue = MeasurementConverter.convertAngle(VeP2PValue);
-					krolldata.put("VeAngle",
+					payload.put("VeAngle",
 							VeP2PValue.getConvertedValueStrNoUnit());
-					krolldata.put("InclinationStatus",
+					payload.put("InclinationStatus",
 							String.valueOf(data.getInclinationStatus()));
-					krolldata.put("timestamp_P2P_Measurements",
+					payload.put("timestamp_P2P_Measurements",
 							String.valueOf(data.getTimestampAndFlags()));
 				}
 					break;
@@ -150,51 +146,51 @@ public class MessageDispatcher {
 				case Defines.ID_IMU_QUATERNION: {
 					ReceivedYetiDataPacket.YetiQuaternion data = receivedYetiDataPacket
 							.getQuaternion();
-					krolldata.put("Quaternion_X",
+					payload.put("Quaternion_X",
 							String.valueOf(data.getQuaternion_X()));
-					krolldata.put("Quaternion_Y",
+					payload.put("Quaternion_Y",
 							String.valueOf(data.getQuaternion_Y()));
-					krolldata.put("Quaternion_Z",
+					payload.put("Quaternion_Z",
 							String.valueOf(data.getQuaternion_Z()));
-					krolldata.put("Quaternion_W",
+					payload.put("Quaternion_W",
 							String.valueOf(data.getQuaternion_W()));
-					krolldata.put("timestamp",
+					payload.put("timestamp",
 							String.valueOf(data.getTimestampAndFlags()));
 				}
 					break;
 				case Defines.ID_IMU_ACELERATION_AND_ROTATION: {
 					ReceivedYetiDataPacket.YetiAccelerationAndRotation data = receivedYetiDataPacket
 							.getAccelerationAndRotation();
-					krolldata.put("Acceleration_X",
+					payload.put("Acceleration_X",
 							String.valueOf(data.getAcceleration_X()));
-					krolldata.put("Acceleration_Y",
+					payload.put("Acceleration_Y",
 							String.valueOf(data.getAcceleration_Y()));
-					krolldata.put("Acceleration_Z",
+					payload.put("Acceleration_Z",
 							String.valueOf(data.getAcceleration_Z()));
-					krolldata.put("AccSensitivity",
+					payload.put("AccSensitivity",
 							String.valueOf(data.getAccSensitivity()));
-					krolldata.put("Rotation_X",
+					payload.put("Rotation_X",
 							String.valueOf(data.getRotation_X()));
-					krolldata.put("Rotation_Y",
+					payload.put("Rotation_Y",
 							String.valueOf(data.getRotation_Y()));
-					krolldata.put("Rotation_Z",
+					payload.put("Rotation_Z",
 							String.valueOf(data.getRotation_Z()));
-					krolldata.put("RotationSensitivity",
+					payload.put("RotationSensitivity",
 							String.valueOf(data.getRotationSensitivity()));
-					krolldata.put("timestamp",
+					payload.put("timestamp",
 							String.valueOf(data.getTimestampAndFlags()));
 				}
 					break;
 				case Defines.ID_IMU_MAGNETOMETER: {
 					ReceivedYetiDataPacket.YetiMagnetometer data;
 					data = receivedYetiDataPacket.getMagnetometer();
-					krolldata.put("Magnetometer_X",
+					payload.put("Magnetometer_X",
 							String.valueOf(data.getMagnetometer_X()));
-					krolldata.put("Magnetometer_Y",
+					payload.put("Magnetometer_Y",
 							String.valueOf(data.getMagnetometer_Y()));
-					krolldata.put("Magnetometer_Z",
+					payload.put("Magnetometer_Z",
 							String.valueOf(data.getMagnetometer_Z()));
-					krolldata.put("timestamp",
+					payload.put("timestamp",
 							String.valueOf(data.getTimestampAndFlags()));
 				}
 					break;
@@ -203,32 +199,32 @@ public class MessageDispatcher {
 							.getDistocomReceivedMessage();
 					data = data.trim();
 					if (data != null && data.isEmpty() == false) {
-						krolldata.put("distoCOMResponse", data);
+						payload.put("distoCOMResponse", data);
 					}
 				}
 					break;
 				case Defines.ID_IMU_DISTOCOM_EVENT: {
 					String data = receivedYetiDataPacket
 							.getDistocomReceivedMessage();
-					krolldata.put("distoCOMEvent", data);
+					payload.put("distoCOMEvent", data);
 				}
 					break;
 				default: {
-					Log.d(LCAT, "Error setting data");
+					Log.w(LCAT, "Error setting data\n"+ receivedYetiDataPacket.response.toString());
 				}
 					break;
 				}
-				event.put("data", krolldata);
+				event.put("data", payload);
 			} catch (IllegalArgumentCheckedException e) {
-				Log.e(LCAT,e.getMessage());
+				Log.e(LCAT, e.getMessage());
 				event.put("error", e.getMessage());
 			} catch (WrongDataException e) {
-				Log.e(LCAT,e.getMessage());
+				Log.e(LCAT, e.getMessage());
 				event.put("error", e.getMessage());
 			} catch (Exception e) {
-				Log.e(LCAT,e.getMessage());
+				Log.e(LCAT, e.getMessage());
 				event.put("error", e.getMessage());
-			} finally{
+			} finally {
 				if (dataCallback != null) {
 					event.put("success", true);
 					dataCallback.call(krollObject, event);
@@ -237,8 +233,7 @@ public class MessageDispatcher {
 					Log.w(LCAT, "dataCallback missing");
 			}
 
-			
-		}
+		} else Log.w(LCAT, "ReceivedDataPacket was null");
 
 	}
 
