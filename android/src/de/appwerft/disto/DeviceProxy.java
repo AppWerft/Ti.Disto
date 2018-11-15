@@ -208,6 +208,7 @@ public class DeviceProxy extends KrollProxy implements
 												.getConnectionType().name());
 										Log.i(LCAT, event.toString());
 										messageDispatcher.dispatchDevice(event);
+										startTracking();
 									}
 								});
 					} else
