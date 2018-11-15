@@ -53,7 +53,7 @@ if (LeicaSDK.verifyPermissions() == true) {
 Works only if BLUETOOTH_ADMIN permission is granted.
 ### getVersion(): String
 ### init();
-Reads the `command.json` in modules assets folder.
+Reads the `command.json` in modules assets folder. You can use a String paramter for filename. `commands.json` is default.
 ### verifyPermissions(): boolean
 
 
