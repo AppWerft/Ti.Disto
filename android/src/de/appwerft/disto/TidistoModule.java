@@ -28,6 +28,7 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.location.LocationManager;
@@ -81,6 +82,8 @@ public class TidistoModule extends KrollModule {
 	public static final int WARN = 5;
 	@Kroll.constant
 	public static final int ERROR = 6;
+	BluetoothAdapter bluetoothAdapter = BluetoothAdapter
+			.getDefaultAdapter();
 
 	List<Device> availableDevices = new ArrayList<>();
 	// Standard Debugging variables
@@ -125,15 +128,11 @@ public class TidistoModule extends KrollModule {
 
 	@Kroll.method
 	public boolean isBluetoothAvailable() {
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
-				.getDefaultAdapter();
 		return (bluetoothAdapter == null) ? false : true;
 	}
 
 	@Kroll.method
 	public boolean isBluetoothEnabled() {
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
-				.getDefaultAdapter();
 		if (bluetoothAdapter == null) {
 			return false;
 		} else {
@@ -146,8 +145,6 @@ public class TidistoModule extends KrollModule {
 		DeviceManager.getInstance(
 				TiApplication.getInstance().getApplicationContext())
 				.enableBLE();
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
-				.getDefaultAdapter();
 		if (!bluetoothAdapter.isEnabled()) {
 			bluetoothAdapter.enable();
 		}
@@ -162,23 +159,19 @@ public class TidistoModule extends KrollModule {
 			bluetoothAdapter.disable();
 		}
 		return this;
-
 	}
 
 	@Kroll.method
 	public void init(@Kroll.argument(optional = true) String filename) {
 		String jsoncommandsFilename = (filename == null) ? JSONCOMMANDS
 				: filename;
-		Log.i(LCAT, "====== START leica DISTO ========");
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
-			Log.i(LCAT, "====== START init ========");
 			importCommands(jsoncommandsFilename);
 			LeicaSdk.setMethodCalledLog(true);
 			LeicaSdk.scanConfig.setBleAdapterOn(true);
 		} else
 			Log.w(LCAT, "was always initalized.");
-		Log.d(LCAT, "init done, now setScanconfig");
 		LeicaSdk.setScanConfig(true, true, true, true);
 		ArrayList<String> keys = new ArrayList<>();
 		// adding key from properties:
@@ -186,7 +179,6 @@ public class TidistoModule extends KrollModule {
 				.getString("DISTO_KEY", "1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+");
 		keys.add(key);
 		LeicaSdk.setLicenses(keys);
-		Log.i(LCAT, "====== END init ==========");
 	}
 
 	private boolean hasPermission(String permission) {

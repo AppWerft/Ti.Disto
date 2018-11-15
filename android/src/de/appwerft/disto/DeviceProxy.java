@@ -92,6 +92,8 @@ public class DeviceProxy extends KrollProxy implements
 		try {
 			if (currentDevice == null || currentDevice.isInUpdateMode())
 				return;
+			Log.i(LCAT,"connectionStateName="+currentDevice.getConnectionState().name());
+			Log.i(LCAT,"connectionStateOrdinal="+currentDevice.getConnectionState().ordinal());
 			Log.i(LCAT,">>>>>>> startTracking 1");
 			currentDevice.sendCommand(Types.Commands.StartTracking);
 			Log.i(LCAT,">>>>>>> startTracking 2");
