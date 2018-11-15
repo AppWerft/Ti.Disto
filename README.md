@@ -77,7 +77,14 @@ Return a list of device. For every device you can the methods below:
 ### getDeviceName(): String
 ### connect()
 ### disconnect()
+### isInUpdateMode(): boolean
 ### getConnectionState(): {name:,code:}
 ### getAvailableCommands(): String[]
 ### startTracking()
 ### stopTracking()
+### startBaseMode()
+### startMeasurePlan()
+### startSmartRoom()
+
+### sendCustomCommand(String cmd, Callback)
+

@@ -87,28 +87,28 @@ public class DeviceProxy extends KrollProxy implements
 		Commands.getDeviceInfo(currentDevice, this, callback);
 	}
 
-
 	@Kroll.method
 	public KrollDict getConnectionState() {
-		if (currentDevice==null) return null;
+		if (currentDevice == null)
+			return null;
 		KrollDict event = new KrollDict();
 		event.put("name", currentDevice.getConnectionState().name());
 		event.put("code", currentDevice.getConnectionState().ordinal());
 		return event;
-	}	
-	
+	}
+
 	@Kroll.method
 	public boolean isInUpdateMode() {
-		if (currentDevice==null) return false;
+		if (currentDevice == null)
+			return false;
 		try {
 			return currentDevice.isInUpdateMode();
 		} catch (DeviceException e) {
 			e.printStackTrace();
 		}
 		return false;
-	}	
-	
-	
+	}
+
 	@Kroll.method
 	public void startBaseMode() {
 		try {
@@ -119,6 +119,7 @@ public class DeviceProxy extends KrollProxy implements
 			e.printStackTrace();
 		}
 	}
+
 	@Kroll.method
 	public void startMeasurePlan() {
 		try {
@@ -129,6 +130,7 @@ public class DeviceProxy extends KrollProxy implements
 			e.printStackTrace();
 		}
 	}
+
 	@Kroll.method
 	public void startSmartRoom() {
 		try {
@@ -139,14 +141,15 @@ public class DeviceProxy extends KrollProxy implements
 			e.printStackTrace();
 		}
 	}
+
 	@Kroll.method
 	public void startTracking() {
 		try {
 			if (currentDevice == null)
 				return;
-			Log.i(LCAT,">>>>>>> startTracking 1");
+			Log.i(LCAT, ">>>>>>> startTracking 1");
 			currentDevice.sendCommand(Types.Commands.StartTracking);
-			Log.i(LCAT,">>>>>>> startTracking 2");
+			Log.i(LCAT, ">>>>>>> startTracking 2");
 		} catch (DeviceException e) {
 			e.printStackTrace();
 		}
@@ -238,7 +241,6 @@ public class DeviceProxy extends KrollProxy implements
 												.getConnectionType().name());
 										Log.i(LCAT, event.toString());
 										messageDispatcher.dispatchDevice(event);
-										startTracking();
 									}
 								});
 					} else
