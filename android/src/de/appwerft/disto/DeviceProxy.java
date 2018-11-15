@@ -112,7 +112,7 @@ public class DeviceProxy extends KrollProxy implements
 	@Kroll.method
 	public void startTracking() {
 		try {
-			if (currentDevice == null || currentDevice.isInUpdateMode())
+			if (currentDevice == null)
 				return;
 			Log.i(LCAT,">>>>>>> startTracking 1");
 			currentDevice.sendCommand(Types.Commands.StartTracking);
