@@ -110,6 +110,36 @@ public class DeviceProxy extends KrollProxy implements
 	
 	
 	@Kroll.method
+	public void startBaseMode() {
+		try {
+			if (currentDevice == null)
+				return;
+			currentDevice.sendCommand(Types.Commands.StartBaseMode);
+		} catch (DeviceException e) {
+			e.printStackTrace();
+		}
+	}
+	@Kroll.method
+	public void startMeasurePlan() {
+		try {
+			if (currentDevice == null)
+				return;
+			currentDevice.sendCommand(Types.Commands.StartMeasurePlan);
+		} catch (DeviceException e) {
+			e.printStackTrace();
+		}
+	}
+	@Kroll.method
+	public void startSmartRoom() {
+		try {
+			if (currentDevice == null)
+				return;
+			currentDevice.sendCommand(Types.Commands.StartSmartRoom);
+		} catch (DeviceException e) {
+			e.printStackTrace();
+		}
+	}
+	@Kroll.method
 	public void startTracking() {
 		try {
 			if (currentDevice == null)
