@@ -40,8 +40,8 @@ public class Commands {
 								.sendCommand(Types.Commands.DistanceDC);
 						Log.i(LCAT,"start waiting for data");
 						secondresponse.waitForData();
-						Log.i(LCAT,"end waiting for data");
-					} else Log.e(LCAT, "1, response was null");
+						Log.i(LCAT,"end second waiting for data");
+					} else Log.e(LCAT, "response was null");
 				} catch (DeviceException | InterruptedException e) {
 					Log.e(LCAT, e.getMessage());
 				}
