@@ -31,7 +31,7 @@ public class Commands {
 							.sendCommand(Types.Commands.DistanceDC);
 					firstresponse.waitForData();
 					if (readDataFromResponseObject(firstresponse)!=null) {
-						TimeUnit.SECONDS.sleep(1);
+						TimeUnit.MILLISECONDS.sleep(500);
 						final ResponsePlain secondresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
 						secondresponse.waitForData();
