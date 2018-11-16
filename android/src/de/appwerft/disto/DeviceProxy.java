@@ -155,7 +155,7 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void startTracking(
-			@Kroll.argument(optional = true) KrollFunction callback) {
+			@Kroll.argument(optional = true) final KrollFunction callback) {
 		tracker = new Timer();
 		tracker.scheduleAtFixedRate(new TimerTask(){
 		    @Override
