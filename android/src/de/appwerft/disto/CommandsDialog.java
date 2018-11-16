@@ -46,12 +46,14 @@ public class CommandsDialog {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						
 						final String command = currentDevice
 								.getAvailableCommands()[which];
 
 						if (command.equals(Types.Commands.Custom.name())) {
 							// showCustomCommandDialog();
 						} else {
+							commandDialog.hide();
 							new Thread(new Runnable() {
 								@Override
 								public void run() {
