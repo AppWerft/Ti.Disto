@@ -104,6 +104,12 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
+	public void createCommandsDialog() {
+		CommandsDialog dialog = new CommandsDialog(this);
+		dialog.create();
+	}
+	
+	@Kroll.method
 	public boolean isInUpdateMode() {
 		if (currentDevice == null)
 			return false;

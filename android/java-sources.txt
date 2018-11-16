@@ -1,4 +1,5 @@
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/Commands.java"
+"/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/CommandsDialog.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/DeviceProxy.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/DevicemanagerModule.java"
 "/Users/fuerst/Documents/MLearning/Ti.Disto/android/src/de/appwerft/disto/MessageDispatcher.java"

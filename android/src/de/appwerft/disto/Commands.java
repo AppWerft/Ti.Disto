@@ -40,30 +40,6 @@ public class Commands {
 			}
 		}).start();
 	}
-	
-	public static void startTracking(final Device currentDevice,
-			KrollProxy proxy, KrollFunction callback) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Log.i(LCAT, "===== start Tracking =====");
-					final ResponseMeasurement response = (ResponseMeasurement) currentDevice
-							.sendCommand(Types.Commands.StartTracking);
-					response.waitForData();
-					if (response.getError() != null) {
-						Log.e(LCAT, response.getError().getErrorMessage());
-					} else {
-						Log.i(LCAT, "RESPONSE="+response.getDistanceValue().toString());
-					}
-					Log.i(LCAT, "after proceeding");
-				} catch (DeviceException e) {
-					Log.e(LCAT, e.getMessage());
-				}
-			}
-		}).start();
-	}
-
 
 	public static void getDeviceInfo(final Device currentDevice,
 			KrollProxy proxy, KrollFunction callback) {
