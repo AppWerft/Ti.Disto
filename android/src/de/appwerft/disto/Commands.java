@@ -23,8 +23,8 @@ public class Commands {
 	}
 
 	public static void getDistance(final Device currentDevice,
-			KrollProxy proxy,KrollFunction callback) {
-		long delay = 10;
+			KrollProxy proxy, KrollFunction callback) {
+		final long delay = 10;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -32,10 +32,10 @@ public class Commands {
 					long startTime = System.currentTimeMillis();
 					final ResponsePlain firstresponse = (ResponsePlain) currentDevice
 							.sendCommand(Types.Commands.DistanceDC);
-					Log.i(LCAT,"start waiting for data");
+					Log.i(LCAT, "start waiting for data");
 					firstresponse.waitForData();
-					Log.i(LCAT,"end waiting for data");
-					if (readDataFromResponseObject(firstresponse)!=null) {
+					Log.i(LCAT, "end waiting for data");
+					if (readDataFromResponseObject(firstresponse) != null) {
 						TimeUnit.MILLISECONDS.sleep(delay);
 						final ResponsePlain secondresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
@@ -44,12 +44,13 @@ public class Commands {
 						final ResponsePlain thirdresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
 						thirdresponse.waitForData();
-						KrollDict event= new KrollDict();
+						KrollDict event = new KrollDict();
 						long stopTime = System.currentTimeMillis();
 						event.put("time", stopTime - startTime);
-						if (callback!=null)
+						if (callback != null)
 							callback.callAsync(proxy.getKrollObject(), event);
-					} else Log.e(LCAT, "response was null");
+					} else
+						Log.e(LCAT, "response was null");
 				} catch (DeviceException | InterruptedException e) {
 					Log.e(LCAT, e.getMessage());
 				}
@@ -57,9 +58,6 @@ public class Commands {
 		}).start();
 	}
 
-	
-	
-		
 	public static String readDataFromResponseObject(final Response response) {
 		if (response.getError() != null) {
 			Log.e(LCAT, ": response error: "
@@ -68,7 +66,7 @@ public class Commands {
 		}
 		if (response instanceof ResponsePlain) {
 			return ((ResponsePlain) response).getReceivedDataString();
-			
+
 		}
 		return null;
 	}
