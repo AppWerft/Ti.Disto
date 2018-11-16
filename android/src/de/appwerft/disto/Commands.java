@@ -33,23 +33,13 @@ public class Commands {
 					firstresponse.waitForData();
 					Log.i(LCAT,"end waiting for data");
 					if (readDataFromResponseObject(firstresponse)!=null) {
-						Log.i(LCAT,"readDataFromResponseObject = "+ readDataFromResponseObject(firstresponse));
-						TimeUnit.MILLISECONDS.sleep(delay);
-						Log.i(LCAT,"end of pause " + delay + " ms.");
 						final ResponsePlain secondresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
-						Log.i(LCAT,"start waiting for data");
-						secondresponse.waitForData();
-						Log.i(LCAT,"end second waiting for data");
-						TimeUnit.MILLISECONDS.sleep(delay);
-						Log.i(LCAT,"end of pause " + delay + " ms.");
 						final ResponsePlain thirdresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
-						Log.i(LCAT,"start waiting for data");
 						thirdresponse.waitForData();
-						Log.i(LCAT,"end second waiting for data");
 					} else Log.e(LCAT, "response was null");
-				} catch (DeviceException | InterruptedException e) {
+				} catch (DeviceException e) {
 					Log.e(LCAT, e.getMessage());
 				}
 			}
