@@ -3,6 +3,7 @@ package de.appwerft.disto;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -22,24 +23,34 @@ public class Commands {
 	}
 
 	public static void getDistance(final Device currentDevice,
-			KrollProxy proxy, final long delay,KrollFunction callback) {
+			KrollProxy proxy,KrollFunction callback) {
+		long delay = 10;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
+					long startTime = System.currentTimeMillis();
 					final ResponsePlain firstresponse = (ResponsePlain) currentDevice
 							.sendCommand(Types.Commands.DistanceDC);
 					Log.i(LCAT,"start waiting for data");
 					firstresponse.waitForData();
 					Log.i(LCAT,"end waiting for data");
 					if (readDataFromResponseObject(firstresponse)!=null) {
+						TimeUnit.MILLISECONDS.sleep(delay);
 						final ResponsePlain secondresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
+						secondresponse.waitForData();
+						TimeUnit.MILLISECONDS.sleep(delay);
 						final ResponsePlain thirdresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
 						thirdresponse.waitForData();
+						KrollDict event= new KrollDict();
+						long stopTime = System.currentTimeMillis();
+						event.put("time", stopTime - startTime);
+						if (callback!=null)
+							callback.callAsync(proxy.getKrollObject(), event);
 					} else Log.e(LCAT, "response was null");
-				} catch (DeviceException e) {
+				} catch (DeviceException | InterruptedException e) {
 					Log.e(LCAT, e.getMessage());
 				}
 			}
