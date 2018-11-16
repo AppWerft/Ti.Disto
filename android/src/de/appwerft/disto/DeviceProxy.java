@@ -81,18 +81,13 @@ public class DeviceProxy extends KrollProxy implements
 		return currentDevice.getAvailableCommands();
 	}
 
-	@Kroll.method
-	public void getDeviceInfo(
-			@Kroll.argument(optional = true) KrollFunction callback) {
-		Commands.getDeviceInfo(currentDevice, this, callback);
-	}
-
+	
 	@Kroll.method
 	public void unpair() {
 		if (currentDevice != null)
-		currentDevice.unpairDevice();
+			currentDevice.unpairDevice();
 	}
-	
+
 	@Kroll.method
 	public KrollDict getConnectionState() {
 		if (currentDevice == null)
@@ -105,10 +100,10 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void createCommandsDialog() {
-		CommandsDialog dialog = new CommandsDialog(this,currentDevice);
+		CommandsDialog dialog = new CommandsDialog(this, currentDevice);
 		dialog.create();
 	}
-	
+
 	@Kroll.method
 	public boolean isInUpdateMode() {
 		if (currentDevice == null)
