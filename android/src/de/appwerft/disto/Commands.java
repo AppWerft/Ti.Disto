@@ -24,7 +24,7 @@ public class Commands {
 
 	public static void getDistance(final Device currentDevice,final
 			KrollProxy proxy,final KrollFunction callback) {
-		final long delay = 10;
+		final long delay = 50;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {

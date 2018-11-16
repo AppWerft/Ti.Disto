@@ -177,8 +177,7 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void getDistance(long delay,
-			@Kroll.argument(optional = true) KrollFunction callback) {
+	public void getDistance(@Kroll.argument(optional = true) KrollFunction callback) {
 		Commands.getDistance(currentDevice, this, callback);
 	}
 
