@@ -153,6 +153,15 @@ public class DeviceProxy extends KrollProxy implements
 		}
 	}
 
+	
+	@Kroll.method
+	public void toggleTracking(@Kroll.argument(optional = true) KrollFunction callback) {
+		if (deviceIsInTrackingMode==true) {
+			stopTracking() ;
+		}
+		else startTracking( callback);
+	}
+	
 	@Kroll.method
 	public void startTracking(
 			@Kroll.argument(optional = true) final KrollFunction callback) {
