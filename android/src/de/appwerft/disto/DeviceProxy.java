@@ -23,7 +23,7 @@ import ch.leica.sdk.connection.BaseConnectionManager.BleReceivedDataListener;
 public class DeviceProxy extends KrollProxy implements
 		Device.ConnectionListener, ErrorListener, ReceivedDataListener,
 		BleReceivedDataListener {
-	private static Device currentDevice;
+	static Device currentDevice;
 	private MessageDispatcher messageDispatcher;
 	private static String LCAT = TidistoModule.LCAT;
 	Handler sendCustomCommandHandler;
@@ -105,7 +105,7 @@ public class DeviceProxy extends KrollProxy implements
 
 	@Kroll.method
 	public void createCommandsDialog() {
-		CommandsDialog dialog = new CommandsDialog(this);
+		CommandsDialog dialog = new CommandsDialog(this,currentDevice);
 		dialog.create();
 	}
 	

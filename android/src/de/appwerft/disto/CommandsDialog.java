@@ -27,9 +27,13 @@ public class CommandsDialog {
 	private AlertDialog commandDialog;
 	private static String LCAT = TidistoModule.LCAT;
 
-	public CommandsDialog(KrollProxy proxy) {
+	
+	public CommandsDialog() {
+	}
+	
+	public CommandsDialog(KrollProxy proxy, Device device) {
 		this.proxy = proxy;
-		currentDevice = this.currentDevice;
+		currentDevice = device;
 
 	}
 
