@@ -22,7 +22,7 @@ public class Commands {
 	}
 
 	public static void getDistance(final Device currentDevice,
-			KrollProxy proxy, KrollFunction callback) {
+			KrollProxy proxy, long delay,KrollFunction callback) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -31,7 +31,7 @@ public class Commands {
 							.sendCommand(Types.Commands.DistanceDC);
 					firstresponse.waitForData();
 					if (readDataFromResponseObject(firstresponse)!=null) {
-						TimeUnit.MILLISECONDS.sleep(500);
+						TimeUnit.MILLISECONDS.sleep(delay);
 						final ResponsePlain secondresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
 						secondresponse.waitForData();
