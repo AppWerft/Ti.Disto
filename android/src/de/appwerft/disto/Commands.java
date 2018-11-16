@@ -29,12 +29,17 @@ public class Commands {
 				try {
 					final ResponsePlain firstresponse = (ResponsePlain) currentDevice
 							.sendCommand(Types.Commands.DistanceDC);
+					Log.d(LCAT,"start waiting for data");
 					firstresponse.waitForData();
+					Log.d(LCAT,"end waiting for data");
 					if (readDataFromResponseObject(firstresponse)!=null) {
 						TimeUnit.MILLISECONDS.sleep(delay);
+						Log.d(LCAT,"end of pause " + delay + " ms.");
 						final ResponsePlain secondresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
+						Log.d(LCAT,"start waiting for data");
 						secondresponse.waitForData();
+						Log.d(LCAT,"end waiting for data");
 					};
 				} catch (DeviceException | InterruptedException e) {
 					Log.e(LCAT, e.getMessage());
