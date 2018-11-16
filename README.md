@@ -86,6 +86,7 @@ Start one measurement.
 Start continously measurement
 ### stopTracking()
 no comment 
+### toogleTracking()
 ### unpair()
 
 ### sendCustomCommand(String cmd, Callback)
