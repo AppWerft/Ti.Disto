@@ -1,6 +1,7 @@
 package de.appwerft.disto;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
@@ -30,11 +31,12 @@ public class Commands {
 							.sendCommand(Types.Commands.DistanceDC);
 					firstresponse.waitForData();
 					if (readDataFromResponseObject(firstresponse)!=null) {
+						TimeUnit.SECONDS.sleep(1);
 						final ResponsePlain secondresponse = (ResponsePlain) currentDevice
 								.sendCommand(Types.Commands.DistanceDC);
 						secondresponse.waitForData();
 					};
-				} catch (DeviceException e) {
+				} catch (DeviceException | InterruptedException e) {
 					Log.e(LCAT, e.getMessage());
 				}
 			}
