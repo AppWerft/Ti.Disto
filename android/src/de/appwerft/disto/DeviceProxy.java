@@ -1,5 +1,9 @@
 package de.appwerft.disto;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Future;
+
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
@@ -29,7 +33,7 @@ public class DeviceProxy extends KrollProxy implements
 	Handler sendCustomCommandHandler;
 	private boolean deviceIsInTrackingMode = false;
 	HandlerThread sendCustomCommandThread;
-
+	Timer tracker;
 	public DeviceProxy() {
 		super();
 	}
@@ -150,29 +154,21 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void startTracking() {
-		try {
-			if (currentDevice == null)
-				return;
-			Log.i(LCAT, ">>>>>>> startTracking 1");
-			currentDevice.sendCommand(Types.Commands.StartTracking,
-					currentDevice.getTIMEOUT_NORMAL());
-			Log.i(LCAT, ">>>>>>> startTracking 2");
-		} catch (DeviceException e) {
-			e.printStackTrace();
-		}
+	public void startTracking(
+			@Kroll.argument(optional = true) KrollFunction callback) {
+		tracker = new Timer();
+		tracker.scheduleAtFixedRate(new TimerTask(){
+		    @Override
+		    public void run(){
+		    	Commands.getDistance(currentDevice, DeviceProxy.this, callback);
+		    }
+		},0,800);
 		deviceIsInTrackingMode = true;
 	}
 
 	@Kroll.method
-	public void stopTracking(
-			@Kroll.argument(optional = true) KrollFunction callback) {
-		try {
-			currentDevice.sendCommand(Types.Commands.StopTracking);
-		} catch (DeviceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void stopTracking() {
+		tracker.cancel();
 		deviceIsInTrackingMode = false;
 	}
 
