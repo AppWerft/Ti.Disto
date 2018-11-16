@@ -84,7 +84,8 @@ Return a list of device. For every device you can the methods below:
 Start one measurement.
 ### startTracking() 
 Start continously measurement
-
+### stopTracking()
+no comment 
 ### unpair()
 
 ### sendCustomCommand(String cmd, Callback)
