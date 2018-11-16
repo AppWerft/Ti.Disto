@@ -80,11 +80,11 @@ Return a list of device. For every device you can the methods below:
 ### isInUpdateMode(): boolean
 ### getConnectionState(): {name:,code:}
 ### getAvailableCommands(): String[]
-### startTracking()
-### stopTracking()
-### startBaseMode()
-### startMeasurePlan()
-### startSmartRoom()
+### getDistance()
+Start one measurement.
+### startTracking() 
+Start continously measurement
+
 ### unpair()
 
 ### sendCustomCommand(String cmd, Callback)

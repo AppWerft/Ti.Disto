@@ -11,6 +11,7 @@ import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 
 import android.content.Context;
+import android.content.Intent;
 import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Devices.Device;
 import ch.leica.sdk.Devices.DeviceManager;
@@ -40,7 +41,12 @@ public class DevicemanagerModule extends TidistoModule implements
 	public void handleCreationDict(KrollDict options) {
 		super.handleCreationDict(options);
 	}
-
+	
+	@Kroll.method
+	public void supressDialog() {
+		ctx.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+	}
+	
 	@Kroll.method
 	public void findAvailableDevices(KrollDict options) {
 		if (options.containsKeyAndNotNull("onfound"))
