@@ -42,6 +42,12 @@ public class BluetoothModule extends TidistoModule {
 	public boolean isAvailable() {
 		return (bluetoothAdapter == null) ? false : true;
 	}
+	
+	@Kroll.method
+	public int getAvailability() {
+		if (bluetoothAdapter == null) return NOTAVAILABLE;
+		return bluetoothAdapter.isEnabled() ? ENABLED : DISABLED;
+	}
 
 	@Kroll.method
 	public boolean isEnabled() {

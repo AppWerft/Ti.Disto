@@ -68,18 +68,18 @@ if (LeicaSDK.verifyPermissions() == true) {
 - CONNECTION\_TYPE\_WIFI\_AP
 - CONNECTION\_TYPE\_WIFI\_HOTSPOT
 
-## Bluetooth availibility
+## Bluetooth availability
 
 ```js
 const BT = require("de.appwerft.disto").Bluetooth;
-var state = BT.Bluetooth.getAvailibility();
+var state = BT.getAvailability();
 ```
 
 The result can be:
 
-*   BT\_NOTAVAILABLE
-*   BT\_DISABLED
-*   BT\_ENABLED
+*   NOTAVAILABLE
+*   DISABLED
+*   ENABLED
 
 In case two you can do:
 
@@ -105,10 +105,10 @@ If false then you cannot use this device.
 If false then you cannot use this device.
 
 ### isEnabled(): boolean
-If false you can start `enableBluetooth()`
+If false you can start `enable()`
 
 ### enable()
-
+This method has an object with to callbacks: `onsuccess` and `onerror`
 
 ###  disable()
 
