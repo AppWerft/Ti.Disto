@@ -1,6 +1,7 @@
 package de.appwerft.disto;
 
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.TiMessenger;
 import org.appcelerator.titanium.TiApplication;
@@ -14,7 +15,7 @@ import android.content.Intent;
 import ch.leica.sdk.Devices.DeviceManager;
 import de.appwerft.disto.utils.KrollCallbacks;
 
-@Kroll.module(parentModule = TidistoModule.class)
+@Kroll.module(parentModule = TidistoModule.class, propertyAccessors = { "onSuccess" })
 public class BluetoothModule extends TidistoModule {
 	private Context ctx;
 	private DeviceManager deviceManager;
@@ -57,9 +58,13 @@ public class BluetoothModule extends TidistoModule {
 			return (bluetoothAdapter.isEnabled()) ? true : false;
 		}
 	}
-
+	private KrollFunction onSuccessCallback;
 	@Kroll.method
 	public boolean enable(@Kroll.argument(optional = true) KrollDict opts) {
+		
+		if (hasProperty("onSuccess")) {
+			onSuccessCallback = (KrollFunction)getProperty("onSuccess");
+		}
 		if (opts == null) {
 			return btAdapter.enable();
 		} else {
@@ -108,6 +113,7 @@ public class BluetoothModule extends TidistoModule {
 				event.put("name", btAdapter.getName());
 				event.put("address", btAdapter.getAddress());
 				callbacks.call("onsuccess", event);
+				if (onSuccessCallback != null) onSuccessCallback.callAsync(getKrollObject(),event);
 			}
 		}
 	}

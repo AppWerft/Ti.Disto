@@ -129,7 +129,7 @@ public class TidistoModule extends KrollModule {
 	
 
 	@Kroll.method
-	public void init(@Kroll.argument(optional = true) String filename) {
+	public TidistoModule init(@Kroll.argument(optional = true) String filename) {
 		String jsoncommandsFilename = (filename == null) ? JSONCOMMANDS
 				: filename;
 		verifyPermissions();
@@ -141,11 +141,13 @@ public class TidistoModule extends KrollModule {
 			Log.w(LCAT, "was always initalized.");
 		LeicaSdk.setScanConfig(true, true, true, true);
 		ArrayList<String> keys = new ArrayList<>();
-		// adding key from properties:
+		
+		// adding key from properties or default:
 		String key = TiApplication.getInstance().getAppProperties()
 				.getString("DISTO_KEY", "1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+");
 		keys.add(key);
 		LeicaSdk.setLicenses(keys);
+		return this;
 	}
 
 	private boolean hasPermission(String permission) {

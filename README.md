@@ -81,15 +81,23 @@ The result can be:
 *   DISABLED
 *   ENABLED
 
-In case two you can do:
+In case two you can enable BT by:
 
 ```js
-const BT = require("de.appwerft.disto").Bluetooth;
+import Dist from "de.appwerft.disto";
+let Bluetooth = Dist.Bluetooth;
+let Devicemanager = Dist.Devicemanager;
+
+// maybe it is possible to import in one line …
 
 BT.enableBluetooth({
-	onsuccess : (e) => {}, // result is name and address of BT on device
-	onerror : (e) => {}
+	onsuccess : handleDisto, // result is name and address of BT on device
+	onerror : e => {}
 }); 
+function handleDisto(e) {  // will hoisted ;-)
+	Object.key(e).forEach(k => {console.log(k + "=" + e[k];)})
+}
+
 ```
 
 This opens a system dialog and the user can grant (or not)
@@ -97,8 +105,14 @@ This opens a system dialog and the user can grant (or not)
 
 ## Methods of Bluetooth module
 
-### getAvailability(): boolean
-If false then you cannot use this device.
+### getAvailability(): int
+Possible results are:
+
+*   NOTAVAILABLE
+*   DISABLED
+*   ENABLED
+
+This constants are part of sub module Bluetooth.
 
 
 ### isAvailable(): boolean
@@ -108,7 +122,16 @@ If false then you cannot use this device.
 If false you can start `enable()`
 
 ### enable()
-This method has an object with to callbacks: `onsuccess` and `onerror`
+This method has an object with to callbacks: `onsuccess` and `onerror`.
+
+Alternatively you can overwrite the onSuccess property:
+
+```js
+Bluetooth.onSuccess = (e) => {
+	// Disto work
+};
+
+```
 
 ###  disable()
 
@@ -116,11 +139,20 @@ This method has an object with to callbacks: `onsuccess` and `onerror`
 ## Methods of module 
 
 ### getVersion(): String
+
 ### init();
 Reads the `commands.json` in modules assets folder. You can use a String paramter for filename. `commands.json` is default.
 ### verifyPermissions(): boolean
 
+### setTimeout 
 
+### setlogLevel
+
+```js
+import Disto from 'de.appwerft.disto';
+Disto.setLogLevel(Disto.DEBUG).setTimeout(10000).init();
+
+```
 ## Methods of DeviceManager
 
 DeviceManager ist available under `LeicaSDK.Devicemanager`
