@@ -18,24 +18,34 @@ Axway Titaniums module for connecting to Disto devices via bluetooth. The offici
 
 [This file](https://raw.githubusercontent.com/AppWerft/Ti.Disto/master/android/assets/commands.json) contains all BT-commands and will imported from Titaniums `Resources`-folder.
 
+### Licence key
+The SDK need for work a licence key. Currently you can use the public known key (also part of this module) or you can an own one. In this case you can put it into tiapp.xml:
+
+```xml
+<property 
+	name="DISTO_KEY" 
+	type="String">1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+</property>
+```
+
+
 ## Usage concept
 
 ```javascript
 const LeicaSDK = require("de.appwerft.disto");
 
 if (LeicaSDK.verifyPermissions() == true) {
-	LeicaSDK
-		.setLogLevel(LeicaSDK.DEBUG)
-		.enableBluetooth()
-		.init("commands.json")  // don't forget commands.json in Resources folder!
+	LeicaSDK.setLogLevel(LeicaSDK.DEBUG);
+	LeicaSDK.Bluetooth.enable();
+	LeicaSDK.init("commands.json")  // don't forget commands.json in Resources folder!
+
 	LeicaSDK.Devicemanager.findAvailableDevices({
-		onfound : function(e) {
+		onfound : (e) => {
 			const currentDevive = e.device;
 			currentDevice.connect({
-				ondata : function(data) {
+				ondata : (data) => {
 					console.log(data);
 				},
-				onconnect : function() {
+				onconnect : () => {
 					currentDevice.startTracking();
 				}
 			});
@@ -58,33 +68,71 @@ if (LeicaSDK.verifyPermissions() == true) {
 - CONNECTION\_TYPE\_WIFI\_AP
 - CONNECTION\_TYPE\_WIFI\_HOTSPOT
 
+## Bluetooth availibility
 
-## Methods of module
+```js
+const BT = require("de.appwerft.disto").Bluetooth;
+var state = BT.Bluetooth.getAvailibility();
+```
 
-### isBluetoothAvailable(): boolean
-### isBluetoothEnabled(): boolean
-### enableBluetooth()
-###  disableBluetooth()
+The result can be:
 
-Works only if BLUETOOTH_ADMIN permission is granted.
+*   BT\_NOTAVAILABLE
+*   BT\_DISABLED
+*   BT\_ENABLED
+
+In case two you can do:
+
+```js
+const BT = require("de.appwerft.disto").Bluetooth;
+
+BT.enableBluetooth({
+	onsuccess : (e) => {}, // result is name and address of BT on device
+	onerror : (e) => {}
+}); 
+```
+
+This opens a system dialog and the user can grant (or not)
+
+
+## Methods of Bluetooth module
+
+### getAvailability(): boolean
+If false then you cannot use this device.
+
+
+### isAvailable(): boolean
+If false then you cannot use this device.
+
+### isEnabled(): boolean
+If false you can start `enableBluetooth()`
+
+### enable()
+
+
+###  disable()
+
+
+## Methods of module 
+
 ### getVersion(): String
 ### init();
 Reads the `commands.json` in modules assets folder. You can use a String paramter for filename. `commands.json` is default.
 ### verifyPermissions(): boolean
 
 
-##Methods of DeviceManager
+## Methods of DeviceManager
 
 DeviceManager ist available under `LeicaSDK.Devicemanager`
 
-### findAvailableDevices({})
+### Devicemanager.findAvailableDevices({})
 
 #### Properties
 
 - onfound: Function
 
 
-### getConnectedDevices(): Device[]
+### Devicemanager.getConnectedDevices(): Device[]
 Return a list of device. For every device you can the methods below:
 
 ## Methods of device
@@ -109,3 +157,7 @@ no comment
 ### unpair()
 
 ### sendCustomCommand(String cmd, Callback)
+
+## Roadmap
+
+As mentioned this module only works for Yeti-protocol. On request we can extend the module for usage with other protocols.

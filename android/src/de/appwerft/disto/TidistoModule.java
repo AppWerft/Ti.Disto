@@ -127,42 +127,6 @@ public class TidistoModule extends KrollModule {
 	}
 
 	
-	
-	
-	@Kroll.method
-	public boolean isBluetoothAvailable() {
-		return (bluetoothAdapter == null) ? false : true;
-	}
-
-	@Kroll.method
-	public boolean isBluetoothEnabled() {
-		if (bluetoothAdapter == null) {
-			return false;
-		} else {
-			return (bluetoothAdapter.isEnabled()) ? true : false;
-		}
-	}
-
-	@Kroll.method
-	public TidistoModule enableBluetooth() {
-		DeviceManager.getInstance(
-				TiApplication.getInstance().getApplicationContext())
-				.enableBLE();
-		if (!bluetoothAdapter.isEnabled()) {
-			bluetoothAdapter.enable();
-		}
-		return this;
-	}
-
-	@Kroll.method
-	public TidistoModule disableBluetooth() {
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter
-				.getDefaultAdapter();
-		if (bluetoothAdapter.isEnabled()) {
-			bluetoothAdapter.disable();
-		}
-		return this;
-	}
 
 	@Kroll.method
 	public void init(@Kroll.argument(optional = true) String filename) {
