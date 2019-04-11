@@ -16,7 +16,7 @@ Axway Titaniums module for connecting to Disto devices via bluetooth. The offici
 
 ### command.json
 
-This file contains all BT-commands and will imported from Titaniums `Resources`-folder.
+[This file](https://raw.githubusercontent.com/AppWerft/Ti.Disto/master/android/assets/commands.json) contains all BT-commands and will imported from Titaniums `Resources`-folder.
 
 ## Usage concept
 
