@@ -97,7 +97,7 @@ public class DevicemanagerModule extends TidistoModule implements
 				onFoundCallback.callAsync(getKrollObject(), event);
 			} else
 				Log.e(LCAT, "onFound not defined!");
-		}
+		} // TODO: add other devices like Wifi ...
 	}
 
 	/*
