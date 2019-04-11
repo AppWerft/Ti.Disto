@@ -6,13 +6,17 @@ Axway Titaniums module for connecting to Disto devices via bluetooth. The offici
 
 ## Prerequisites
 
-Permissions in manifest:
+### Permissions in manifest:
 
 ```xml
  <uses-permission android:name="android.permission.BLUETOOTH" />
  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
+
+### command.json
+
+This file contains all BT-commands and will imported from Titaniums `Resources`-folder.
 
 ## Usage concept
 
@@ -65,7 +69,7 @@ if (LeicaSDK.verifyPermissions() == true) {
 Works only if BLUETOOTH_ADMIN permission is granted.
 ### getVersion(): String
 ### init();
-Reads the `command.json` in modules assets folder. You can use a String paramter for filename. `commands.json` is default.
+Reads the `commands.json` in modules assets folder. You can use a String paramter for filename. `commands.json` is default.
 ### verifyPermissions(): boolean
 
 
