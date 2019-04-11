@@ -1,6 +1,6 @@
 # Ti.Disto
 
-<img align="left" src="https://i.ebayimg.com/images/g/5oMAAOSwOuBbv1OQ/s-l640.jpg" />
+<img src="https://i.ebayimg.com/images/g/5oMAAOSwOuBbv1OQ/s-l640.jpg" />
 Axway Titaniums module for connecting to Disto devices via bluetooth. The official SDK supports Bluetooth, Yeti, USB and Wifi. This module supports at the time only yeti. This is the Leica-Name for BT.
 
 <div style="clear:both" />
