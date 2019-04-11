@@ -3,13 +3,15 @@
 <img src="https://lasers.leica-geosystems.com/eu/sites/lasers.leica-geosystems.com.eu/files/leica_media/images/disto/x3-rotateimg.jpg" />
 Axway Titaniums module for connecting to Disto devices via bluetooth. The official SDK supports Bluetooth, Yeti, USB and Wifi. This module supports at the time only yeti. This is the Leica-Name for BT.
 
-<div style="clear:both" />
+
 ## Prerequisites
 
 Permissions in manifest:
 
 ```xml
-
+ <uses-permission android:name="android.permission.BLUETOOTH" />
+ <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+ <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
 
 ## Usage concept
