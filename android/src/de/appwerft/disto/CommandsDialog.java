@@ -27,11 +27,12 @@ public class CommandsDialog {
 	private AlertDialog customCommandDialog;
 	private AlertDialog commandDialog;
 	private static String LCAT = TidistoModule.LCAT;
-	AlertDialog.Builder alertConnectedBuilder = new AlertDialog.Builder(TiApplication.getAppCurrentActivity());
-	
+	AlertDialog.Builder alertConnectedBuilder = new AlertDialog.Builder(
+			TiApplication.getAppCurrentActivity());
+
 	public CommandsDialog() {
 	}
-	
+
 	public CommandsDialog(KrollProxy proxy, Device device) {
 		this.proxy = proxy;
 		currentDevice = device;
@@ -47,7 +48,7 @@ public class CommandsDialog {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
+
 						final String command = currentDevice
 								.getAvailableCommands()[which];
 
@@ -89,80 +90,96 @@ public class CommandsDialog {
 			extractDataFromPlainResponse((ResponsePlain) response);
 		}
 	}
+
 	public void extractDataFromPlainResponse(ResponsePlain response) {
 
 		final String METHODTAG = "extractDataFromPlainResponse";
 		Log.v(LCAT, METHODTAG + " called");
 
-		
 	}
-	
+
 	void showCustomCommandDialog() {
 
-
 		final String METHODTAG = ".showCustomCommandDialog";
-		AlertDialog.Builder customCommandDialogBuilder = new AlertDialog.Builder(TiApplication.getAppCurrentActivity());
-		final EditText input = new EditText(TiApplication.getAppCurrentActivity());
+		AlertDialog.Builder customCommandDialogBuilder = new AlertDialog.Builder(
+				TiApplication.getAppCurrentActivity());
+		final EditText input = new EditText(
+				TiApplication.getAppCurrentActivity());
 		customCommandDialogBuilder.setTitle("Custom Command");
 		customCommandDialogBuilder.setView(input);
-		customCommandDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
+		customCommandDialogBuilder.setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
 
+						if (sendCustomCommandThread == null) {
+							sendCustomCommandThread = new HandlerThread(
+									"getDeviceStateThread"
+											+ System.currentTimeMillis(),
+									HandlerThread.MAX_PRIORITY);
 
-				if (sendCustomCommandThread == null) {
-					sendCustomCommandThread =
-							new HandlerThread(
-									"getDeviceStateThread" + System.currentTimeMillis(),
-									HandlerThread.MAX_PRIORITY
-							);
-
-					sendCustomCommandThread.start();
-					sendCustomCommandHandler = new Handler(sendCustomCommandThread.getLooper());
-				}
-
-				// send any string to device
-				try {
-					sendCustomCommandHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Response response =
-										currentDevice.sendCustomCommand(
-												input.getText().toString()/*,
-												currentDevice.getTIMEOUT_NORMAL()*/
-										);
-
-								response.waitForData();
-
-								if (response.getError() != null) {
-									Log.e(LCAT,
-											METHODTAG + ": error: " + response.getError().getErrorMessage()
-									);
-								}
-//								setDistoComResponse(((ResponsePlain) response).getReceivedDataString());
-								Log.d(LCAT, METHODTAG + "DistoComResponse set with ResponsePlain");
-
-							} catch (DeviceException e) {
-
-								Log.e(LCAT, METHODTAG + ": Error sending the command.", e);
-							}
+							sendCustomCommandThread.start();
+							sendCustomCommandHandler = new Handler(
+									sendCustomCommandThread.getLooper());
 						}
-					});
 
-				} catch (Exception e) {
-					Log.e(LCAT, METHODTAG + ": Error showCustomCommandDialog ", e);
-				}
-			}
-		});
-		customCommandDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		});
+						// send any string to device
+						try {
+							sendCustomCommandHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										Response response = currentDevice
+												.sendCustomCommand(input
+														.getText().toString()/*
+																			 * ,
+																			 * currentDevice
+																			 * .
+																			 * getTIMEOUT_NORMAL
+																			 * (
+																			 * )
+																			 */
+												);
+
+										response.waitForData();
+
+										if (response.getError() != null) {
+											Log.e(LCAT, METHODTAG
+													+ ": error: "
+													+ response.getError()
+															.getErrorMessage());
+										}
+										// setDistoComResponse(((ResponsePlain)
+										// response).getReceivedDataString());
+										Log.d(LCAT,
+												METHODTAG
+														+ "DistoComResponse set with ResponsePlain");
+
+									} catch (DeviceException e) {
+
+										Log.e(LCAT,
+												METHODTAG
+														+ ": Error sending the command.",
+												e);
+									}
+								}
+							});
+
+						} catch (Exception e) {
+							Log.e(LCAT, METHODTAG
+									+ ": Error showCustomCommandDialog ", e);
+						}
+					}
+				});
+		customCommandDialogBuilder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
 		customCommandDialog = customCommandDialogBuilder.create();
 		customCommandDialog.show();
-}
+	}
 
 }

@@ -34,6 +34,7 @@ public class DeviceProxy extends KrollProxy implements
 	private boolean deviceIsInTrackingMode = false;
 	HandlerThread sendCustomCommandThread;
 	Timer tracker;
+
 	public DeviceProxy() {
 		super();
 	}
@@ -85,7 +86,6 @@ public class DeviceProxy extends KrollProxy implements
 		return currentDevice.getAvailableCommands();
 	}
 
-	
 	@Kroll.method
 	public void unpair() {
 		if (currentDevice != null)
@@ -153,25 +153,25 @@ public class DeviceProxy extends KrollProxy implements
 		}
 	}
 
-	
 	@Kroll.method
-	public void toggleTracking(@Kroll.argument(optional = true) KrollFunction callback) {
-		if (deviceIsInTrackingMode==true) {
-			stopTracking() ;
-		}
-		else startTracking( callback);
+	public void toggleTracking(
+			@Kroll.argument(optional = true) KrollFunction callback) {
+		if (deviceIsInTrackingMode == true) {
+			stopTracking();
+		} else
+			startTracking(callback);
 	}
-	
+
 	@Kroll.method
 	public void startTracking(
 			@Kroll.argument(optional = true) final KrollFunction callback) {
 		tracker = new Timer();
-		tracker.scheduleAtFixedRate(new TimerTask(){
-		    @Override
-		    public void run(){
-		    	Commands.getDistance(currentDevice, DeviceProxy.this, callback);
-		    }
-		},0,800);
+		tracker.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				Commands.getDistance(currentDevice, DeviceProxy.this, callback);
+			}
+		}, 0, 1000);
 		deviceIsInTrackingMode = true;
 	}
 
@@ -182,7 +182,8 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
-	public void getDistance(@Kroll.argument(optional = true) KrollFunction callback) {
+	public void getDistance(
+			@Kroll.argument(optional = true) KrollFunction callback) {
 		Commands.getDistance(currentDevice, this, callback);
 	}
 

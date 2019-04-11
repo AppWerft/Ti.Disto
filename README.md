@@ -1,6 +1,15 @@
 # Ti.Disto
 
-Axway Titaniums module for connecting to Disto devices via bluetooth.
+<img align="left" src="https://i.ebayimg.com/images/g/5oMAAOSwOuBbv1OQ/s-l640.jpg" />
+Axway Titaniums module for connecting to Disto devices via bluetooth. The official SDK supports Bluetooth, Yeti, USB and Wifi. This module supports at the time only yeti. This is the Leica-Name for BT.
+
+## Prerequisites
+
+Permissions in manifest:
+
+```xml
+
+```
 
 ## Usage concept
 
@@ -11,7 +20,7 @@ if (LeicaSDK.verifyPermissions() == true) {
 	LeicaSDK
 		.setLogLevel(LeicaSDK.DEBUG)
 		.enableBluetooth()
-		.init("commands.json")  // don't forget commands.json in Resources folder! 
+		.init("commands.json")  // don't forget commands.json in Resources folder!
 	LeicaSDK.Devicemanager.findAvailableDevices({
 		onfound : function(e) {
 			const currentDevive = e.device;
@@ -57,7 +66,7 @@ Reads the `command.json` in modules assets folder. You can use a String paramter
 ### verifyPermissions(): boolean
 
 
-##Methods of DeviceManager 
+##Methods of DeviceManager
 
 DeviceManager ist available under `LeicaSDK.Devicemanager`
 
@@ -65,11 +74,11 @@ DeviceManager ist available under `LeicaSDK.Devicemanager`
 
 #### Properties
 
-- onfound: Function 
+- onfound: Function
 
 
 ### getConnectedDevices(): Device[]
-Return a list of device. For every device you can the methods below:	
+Return a list of device. For every device you can the methods below:
 
 ## Methods of device
 
@@ -81,13 +90,15 @@ Return a list of device. For every device you can the methods below:
 ### getConnectionState(): {name:,code:}
 ### getAvailableCommands(): String[]
 ### getDistance()
+
 Start one measurement.
-### startTracking() 
+### startTracking()
+
 Start continously measurement
 ### stopTracking()
-no comment 
-### toogleTracking()
+
+no comment
+### toggleTracking()
 ### unpair()
 
 ### sendCustomCommand(String cmd, Callback)
-

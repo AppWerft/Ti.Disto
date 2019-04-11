@@ -126,6 +126,9 @@ public class TidistoModule extends KrollModule {
 		return this;
 	}
 
+	
+	
+	
 	@Kroll.method
 	public boolean isBluetoothAvailable() {
 		return (bluetoothAdapter == null) ? false : true;
