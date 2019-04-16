@@ -3,12 +3,14 @@ package de.appwerft.disto;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Future;
+import java.util.regex.Pattern;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
+
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -89,7 +91,7 @@ public class DeviceProxy extends KrollProxy implements
 	@Kroll.method
 	@Kroll.getProperty
 	public String getAddress() {
-		return getId().split("+++")[1];
+		return getId().split(Pattern.quote("+++"))[1];
 	}
 	@Kroll.method
 	@Kroll.getProperty
