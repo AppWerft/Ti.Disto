@@ -14,9 +14,11 @@ Axway Titaniums module for connecting to Disto devices via bluetooth. The offici
  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
 
+This permission will automaticaly inserted by module `de.appwerft.bluetoothmanager`
+
 ### command.json
 
-[This file](https://raw.githubusercontent.com/AppWerft/Ti.Disto/master/android/assets/commands.json) contains all BT-commands and will imported from Titaniums `Resources`-folder.
+[This file](https://raw.githubusercontent.com/AppWerft/Ti.Disto/master/android/assets/commands.json) contains all BT-commands and will automaticaly imported from modules asset folder.
 
 ### Licence key
 The SDK need for work a licence key. Currently you can use the public known key (also part of this module) or you can an own one. In this case you can put it into tiapp.xml:
@@ -32,12 +34,14 @@ The SDK need for work a licence key. Currently you can use the public known key 
 
 ```javascript
 const LeicaSDK = require("de.appwerft.disto");
+const BTManager = require("de.appwerft.bluetoothmanager");
+
 
 if (LeicaSDK.verifyPermissions() == true) {
-	LeicaSDK.setLogLevel(LeicaSDK.DEBUG);
-	LeicaSDK.Bluetooth.enable();
-	LeicaSDK.init("commands.json")  // don't forget commands.json in Resources folder!
-
+	LeicaSDK
+		.setLogLevel(LeicaSDK.DEBUG)
+		.setTimeout(10000)
+		.init(); 
 	LeicaSDK.Devicemanager.findAvailableDevices({
 		onfound : (e) => {
 			const currentDevive = e.device;
@@ -71,7 +75,7 @@ if (LeicaSDK.verifyPermissions() == true) {
 ## Bluetooth availability
 
 ```js
-const BT = require("de.appwerft.disto").Bluetooth;
+const BT = require("de.appwerft.bluetoothmanager");
 var state = BT.getAvailability();
 ```
 
@@ -84,26 +88,18 @@ The result can be:
 In case two you can enable BT by:
 
 ```js
-import Dist from "de.appwerft.disto";
-let Bluetooth = Dist.Bluetooth;
-let Devicemanager = Dist.Devicemanager;
+import BT from "de.appwerft.bluetoothmanager";
 
-// maybe it is possible to import in one line …
-
-BT.enableBluetooth({
+BT.enable({
 	onsuccess : handleDisto, // result is name and address of BT on device
 	onerror : e => {}
 }); 
-function handleDisto(e) {  // will hoisted ;-)
-	Object.key(e).forEach(k => {console.log(k + "=" + e[k];)})
-}
 
 ```
-
 This opens a system dialog and the user can grant (or not)
 
 
-## Methods of Bluetooth module
+## Methods of Bluetoothmanager module
 
 ### getAvailability(): int
 Possible results are:

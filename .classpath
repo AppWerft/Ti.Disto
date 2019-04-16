@@ -12,7 +12,7 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/fuerst/Documents/MLearning/Ti.Disto/android/classpathlibs/disto.jar"/>
+	<classpathentry kind="lib" path="/Users/fuerst/Documents/APPC_WORKSPACE/IOT/Ti.Disto/android/classpathlibs/disto.jar"/>
 	<classpathentry kind="lib" path="/Users/fuerst/Library/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/25.3.1/appcompat-v7-25.3.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

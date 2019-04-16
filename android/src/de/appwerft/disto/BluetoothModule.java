@@ -23,7 +23,9 @@ public class BluetoothModule extends TidistoModule {
 	boolean activityStopped = true;
 	final static int REQUEST_CODE = 3667;
 
-	BluetoothAdapter btAdapter;
+	
+	BluetoothAdapter bluetoothAdapter = BluetoothAdapter
+			.getDefaultAdapter();
 	KrollCallbacks callbacks;
 	@Kroll.constant
 	final static int NOTAVAILABLE = 0;
@@ -43,10 +45,11 @@ public class BluetoothModule extends TidistoModule {
 	public boolean isAvailable() {
 		return (bluetoothAdapter == null) ? false : true;
 	}
-	
+
 	@Kroll.method
 	public int getAvailability() {
-		if (bluetoothAdapter == null) return NOTAVAILABLE;
+		if (bluetoothAdapter == null)
+			return NOTAVAILABLE;
 		return bluetoothAdapter.isEnabled() ? ENABLED : DISABLED;
 	}
 
@@ -58,15 +61,17 @@ public class BluetoothModule extends TidistoModule {
 			return (bluetoothAdapter.isEnabled()) ? true : false;
 		}
 	}
+
 	private KrollFunction onSuccessCallback;
+
 	@Kroll.method
 	public boolean enable(@Kroll.argument(optional = true) KrollDict opts) {
-		
+
 		if (hasProperty("onSuccess")) {
-			onSuccessCallback = (KrollFunction)getProperty("onSuccess");
+			onSuccessCallback = (KrollFunction) getProperty("onSuccess");
 		}
 		if (opts == null) {
-			return btAdapter.enable();
+			return bluetoothAdapter.enable();
 		} else {
 			callbacks = new KrollCallbacks(this, opts);
 			final Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -110,10 +115,12 @@ public class BluetoothModule extends TidistoModule {
 			if (requestCode == REQUEST_CODE) {
 				KrollDict event = new KrollDict();
 				event.put("result", resultCode);
-				event.put("name", btAdapter.getName());
-				event.put("address", btAdapter.getAddress());
+				event.put("name", bluetoothAdapter.getName());
+				event.put("address", bluetoothAdapter.getAddress());
 				callbacks.call("onsuccess", event);
-				if (onSuccessCallback != null) onSuccessCallback.callAsync(getKrollObject(),event);
+				// if module has callback property: 
+				if (onSuccessCallback != null)
+					onSuccessCallback.callAsync(getKrollObject(), event);
 			}
 		}
 	}

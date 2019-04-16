@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
@@ -28,16 +27,13 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import ch.leica.sdk.LeicaSdk;
 import ch.leica.sdk.Types;
 import ch.leica.sdk.Devices.Device;
-import ch.leica.sdk.Devices.DeviceManager;
 import ch.leica.sdk.ErrorHandling.IllegalArgumentCheckedException;
 import ch.leica.sdk.commands.CommandsParser;
 
@@ -71,7 +67,7 @@ public class TidistoModule extends KrollModule {
 	@Kroll.constant
 	public static final int DEVICE_STATE_UPDATE = Device.DeviceState.update
 			.ordinal();
-	public static final String JSONCOMMANDS = "commands.json";
+	public static final String COMMANDS = "commands.json";
 	@Kroll.constant
 	public static final int VERBOSE = 2;
 	@Kroll.constant
@@ -124,13 +120,11 @@ public class TidistoModule extends KrollModule {
 	public TidistoModule setLogLevel(int level) {
 		LeicaSdk.setLogLevel(level);
 		return this;
-	}
-
-	
+	}	
 
 	@Kroll.method
 	public TidistoModule init(@Kroll.argument(optional = true) String filename) {
-		String jsoncommandsFilename = (filename == null) ? JSONCOMMANDS
+		String jsoncommandsFilename = (filename == null) ? COMMANDS
 				: filename;
 		verifyPermissions();
 		if (LeicaSdk.isInit == false) {
@@ -147,11 +141,11 @@ public class TidistoModule extends KrollModule {
 				.getString("DISTO_KEY", "1Xj1z6thybdW/O+Jc6XG2ExVzYuY3GF4h+");
 		keys.add(key);
 		LeicaSdk.setLicenses(keys);
-		return this;
+		return this;	
 	}
 
 	private boolean hasPermission(String permission) {
-		if (Build.VERSION.SDK_INT >= 23) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			Activity currentActivity = TiApplication.getInstance()
 					.getCurrentActivity();
 			if (currentActivity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
@@ -215,23 +209,25 @@ public class TidistoModule extends KrollModule {
 	}
 
 	public boolean importCommands(String filename) {
-		String url = this.resolveUrl(null, filename);
+		
 		InputStream inStream;
 		try {
-			inStream = TiFileFactory.createTitaniumFile(new String[] { url },
-					false).getInputStream();
+			inStream = ctx.getAssets().open(filename);
 			try {
 				new CommandsParser(inStream);
-				return false;
+				return true;
 			} catch (IllegalArgumentCheckedException e) {
+				Log.e(LCAT,e.getLocalizedMessage());
 				return false;
 			} catch (JSONException e) {
+				Log.e(LCAT,e.getLocalizedMessage());
 				return false;
 			} catch (IOException e) {
-
+				Log.e(LCAT,e.getLocalizedMessage());
 				return false;
 			}
-		} catch (IOException e1) {
+		} catch (IOException e) {
+			Log.e(LCAT,e.getLocalizedMessage());
 			return false;
 		}
 	}

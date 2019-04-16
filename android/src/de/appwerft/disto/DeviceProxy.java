@@ -77,10 +77,20 @@ public class DeviceProxy extends KrollProxy implements
 	}
 
 	@Kroll.method
+	@Kroll.getProperty
 	public String getId() {
 		return currentDevice.getDeviceID();
 	}
-
+	@Kroll.method
+	@Kroll.getProperty
+	public String getName() {
+		return currentDevice.getDeviceName();
+	}
+	@Kroll.method
+	@Kroll.getProperty
+	public String getType() {
+		return currentDevice.getDeviceType().name();
+	}
 	@Kroll.method
 	public String[] getAvailableCommands() {
 		return currentDevice.getAvailableCommands();
